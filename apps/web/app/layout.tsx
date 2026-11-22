@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "ParkKaro",
-  description: "Find. Check. Park.",
+  title: "ParkKaro - India-Focused AI Parking & Live Spot Booking",
+  description: "Find legal parking spots, check real-time availability, and book slots with ease.",
 };
 
 export default function RootLayout({
@@ -13,7 +13,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <head>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossOrigin="" />
+      </head>
+      <body className="antialiased font-sans bg-slate-50 text-slate-900">
+        {children}
+      </body>
     </html>
   );
 }

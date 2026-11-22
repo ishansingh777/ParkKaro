@@ -1,73 +1,74 @@
-# ParkKaro
+# 🚗 ParkKaro - Smart Parking Intelligence Platform
 
-"Find. Check. Park."
+> **"Find. Check. Park."**  
+> India-focused AI parking intelligence platform with PostGIS spatial tracking, real-time availability, and live slot booking.
 
-ParkKaro is an India-focused AI-powered parking intelligence platform.
+---
 
-## Architecture
+## 🏗️ Architecture
 
-This is a monorepo containing:
-- `apps/`: Next.js applications (`web`, `admin`, `operator`)
-- `services/`: Python FastAPI backend modular monolith
-- `packages/`: Shared packages and UI components
-- `ai/`: AI pipelines for parking rule extraction and recommendations
-- `database/`: Database migrations and seeds
+- **Database**: **Supabase (PostgreSQL 15 + PostGIS)** with spatial Point geography (`location`).
+- **Backend**: **FastAPI** (`services/api`) connecting to Supabase via SQLAlchemy 2.0 & Psycopg2.
+- **Frontend**: **Next.js 14 App Router** (`apps/web`) with Tailwind CSS & Leaflet (OpenStreetMap) live interactive map.
 
-## Prerequisites
+---
 
-- **Node.js**: >= 20.0.0
-- **pnpm**: >= 9.0.0
-- **Python**: 3.11+
-- **Docker & Docker Compose**: For PostgreSQL + PostGIS
+## 📍 5 Sample Testing Spots in Supabase
 
-## Environment Setup
+| ID | Spot Name | City | PostGIS Coordinates | Type | Pricing | Rule Description |
+|:---|:---|:---|:---|:---|:---|:---|
+| **1** | Rajwada Main Parking | Indore | `22.7185, 75.8553` | 🔵 PAID | ₹20/hr | Paid municipal parking: ₹20/hr cars, ₹10/hr bikes |
+| **2** | Vijay Nagar Square Lot | Indore | `22.7533, 75.8937` | 🟢 ALLOWED | Free | Free public parking allowed till 10 PM |
+| **3** | Sector 17 Plaza Parking | Chandigarh | `30.7415, 76.7821` | 🔵 PAID | ₹30/hr | Smart parking zone: ₹30/hr |
+| **4** | Elante Side Road | Chandigarh | `30.7055, 76.8013` | 🔴 NO_PARKING | - | Strict No Parking / Tow-Away Zone 9 AM - 9 PM |
+| **5** | Panaji Municipal Market | Goa | `15.4989, 73.8278` | 🔵 PAID | ₹20/hr | Pay & Park zone: ₹20/hr |
 
-1. Copy `.env.example` to `.env` and fill in your details:
-   ```bash
-   cp .env.example .env
-   ```
-2. Install frontend dependencies:
-   ```bash
-   pnpm install
-   ```
-3. Setup Python virtual environment for the backend:
-   ```bash
-   cd services/api
-   python -m venv venv
-   source venv/bin/activate  # On Windows: .\venv\Scripts\Activate.ps1
-   pip install -r requirements.txt
-   ```
+---
 
-## Starting the Application
+## 🚀 Quick Start (Running Locally)
 
-### 1. Database (PostgreSQL + PostGIS)
-From the root directory, start the database using Docker:
-```bash
-docker-compose up -d db
+### 1. Start the FastAPI Backend (Port 8000)
+
+Double click `run_backend.bat` or run:
+```powershell
+.\run_backend.ps1
 ```
-
-### 2. Database Migrations
-With the database running, apply Alembic migrations:
-```bash
-cd services/api
-alembic upgrade head
+* Or manually:
+```powershell
+cd services\api
+.\venv\Scripts\uvicorn.exe app.main:app --reload --host 0.0.0.0 --port 8000
 ```
+API Health Check & Docs:
+* Health Check: [http://localhost:8000/api/v1/health](http://localhost:8000/api/v1/health)
+* Interactive Swagger Docs: [http://localhost:8000/docs](http://localhost:8000/docs)
 
-### 3. FastAPI Backend
-Start the FastAPI application:
-```bash
-cd services/api
-uvicorn app.main:app --reload
-```
-The API health check will be available at: `http://localhost:8000/api/v1/health`
+---
 
-Alternatively, you can run the backend via Docker:
-```bash
-docker-compose up -d api
-```
+### 2. Start the Next.js Frontend (Port 3000)
 
-### 4. Next.js Frontend
-Start the Next.js apps from the root directory:
-```bash
-pnpm dev
+Double click `run_frontend.bat` or run:
+```powershell
+.\run_frontend.ps1
 ```
+* Or manually:
+```powershell
+cd apps\web
+npm run dev
+```
+Open **[http://localhost:3000](http://localhost:3000)** in your browser!
+
+---
+
+## 🧪 Testing Live Booking Flow
+
+1. Open `http://localhost:3000`.
+2. Notice the **Live PostGIS Map** showing the 5 spots with color-coded pins:
+   - 🟢 **Green** = Free Parking
+   - 🔵 **Blue** = Paid Municipal Lot
+   - 🔴 **Red** = Tow-Away / No Parking
+3. Click on **"Book Slot"** on any available spot (e.g. *Rajwada Main Parking* or *Vijay Nagar*).
+4. Enter your name/plate, choose vehicle (Car / Bike), choose hours, and click **Confirm & Park Now**.
+5. You will see:
+   - The slot count dynamically decrease in real-time in Supabase.
+   - An active parking session banner appear with a countdown timer.
+6. Click **"End Park"** on the session banner — the slot is immediately released and available again in Supabase!
