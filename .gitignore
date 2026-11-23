@@ -1,4 +1,4 @@
-# Node
+# Node & Next.js
 node_modules/
 .pnp
 .pnp.js
@@ -8,7 +8,7 @@ out/
 build/
 dist/
 
-# Python
+# Python & Virtual Envs
 __pycache__/
 *.py[cod]
 *$py.class
@@ -17,10 +17,25 @@ __pycache__/
 htmlcov/
 venv/
 env/
-.env
+.venv/
 
-# MacOS
+# Environment Variables & Secrets
+.env
+.env.local
+.env.*.local
+
+# ML Large Model Checkpoints & Datasets (keep sample configs, ignore heavy weights)
+*.pth
+*.pt.bak
+ml/**/data/*.csv
+!ml/**/data/*.md
+data/raw/*.kml
+data/raw/*.osm
+
+# MacOS & Windows OS Junk
 .DS_Store
+Thumbs.db
+desktop.ini
 
 # IDEs
 .vscode/

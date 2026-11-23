@@ -1,0 +1,16 @@
+# ParkKaro - YOLOv8 Parking & Traffic Sign Dataset Configuration
+path: ./datasets/indian_parking_signs
+train: images/train
+val: images/val
+test: images/test
+
+# Number of classes
+nc: 5
+
+# Indian Parking Sign Classes
+names:
+  0: 'No Parking'
+  1: 'Tow Away Zone'
+  2: 'Paid Parking'
+  3: 'Free Parking'
+  4: 'No Stopping'

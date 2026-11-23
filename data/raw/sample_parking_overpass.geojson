@@ -1,0 +1,36 @@
+{
+  "type": "FeatureCollection",
+  "name": "overpass_sample_indore_parking",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Rajwada Municipal Parking",
+        "amenity": "parking",
+        "city": "Indore",
+        "fee": "yes",
+        "capacity:car": 45,
+        "capacity:motorcycle": 120
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [75.8553, 22.7185]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Vijay Nagar Free Public Parking",
+        "amenity": "parking",
+        "city": "Indore",
+        "fee": "no",
+        "capacity:car": 30,
+        "capacity:motorcycle": 60
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [75.8937, 22.7533]
+      }
+    }
+  ]
+}
