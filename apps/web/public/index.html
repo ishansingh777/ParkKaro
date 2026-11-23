@@ -121,7 +121,7 @@
     }
     .custom-park-pin:hover {
       transform: scale(1.18) translateY(-4px);
-      z-index: 9999 !important;
+      z-index: 1000 !important;
     }
     
     .pulse-ring {
@@ -687,7 +687,7 @@
   </div>
 
   <!-- ================= BOOKING MODAL (TRANSLUCENT) ================= -->
-  <div id="bookingModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fade-in">
+  <div id="bookingModal" class="hidden fixed inset-0 z-[10000] flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-xl animate-fade-in">
     <div class="glass-panel rounded-3xl max-w-md w-full shadow-2xl overflow-hidden ring-1 ring-white/15">
       
       <!-- Modal Header -->
@@ -787,7 +787,7 @@
   </div>
 
   <!-- ================= ADD SPOT MODAL ================= -->
-  <div id="addSpotModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fade-in">
+  <div id="addSpotModal" class="hidden fixed inset-0 z-[10000] flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-xl animate-fade-in">
     <div class="glass-panel rounded-3xl max-w-lg w-full shadow-2xl overflow-hidden ring-1 ring-white/15">
       
       <!-- Header -->
@@ -871,7 +871,7 @@
   </div>
 
   <!-- ================= PARKING PASS MODAL ================= -->
-  <div id="passModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fade-in">
+  <div id="passModal" class="hidden fixed inset-0 z-[10010] flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-xl animate-fade-in">
     <div class="glass-panel glow-emerald rounded-3xl max-w-sm w-full shadow-2xl p-6 ring-1 ring-white/15 text-center relative overflow-hidden">
       <button onclick="closePassModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full glass-pill text-slate-400 hover:text-white flex items-center justify-center">
         <i data-lucide="x" class="w-4 h-4"></i>
@@ -916,7 +916,7 @@
   </div>
 
   <!-- Toast Notification Container -->
-  <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+  <div id="toastContainer" class="fixed bottom-5 right-5 z-[10020] flex flex-col gap-2 pointer-events-none"></div>
 
   <!-- ================= CORE FRONTEND LOGIC ================= -->
   <script>
@@ -1810,6 +1810,11 @@
       document.getElementById('modalBikeAvailable').innerText = spot.available_bike_slots;
       document.getElementById('bookingError').classList.add('hidden');
 
+      // Dismiss map popups and hide docked bottom card so modal is completely unobstructed
+      if (leafletMap) leafletMap.closePopup();
+      const bottomCard = document.getElementById('spotBottomCard');
+      if (bottomCard) bottomCard.classList.add('hidden');
+
       if (spot.available_car_slots === 0 && spot.available_bike_slots > 0) {
         selectVehicleType('bike');
       } else {
@@ -1823,6 +1828,9 @@
 
     function closeBookingModal() {
       document.getElementById('bookingModal').classList.add('hidden');
+      if (selectedSpot) {
+        updateBottomCard(selectedSpot);
+      }
     }
 
     function selectVehicleType(type) {
@@ -1898,10 +1906,14 @@
 
         const newBooking = await res.json();
         closeBookingModal();
+        // Hide docked bottom card so pass modal has full focus
+        const bottomCard = document.getElementById('spotBottomCard');
+        if (bottomCard) bottomCard.classList.add('hidden');
+
         showToast(`🎉 Booking confirmed for ${userName}! Slot allocated.`, 'success');
         await fetchData();
 
-        viewParkingPass(newBooking.id);
+        viewParkingPass(newBooking);
       } catch (err) {
         errorDiv.innerText = err.message;
         errorDiv.classList.remove('hidden');
@@ -1931,18 +1943,29 @@
     }
 
     // Digital Parking Pass Modal
-    function viewParkingPass(bookingId) {
-      const booking = activeBookings.find(b => b.id === bookingId);
+    function viewParkingPass(bookingOrId) {
+      let booking = null;
+      if (typeof bookingOrId === 'object' && bookingOrId !== null) {
+        booking = bookingOrId;
+      } else {
+        booking = activeBookings.find(b => b.id === bookingOrId);
+      }
       if (!booking) return;
 
       document.getElementById('passId').innerText = `#PK-${booking.id}`;
-      document.getElementById('passSpotName').innerText = booking.spot_name || 'ParkKaro Station';
+      document.getElementById('passSpotName').innerText = booking.spot_name || (selectedSpot ? selectedSpot.name : 'ParkKaro Station');
       document.getElementById('passUserName').innerText = booking.user_name;
-      document.getElementById('passVehicle').innerText = `${booking.vehicle_type.toUpperCase()}`;
-      document.getElementById('passCost').innerText = booking.total_cost ? `₹${booking.total_cost}` : 'FREE';
+      document.getElementById('passVehicle').innerText = `${(booking.vehicle_type || 'car').toUpperCase()}`;
+      document.getElementById('passCost').innerText = booking.total_cost !== undefined ? (booking.total_cost > 0 ? `₹${booking.total_cost}` : 'FREE') : (selectedSpot && selectedSpot.is_paid ? `₹${selectedSpot.price_per_hour}` : 'FREE');
 
-      const endTime = new Date(booking.end_time);
+      const endTime = booking.end_time ? new Date(booking.end_time) : new Date(Date.now() + 3600000);
       document.getElementById('passValidUntil').innerText = endTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+      // Dismiss any open map popups and ensure booking modal is closed
+      if (leafletMap) leafletMap.closePopup();
+      document.getElementById('bookingModal').classList.add('hidden');
+      const bottomCard = document.getElementById('spotBottomCard');
+      if (bottomCard) bottomCard.classList.add('hidden');
 
       document.getElementById('passModal').classList.remove('hidden');
       lucide.createIcons();
@@ -1950,10 +1973,16 @@
 
     function closePassModal() {
       document.getElementById('passModal').classList.add('hidden');
+      if (selectedSpot) {
+        updateBottomCard(selectedSpot);
+      }
     }
 
     // Add Spot Modal Logic
     function openAddSpotModal() {
+      if (leafletMap) leafletMap.closePopup();
+      const bottomCard = document.getElementById('spotBottomCard');
+      if (bottomCard) bottomCard.classList.add('hidden');
       document.getElementById('addSpotModal').classList.remove('hidden');
       document.getElementById('addSpotError').classList.add('hidden');
       lucide.createIcons();
@@ -1961,6 +1990,9 @@
 
     function closeAddSpotModal() {
       document.getElementById('addSpotModal').classList.add('hidden');
+      if (selectedSpot) {
+        updateBottomCard(selectedSpot);
+      }
     }
 
     async function handleAddSpotSubmit(e) {
