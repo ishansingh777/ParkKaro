@@ -369,3 +369,20 @@ def serve_ui():
         return FileResponse(str(index_file))
     return {"message": "ParkKaro API is running. UI file not found in static folder."}
 
+
+@app.get("/manifest.json", include_in_schema=False)
+def serve_manifest():
+    manifest_file = STATIC_DIR / "manifest.json"
+    if manifest_file.exists():
+        return FileResponse(str(manifest_file), media_type="application/manifest+json")
+    raise HTTPException(status_code=404, detail="manifest.json not found")
+
+
+@app.get("/sw.js", include_in_schema=False)
+def serve_sw():
+    sw_file = STATIC_DIR / "sw.js"
+    if sw_file.exists():
+        return FileResponse(str(sw_file), media_type="application/javascript")
+    raise HTTPException(status_code=404, detail="sw.js not found")
+
+
