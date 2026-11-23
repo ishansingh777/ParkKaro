@@ -22,6 +22,31 @@ class ParkingSpotOut(BaseModel):
         from_attributes = True
 
 
+class ParkingSpotCreate(BaseModel):
+    name: str = Field(..., min_length=2, max_length=100)
+    city: str = Field(..., min_length=2, max_length=50)
+    address: Optional[str] = None
+    latitude: float = Field(..., ge=-90, le=90)
+    longitude: float = Field(..., ge=-180, le=180)
+    total_car_slots: int = Field(10, ge=0)
+    total_bike_slots: int = Field(20, ge=0)
+    is_paid: bool = False
+    price_per_hour: int = Field(0, ge=0)
+    rule_type: str = Field("ALLOWED", pattern="^(PAID|ALLOWED|NO_PARKING)$")
+    rule_description: Optional[str] = None
+
+
+class StatsResponse(BaseModel):
+    total_spots: int
+    available_car_slots: int
+    available_bike_slots: int
+    total_car_slots: int
+    total_bike_slots: int
+    active_bookings: int
+    cities_count: int
+
+
+
 class BookingCreate(BaseModel):
     spot_id: int
     user_name: str = Field(..., min_length=2, max_length=50)
@@ -44,6 +69,31 @@ class BookingOut(BaseModel):
 
     class Config:
         from_attributes = True
+
+
+class ParkingSpotCreate(BaseModel):
+    name: str = Field(..., min_length=2, max_length=100)
+    city: str = Field(..., min_length=2, max_length=50)
+    address: Optional[str] = None
+    latitude: float = Field(..., ge=-90, le=90)
+    longitude: float = Field(..., ge=-180, le=180)
+    total_car_slots: int = Field(10, ge=0)
+    total_bike_slots: int = Field(20, ge=0)
+    is_paid: bool = False
+    price_per_hour: int = Field(0, ge=0)
+    rule_type: str = Field("ALLOWED", pattern="^(PAID|ALLOWED|NO_PARKING)$")
+    rule_description: Optional[str] = None
+
+
+class StatsResponse(BaseModel):
+    total_spots: int
+    available_car_slots: int
+    available_bike_slots: int
+    total_car_slots: int
+    total_bike_slots: int
+    active_bookings: int
+    cities_count: int
+
 
 
 class HealthResponse(BaseModel):
