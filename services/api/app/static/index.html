@@ -57,59 +57,61 @@
       font-family: 'JetBrains Mono', monospace;
     }
     
-    /* 80% Translucent White & Black Frosted Glass System */
+    /* Pure Transparent Black & White Glassmorphic System */
     .glass-panel {
-      background: rgba(0, 0, 0, 0.80);
-      backdrop-filter: blur(24px) saturate(190%);
-      -webkit-backdrop-filter: blur(24px) saturate(190%);
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(28px) saturate(180%);
+      -webkit-backdrop-filter: blur(28px) saturate(180%);
       border: 1px solid rgba(255, 255, 255, 0.16);
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), inset 0 1px 0 0 rgba(255, 255, 255, 0.12);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), inset 0 1px 0 0 rgba(255, 255, 255, 0.15);
     }
 
     .glass-pill {
-      background: rgba(16, 16, 20, 0.80);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+      background: rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #ffffff;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    }
+    .glass-pill:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.35);
     }
 
     .glass-pill-white {
-      background: rgba(255, 255, 255, 0.80);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.6);
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid #ffffff;
       color: #000000;
-      box-shadow: 0 4px 20px rgba(255, 255, 255, 0.15);
+      box-shadow: 0 4px 20px rgba(255, 255, 255, 0.25);
     }
 
     .glass-card {
-      background: rgba(12, 12, 16, 0.80);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      background: rgba(12, 12, 12, 0.60);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
       transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .glass-card:hover {
-      background: rgba(22, 22, 28, 0.80);
-      border-color: rgba(255, 255, 255, 0.35);
-      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.7);
+      background: rgba(25, 25, 25, 0.75);
+      border-color: rgba(255, 255, 255, 0.40);
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.9), 0 0 20px rgba(255, 255, 255, 0.05);
       transform: translateY(-2px);
     }
 
-    /* Glow highlights */
-    .glow-emerald {
-      box-shadow: 0 0 35px -5px rgba(16, 185, 129, 0.3), inset 0 0 15px rgba(16, 185, 129, 0.08);
-      border-color: rgba(16, 185, 129, 0.45);
+    /* Transparent monochrome glow highlights */
+    .glow-white, .glow-emerald, .glow-blue, .glow-rose {
+      box-shadow: 0 0 35px -5px rgba(255, 255, 255, 0.22), inset 0 0 15px rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.45);
     }
-    .glow-blue {
-      box-shadow: 0 0 35px -5px rgba(59, 130, 246, 0.3), inset 0 0 15px rgba(59, 130, 246, 0.08);
-      border-color: rgba(59, 130, 246, 0.45);
-    }
-    .glow-rose {
-      box-shadow: 0 0 35px -5px rgba(239, 68, 68, 0.3), inset 0 0 15px rgba(239, 68, 68, 0.08);
-      border-color: rgba(239, 68, 68, 0.45);
+
+    /* Clean Dark Monochrome Map Layer */
+    .leaflet-tile-pane {
+      filter: invert(100%) hue-rotate(180deg) brightness(92%) contrast(90%) grayscale(20%);
     }
 
     /* Custom Leaflet Map Pin Styles */
@@ -187,10 +189,10 @@
 </head>
 <body class="text-slate-100 min-h-screen flex flex-col selection:bg-brand-500 selection:text-white pb-20 md:pb-6 relative overflow-x-hidden">
 
-  <!-- Ambient Background Gradients (ParkUsher Aesthetic) -->
-  <div class="fixed top-0 left-1/4 w-[500px] h-[500px] bg-indigo-600/10 rounded-full blur-[140px] pointer-events-none -z-10"></div>
-  <div class="fixed bottom-0 right-1/4 w-[550px] h-[550px] bg-emerald-500/10 rounded-full blur-[140px] pointer-events-none -z-10"></div>
-  <div class="fixed top-1/2 right-10 w-[400px] h-[400px] bg-blue-600/10 rounded-full blur-[120px] pointer-events-none -z-10"></div>
+  <!-- Ambient Monochrome Frost Overlays -->
+  <div class="fixed top-0 left-1/4 w-[600px] h-[600px] bg-white/[0.03] rounded-full blur-[160px] pointer-events-none -z-10"></div>
+  <div class="fixed bottom-0 right-1/4 w-[600px] h-[600px] bg-white/[0.02] rounded-full blur-[160px] pointer-events-none -z-10"></div>
+  <div class="fixed top-1/2 right-10 w-[450px] h-[450px] bg-white/[0.02] rounded-full blur-[140px] pointer-events-none -z-10"></div>
 
   <!-- ================= TOP TRANSLUCENT NAVIGATION ISLAND ================= -->
   <header class="sticky top-0 z-40 px-3 sm:px-6 py-3">
@@ -206,7 +208,7 @@
             <span class="text-xl font-black tracking-tight text-white">
               Park<span class="text-white">Karo</span>
             </span>
-            <span class="glass-pill text-white/90 text-[10px] font-black px-2 py-0.5 rounded-full border border-white/20 uppercase tracking-wider">
+            <span class="glass-pill text-white text-[10px] font-black px-2 py-0.5 rounded-full border border-white/25 uppercase tracking-wider">
               PRO
             </span>
           </div>
@@ -228,13 +230,13 @@
 
       <!-- Live Connection Pill & Actions -->
       <div class="flex items-center space-x-2 sm:space-x-3">
-        <!-- Live Connection Status Pill -->
-        <div id="connectionPill" class="hidden sm:flex items-center space-x-2 px-3 py-1.5 rounded-full text-xs font-semibold glass-pill text-emerald-400 border border-white/10">
+        <!-- Live Connection Status Pill (Clean White & Black) -->
+        <div id="connectionPill" class="hidden sm:flex items-center space-x-2 px-3 py-1.5 rounded-full text-xs font-semibold glass-pill text-white border border-white/20">
           <span class="relative flex h-2 w-2">
-            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-            <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
           </span>
-          <span id="connectionText" class="text-[11px] font-mono">PostGIS Live</span>
+          <span id="connectionText" class="text-[11px] font-mono text-white">PostGIS Live</span>
         </div>
 
         <!-- PWA Install Button -->
@@ -244,8 +246,8 @@
         </button>
 
         <!-- Add Spot Button -->
-        <button onclick="openAddSpotModal()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl glass-pill hover:bg-white/15 text-white text-xs font-bold transition-all">
-          <i data-lucide="plus-circle" class="w-3.5 h-3.5 text-white"></i>
+        <button onclick="openAddSpotModal()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl glass-pill hover:bg-white hover:text-black text-white text-xs font-bold transition-all">
+          <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i>
           <span class="hidden md:inline">Add Zone</span>
         </button>
       </div>
@@ -254,18 +256,18 @@
 
   <!-- ================= ACTIVE SESSIONS TRANSLUCENT BANNER ================= -->
   <div id="activeSessionsSection" class="hidden max-w-7xl mx-auto px-4 sm:px-6 w-full mb-3 animate-fade-in">
-    <div class="glass-panel glow-blue rounded-3xl p-4">
+    <div class="glass-panel glow-white rounded-3xl p-4">
       <div class="flex items-center justify-between mb-2.5">
         <div class="flex items-center gap-2">
           <span class="relative flex h-2.5 w-2.5">
-            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-            <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-white"></span>
           </span>
-          <span class="text-xs font-black uppercase tracking-wider text-indigo-300">
+          <span class="text-xs font-black uppercase tracking-wider text-white">
             Active Parking Meters (<span id="activeSessionsCount">0</span>)
           </span>
         </div>
-        <span class="text-[11px] text-slate-400 font-mono">Auto-releases slot on completion</span>
+        <span class="text-[11px] text-white/60 font-mono">Auto-releases slot on completion</span>
       </div>
       <div id="activeSessionsList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
         <!-- Rendered dynamically -->
@@ -276,49 +278,49 @@
   <!-- ================= VIEW 1: MAP & SPOTS EXPLORER ================= -->
   <div id="mapViewContainer" class="flex-1 flex flex-col">
     
-    <!-- TRANSLUCENT STATS STRIP -->
+    <!-- TRANSLUCENT STATS STRIP (BLACK & WHITE) -->
     <div class="max-w-7xl w-full mx-auto px-4 sm:px-6 pt-1 pb-2">
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
         <!-- Monitored Spots -->
-        <div class="glass-card rounded-2xl p-3 flex items-center justify-between">
+        <div class="glass-card rounded-2xl p-3 flex items-center justify-between border border-white/10">
           <div>
-            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Monitored Zones</p>
+            <p class="text-[10px] font-bold text-white/60 uppercase tracking-wider">Monitored Zones</p>
             <p id="statTotalSpots" class="text-lg font-black text-white mt-0.5">5</p>
           </div>
-          <div class="w-8 h-8 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center border border-blue-500/20">
+          <div class="w-8 h-8 rounded-xl bg-white/10 text-white flex items-center justify-center border border-white/20">
             <i data-lucide="map-pin" class="w-4 h-4"></i>
           </div>
         </div>
 
         <!-- Available Car Slots -->
-        <div class="glass-card rounded-2xl p-3 flex items-center justify-between">
+        <div class="glass-card rounded-2xl p-3 flex items-center justify-between border border-white/10">
           <div>
-            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Car Slots Free</p>
-            <p id="statCarSlots" class="text-lg font-black text-emerald-400 mt-0.5">--</p>
+            <p class="text-[10px] font-bold text-white/60 uppercase tracking-wider">Car Slots Free</p>
+            <p id="statCarSlots" class="text-lg font-black text-white mt-0.5">--</p>
           </div>
-          <div class="w-8 h-8 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center border border-emerald-500/20">
+          <div class="w-8 h-8 rounded-xl bg-white/10 text-white flex items-center justify-center border border-white/20">
             <i data-lucide="car" class="w-4 h-4"></i>
           </div>
         </div>
 
         <!-- Available Bike Slots -->
-        <div class="glass-card rounded-2xl p-3 flex items-center justify-between">
+        <div class="glass-card rounded-2xl p-3 flex items-center justify-between border border-white/10">
           <div>
-            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Bike Slots Free</p>
-            <p id="statBikeSlots" class="text-lg font-black text-cyan-400 mt-0.5">--</p>
+            <p class="text-[10px] font-bold text-white/60 uppercase tracking-wider">Bike Slots Free</p>
+            <p id="statBikeSlots" class="text-lg font-black text-white mt-0.5">--</p>
           </div>
-          <div class="w-8 h-8 rounded-xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center border border-cyan-500/20">
+          <div class="w-8 h-8 rounded-xl bg-white/10 text-white flex items-center justify-center border border-white/20">
             <i data-lucide="bike" class="w-4 h-4"></i>
           </div>
         </div>
 
         <!-- Danger / Tow Zones -->
-        <div class="glass-card rounded-2xl p-3 flex items-center justify-between">
+        <div class="glass-card rounded-2xl p-3 flex items-center justify-between border border-white/10">
           <div>
-            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Tow-Away Zones</p>
-            <p id="statDangerZones" class="text-lg font-black text-rose-400 mt-0.5">1</p>
+            <p class="text-[10px] font-bold text-white/60 uppercase tracking-wider">Tow-Away Zones</p>
+            <p id="statDangerZones" class="text-lg font-black text-white mt-0.5">1</p>
           </div>
-          <div class="w-8 h-8 rounded-xl bg-rose-500/10 text-rose-400 flex items-center justify-center border border-rose-500/20">
+          <div class="w-8 h-8 rounded-xl bg-white/10 text-white flex items-center justify-center border border-white/20">
             <i data-lucide="alert-triangle" class="w-4 h-4"></i>
           </div>
         </div>
@@ -332,65 +334,65 @@
         <!-- LEFT: INTERACTIVE MAP (7 COLS) WITH FLOATING GLASS OVERLAYS -->
         <div class="lg:col-span-7 flex flex-col gap-3 relative">
           
-          <!-- Leaflet Map Container -->
-          <div class="relative w-full h-[500px] lg:h-[620px] rounded-3xl overflow-hidden border border-slate-700/80 shadow-2xl bg-slate-900 ring-1 ring-white/10">
+          <!-- Leaflet Map Container (Black & White Translucent Frame) -->
+          <div class="relative w-full h-[500px] lg:h-[620px] rounded-3xl overflow-hidden border border-white/15 shadow-2xl bg-black ring-1 ring-white/10">
             <div id="map" class="w-full h-full z-0"></div>
 
             <!-- FLOATING GLASS OVERLAY: Top Floating Island (City + Rule Filter) -->
             <div class="absolute top-4 left-4 right-4 z-[400] flex flex-wrap items-center justify-between gap-2 pointer-events-none">
               <!-- City Switcher Glass Capsule -->
-              <div class="glass-panel p-1 rounded-2xl flex items-center gap-1 pointer-events-auto">
-                <button onclick="setCityFilter('All')" class="map-city-pill px-3 py-1.5 rounded-xl text-xs font-bold bg-indigo-600 text-white shadow-sm" data-city="All">
+              <div class="glass-panel p-1 rounded-2xl flex items-center gap-1 pointer-events-auto border border-white/15">
+                <button onclick="setCityFilter('All')" class="map-city-pill px-3 py-1.5 rounded-xl text-xs font-black bg-white text-black shadow-md shadow-white/20" data-city="All">
                   All Cities
                 </button>
-                <button onclick="setCityFilter('Indore')" class="map-city-pill px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-400 hover:text-white" data-city="Indore">
+                <button onclick="setCityFilter('Indore')" class="map-city-pill px-3 py-1.5 rounded-xl text-xs font-semibold text-white/70 hover:text-white" data-city="Indore">
                   Indore
                 </button>
-                <button onclick="setCityFilter('Chandigarh')" class="map-city-pill px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-400 hover:text-white" data-city="Chandigarh">
+                <button onclick="setCityFilter('Chandigarh')" class="map-city-pill px-3 py-1.5 rounded-xl text-xs font-semibold text-white/70 hover:text-white" data-city="Chandigarh">
                   Chandigarh
                 </button>
-                <button onclick="setCityFilter('Goa')" class="map-city-pill px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-400 hover:text-white" data-city="Goa">
+                <button onclick="setCityFilter('Goa')" class="map-city-pill px-3 py-1.5 rounded-xl text-xs font-semibold text-white/70 hover:text-white" data-city="Goa">
                   Goa
                 </button>
               </div>
 
               <!-- Pin Type & Map Actions Capsule -->
-              <div class="glass-panel p-1 rounded-2xl flex items-center gap-1.5 pointer-events-auto">
-                <button id="deliveryModeBtn" onclick="toggleDeliveryMode()" class="px-2.5 py-1 rounded-xl glass-pill hover:bg-white/10 text-xs font-bold text-slate-300 transition-all flex items-center gap-1.5" title="Delivery / Commercial loading mode">
-                  <i data-lucide="truck" class="w-3.5 h-3.5 text-amber-400"></i>
+              <div class="glass-panel p-1 rounded-2xl flex items-center gap-1.5 pointer-events-auto border border-white/15">
+                <button id="deliveryModeBtn" onclick="toggleDeliveryMode()" class="px-2.5 py-1 rounded-xl glass-pill hover:bg-white hover:text-black text-xs font-bold text-white transition-all flex items-center gap-1.5" title="Delivery / Commercial loading mode">
+                  <i data-lucide="truck" class="w-3.5 h-3.5"></i>
                   <span class="hidden sm:inline">Delivery</span>
                 </button>
 
-                <select id="ruleTypeFilter" onchange="renderUI()" class="bg-transparent text-xs font-bold text-slate-200 px-2 py-1.5 focus:outline-none cursor-pointer">
-                  <option value="ALL" class="bg-slate-900">All Street Rules</option>
-                  <option value="ALLOWED" class="bg-slate-900">🟢 Legal Parking</option>
-                  <option value="PAID" class="bg-slate-900">🔵 Metered Paid</option>
-                  <option value="NO_PARKING" class="bg-slate-900">🔴 Tow-Away Zone</option>
+                <select id="ruleTypeFilter" onchange="renderUI()" class="bg-black/90 text-xs font-bold text-white px-2 py-1.5 rounded-lg border border-white/10 focus:outline-none cursor-pointer">
+                  <option value="ALL" class="bg-black text-white">All Street Rules</option>
+                  <option value="ALLOWED" class="bg-black text-white">🟢 Legal Parking</option>
+                  <option value="PAID" class="bg-black text-white">🔵 Metered Paid</option>
+                  <option value="NO_PARKING" class="bg-black text-white">🔴 Tow-Away Zone</option>
                 </select>
 
-                <button onclick="resetMapView()" title="Fit all zones" class="p-1.5 rounded-xl hover:bg-white/10 text-slate-300 transition-colors">
+                <button onclick="resetMapView()" title="Fit all zones" class="p-1.5 rounded-xl hover:bg-white/15 text-white transition-colors">
                   <i data-lucide="maximize" class="w-4 h-4"></i>
                 </button>
 
-                <button onclick="fetchData()" title="Reload data" class="p-1.5 rounded-xl hover:bg-white/10 text-slate-300 transition-colors">
+                <button onclick="fetchData()" title="Reload data" class="p-1.5 rounded-xl hover:bg-white/15 text-white transition-colors">
                   <i data-lucide="refresh-cw" class="w-4 h-4" id="refreshIcon"></i>
                 </button>
               </div>
             </div>
 
             <!-- FLOATING GLASS OVERLAY: ParkUsher-Style Legend Capsule -->
-            <div class="absolute bottom-4 left-4 z-[400] glass-panel px-3.5 py-2.5 rounded-2xl flex items-center gap-3.5 text-[11px] font-bold shadow-xl">
+            <div class="absolute bottom-4 left-4 z-[400] glass-panel px-3.5 py-2.5 rounded-2xl flex items-center gap-3.5 text-[11px] font-bold shadow-xl border border-white/15">
               <div class="flex items-center gap-1.5">
                 <span class="w-3 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_#10b981]"></span>
-                <span class="text-slate-200">Legal Street</span>
+                <span class="text-white">Legal Street</span>
               </div>
               <div class="flex items-center gap-1.5">
                 <span class="w-3 h-1.5 rounded-full bg-blue-400 shadow-[0_0_8px_#3b82f6]"></span>
-                <span class="text-slate-200">Metered Paid</span>
+                <span class="text-white">Metered Paid</span>
               </div>
               <div class="flex items-center gap-1.5">
                 <span class="w-3 h-1.5 rounded-full bg-rose-400 shadow-[0_0_8px_#ef4444]"></span>
-                <span class="text-slate-200">Tow-Away Zone</span>
+                <span class="text-white">Tow-Away Zone</span>
               </div>
             </div>
 
@@ -403,19 +405,19 @@
               <div class="flex items-start justify-between gap-3 mb-2.5">
                 <div class="flex-1 min-w-0">
                   <div class="flex items-center gap-2 flex-wrap mb-1">
-                    <span id="bottomCardCity" class="text-[10px] font-black text-indigo-400 uppercase tracking-widest">INDORE</span>
-                    <span id="bottomCardDistance" class="text-[10px] font-mono font-bold text-emerald-400 glass-pill px-2 py-0.5 rounded-lg border border-emerald-500/30">📍 0.8 km away</span>
-                    <span id="bottomCardDifficulty" class="text-[10px] font-black px-2 py-0.5 rounded-lg border glass-pill">🟢 AVAILABLE</span>
+                    <span id="bottomCardCity" class="text-[10px] font-black text-white/80 uppercase tracking-widest">INDORE</span>
+                    <span id="bottomCardDistance" class="text-[10px] font-mono font-bold text-white glass-pill px-2 py-0.5 rounded-lg border border-white/20">📍 0.8 km away</span>
+                    <span id="bottomCardDifficulty" class="text-[10px] font-black px-2 py-0.5 rounded-lg border border-white/20 glass-pill text-white">🟢 AVAILABLE</span>
                   </div>
                   <h3 id="bottomCardName" class="text-base font-black text-white truncate mt-0.5">Spot Name</h3>
-                  <p id="bottomCardAddress" class="text-xs text-slate-400 truncate">Address</p>
+                  <p id="bottomCardAddress" class="text-xs text-white/60 truncate">Address</p>
                 </div>
 
                 <div class="flex items-center gap-2 shrink-0">
-                  <span id="bottomCardBadge" class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-black glass-pill">
+                  <span id="bottomCardBadge" class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-black glass-pill border border-white/20 text-white">
                     ₹20/hr
                   </span>
-                  <button onclick="closeBottomCard()" class="w-8 h-8 rounded-full glass-pill hover:bg-white/10 text-slate-400 hover:text-white flex items-center justify-center transition-colors">
+                  <button onclick="closeBottomCard()" class="w-8 h-8 rounded-full glass-pill hover:bg-white/20 text-white/70 hover:text-white flex items-center justify-center transition-colors">
                     <i data-lucide="x" class="w-4 h-4"></i>
                   </button>
                 </div>
@@ -424,46 +426,46 @@
               <!-- Middle Row: Capacity & Booked-Until Timer (Translucent Glass Pills) -->
               <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 mb-3">
                 <!-- Car Slots -->
-                <div class="glass-pill rounded-2xl p-2.5 flex items-center justify-between">
+                <div class="glass-pill rounded-2xl p-2.5 flex items-center justify-between border border-white/15">
                   <div class="flex items-center gap-2">
-                    <i data-lucide="car" class="w-4 h-4 text-blue-400"></i>
+                    <i data-lucide="car" class="w-4 h-4 text-white"></i>
                     <div>
-                      <p class="text-[10px] text-slate-400 uppercase font-bold">Car Slots</p>
-                      <p id="bottomCardCarSlots" class="text-xs font-black text-slate-100 font-mono">10 / 10</p>
+                      <p class="text-[10px] text-white/60 uppercase font-bold">Car Slots</p>
+                      <p id="bottomCardCarSlots" class="text-xs font-black text-white font-mono">10 / 10</p>
                     </div>
                   </div>
-                  <span id="bottomCardCarStatus" class="text-[10px] font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">Plenty</span>
+                  <span id="bottomCardCarStatus" class="text-[10px] font-bold text-white bg-white/10 px-2 py-0.5 rounded-full border border-white/20">Plenty</span>
                 </div>
 
                 <!-- Bike Slots -->
-                <div class="glass-pill rounded-2xl p-2.5 flex items-center justify-between">
+                <div class="glass-pill rounded-2xl p-2.5 flex items-center justify-between border border-white/15">
                   <div class="flex items-center gap-2">
-                    <i data-lucide="bike" class="w-4 h-4 text-indigo-400"></i>
+                    <i data-lucide="bike" class="w-4 h-4 text-white"></i>
                     <div>
-                      <p class="text-[10px] text-slate-400 uppercase font-bold">Bike Slots</p>
-                      <p id="bottomCardBikeSlots" class="text-xs font-black text-slate-100 font-mono">25 / 25</p>
+                      <p class="text-[10px] text-white/60 uppercase font-bold">Bike Slots</p>
+                      <p id="bottomCardBikeSlots" class="text-xs font-black text-white font-mono">25 / 25</p>
                     </div>
                   </div>
-                  <span id="bottomCardBikeStatus" class="text-[10px] font-bold text-indigo-400 bg-indigo-500/10 px-2 py-0.5 rounded-full border border-indigo-500/20">Available</span>
+                  <span id="bottomCardBikeStatus" class="text-[10px] font-bold text-white bg-white/10 px-2 py-0.5 rounded-full border border-white/20">Available</span>
                 </div>
 
                 <!-- Booked-Until Timer -->
-                <div class="glass-pill rounded-2xl p-2.5 flex items-center justify-between">
+                <div class="glass-pill rounded-2xl p-2.5 flex items-center justify-between border border-white/15">
                   <div class="flex items-center gap-2">
-                    <i data-lucide="timer" class="w-4 h-4 text-amber-400"></i>
+                    <i data-lucide="timer" class="w-4 h-4 text-white"></i>
                     <div>
-                      <p class="text-[10px] text-slate-400 uppercase font-bold">Booked Until</p>
-                      <p id="bottomCardTimer" class="text-xs font-black text-amber-300 font-mono">Open / Available</p>
+                      <p class="text-[10px] text-white/60 uppercase font-bold">Booked Until</p>
+                      <p id="bottomCardTimer" class="text-xs font-black text-white font-mono">Open / Available</p>
                     </div>
                   </div>
-                  <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                  <span class="w-2 h-2 rounded-full bg-white animate-pulse"></span>
                 </div>
               </div>
 
               <!-- Nearest Alternative Spots Strip -->
               <div class="mb-3 pt-2 border-t border-white/10">
-                <p class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 mb-1.5 flex items-center gap-1.5">
-                  <i data-lucide="compass" class="w-3.5 h-3.5 text-indigo-400"></i> Nearest Alternative Legal Spots
+                <p class="text-[10px] font-extrabold uppercase tracking-wider text-white/60 mb-1.5 flex items-center gap-1.5">
+                  <i data-lucide="compass" class="w-3.5 h-3.5 text-white"></i> Nearest Alternative Legal Spots
                 </p>
                 <div id="bottomCardNearestSpots" class="flex gap-2 overflow-x-auto pb-1 text-xs">
                   <!-- Rendered dynamically -->
@@ -492,16 +494,16 @@
           <div class="glass-panel p-3.5 rounded-3xl flex flex-col gap-2.5">
             <div class="flex items-center justify-between">
               <h2 class="text-sm font-black text-white flex items-center gap-2">
-                <i data-lucide="layers" class="w-4 h-4 text-indigo-400"></i>
+                <i data-lucide="layers" class="w-4 h-4 text-white"></i>
                 <span>Parking Locations</span>
-                <span id="spotsBadgeCount" class="text-[11px] glass-pill text-indigo-300 px-2 py-0.5 rounded-full font-mono">0</span>
+                <span id="spotsBadgeCount" class="text-[11px] glass-pill text-white border border-white/20 px-2 py-0.5 rounded-full font-mono">0</span>
               </h2>
               
               <div class="flex items-center gap-1">
-                <button onclick="setSortBy('availability')" class="text-[11px] font-bold text-slate-400 hover:text-white px-2 py-1 rounded-lg hover:bg-white/5 transition-colors">
+                <button onclick="setSortBy('availability')" class="text-[11px] font-bold text-white/60 hover:text-white px-2 py-1 rounded-lg hover:bg-white/10 transition-colors">
                   Most Free
                 </button>
-                <button onclick="setSortBy('price')" class="text-[11px] font-bold text-slate-400 hover:text-white px-2 py-1 rounded-lg hover:bg-white/5 transition-colors">
+                <button onclick="setSortBy('price')" class="text-[11px] font-bold text-white/60 hover:text-white px-2 py-1 rounded-lg hover:bg-white/10 transition-colors">
                   Lowest Price
                 </button>
               </div>
@@ -509,13 +511,13 @@
 
             <!-- Search Input with translucent styling -->
             <div class="relative">
-              <i data-lucide="search" class="w-4 h-4 absolute left-3.5 top-3 text-slate-400"></i>
+              <i data-lucide="search" class="w-4 h-4 absolute left-3.5 top-3 text-white/50"></i>
               <input
                 type="text"
                 id="searchInput"
                 oninput="handleSearch(this.value)"
                 placeholder="Search street, spots, landmarks..."
-                class="w-full glass-pill rounded-2xl pl-10 pr-3.5 py-2.5 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-indigo-400 focus:ring-1 focus:ring-indigo-400"
+                class="w-full glass-pill rounded-2xl pl-10 pr-3.5 py-2.5 text-xs text-white placeholder-white/40 border border-white/20 focus:outline-none focus:border-white focus:bg-white/10"
               />
             </div>
           </div>
@@ -537,22 +539,22 @@
     <div class="glass-panel p-4 rounded-3xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
       <div>
         <div class="flex items-center gap-2">
-          <span class="w-2.5 h-2.5 rounded-full bg-indigo-400 animate-pulse"></span>
-          <span class="text-xs font-black text-indigo-400 uppercase tracking-widest">AI Vision Inspector</span>
+          <span class="w-2.5 h-2.5 rounded-full bg-white animate-pulse"></span>
+          <span class="text-xs font-black text-white/80 uppercase tracking-widest">AI Vision Inspector</span>
         </div>
         <h2 class="text-lg font-black text-white mt-0.5">Parking Sign Scanner</h2>
-        <p class="text-xs text-slate-400">Instantly decode street restriction signs, tow-away hours, and municipal rules.</p>
+        <p class="text-xs text-white/60">Instantly decode street restriction signs, tow-away hours, and municipal rules.</p>
       </div>
 
       <div class="flex items-center gap-2">
-        <button onclick="switchView('map')" class="px-3.5 py-1.5 rounded-xl glass-pill hover:bg-white/10 text-xs font-bold text-slate-200 transition-colors flex items-center gap-1.5">
+        <button onclick="switchView('map')" class="px-3.5 py-1.5 rounded-xl glass-pill hover:bg-white hover:text-black text-xs font-bold text-white transition-all flex items-center gap-1.5 border border-white/20">
           <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Back to Map
         </button>
       </div>
     </div>
 
     <!-- Camera Viewport Card -->
-    <div class="relative w-full aspect-[4/3] sm:aspect-[16/9] bg-slate-950/80 rounded-3xl overflow-hidden border border-indigo-500/40 shadow-2xl flex flex-col items-center justify-center ring-1 ring-white/10">
+    <div class="relative w-full aspect-[4/3] sm:aspect-[16/9] bg-black/90 rounded-3xl overflow-hidden border border-white/20 shadow-2xl flex flex-col items-center justify-center ring-1 ring-white/10">
       
       <!-- Live Video Element -->
       <video id="scannerVideo" playsinline autoplay muted class="absolute inset-0 w-full h-full object-cover hidden"></video>
@@ -564,40 +566,40 @@
       <img id="scannerPreviewImg" class="absolute inset-0 w-full h-full object-cover hidden" alt="Captured sign" />
 
       <!-- HUD Viewfinder Reticle -->
-      <div id="scannerReticle" class="relative z-10 w-64 h-64 sm:w-80 sm:h-80 border-2 border-indigo-400/60 rounded-3xl flex flex-col items-center justify-between p-3 pointer-events-none">
+      <div id="scannerReticle" class="relative z-10 w-64 h-64 sm:w-80 sm:h-80 border-2 border-white/60 rounded-3xl flex flex-col items-center justify-between p-3 pointer-events-none">
         <div class="w-full flex justify-between">
-          <div class="w-4 h-4 border-t-2 border-l-2 border-indigo-400"></div>
-          <div class="w-4 h-4 border-t-2 border-r-2 border-indigo-400"></div>
+          <div class="w-4 h-4 border-t-2 border-l-2 border-white"></div>
+          <div class="w-4 h-4 border-t-2 border-r-2 border-white"></div>
         </div>
         
         <!-- Laser Scanning Line -->
-        <div id="scannerLaser" class="hidden absolute left-0 right-0 h-1 bg-gradient-to-r from-transparent via-cyan-400 to-transparent shadow-[0_0_15px_#22d3ee] scanner-laser"></div>
+        <div id="scannerLaser" class="hidden absolute left-0 right-0 h-1 bg-gradient-to-r from-transparent via-white to-transparent shadow-[0_0_15px_#ffffff] scanner-laser"></div>
 
-        <div class="text-center glass-panel px-3 py-1 rounded-full text-[10px] font-mono text-indigo-300">
+        <div class="text-center glass-panel px-3 py-1 rounded-full text-[10px] font-mono text-white border border-white/20">
           ALIGN STREET SIGN INSIDE FRAME
         </div>
 
         <div class="w-full flex justify-between">
-          <div class="w-4 h-4 border-b-2 border-l-2 border-indigo-400"></div>
-          <div class="w-4 h-4 border-b-2 border-r-2 border-indigo-400"></div>
+          <div class="w-4 h-4 border-b-2 border-l-2 border-white"></div>
+          <div class="w-4 h-4 border-b-2 border-r-2 border-white"></div>
         </div>
       </div>
 
       <!-- Camera Placeholder State -->
       <div id="cameraPlaceholder" class="relative z-10 flex flex-col items-center justify-center p-6 text-center">
-        <div class="w-16 h-16 rounded-3xl bg-indigo-600/20 border border-indigo-500/40 text-indigo-400 flex items-center justify-center mb-3 shadow-lg shadow-indigo-600/20">
+        <div class="w-16 h-16 rounded-3xl bg-white/10 border border-white/25 text-white flex items-center justify-center mb-3 shadow-lg shadow-white/10">
           <i data-lucide="camera" class="w-8 h-8"></i>
         </div>
         <h3 class="text-base font-black text-white">Camera Viewfinder Ready</h3>
-        <p class="text-xs text-slate-400 max-w-sm mt-1">Start your camera or upload a photo of any street sign to check if you can legally park right now.</p>
+        <p class="text-xs text-white/60 max-w-sm mt-1">Start your camera or upload a photo of any street sign to check if you can legally park right now.</p>
         
         <div class="flex items-center gap-3 mt-4">
-          <button onclick="startCamera()" class="px-4 py-2.5 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold shadow-lg shadow-indigo-600/30 transition-all flex items-center gap-2">
+          <button onclick="startCamera()" class="px-4 py-2.5 rounded-2xl bg-white hover:bg-slate-200 text-black text-xs font-black shadow-lg shadow-white/20 transition-all flex items-center gap-2">
             <i data-lucide="video" class="w-4 h-4"></i> Start Camera
           </button>
           
-          <label class="px-4 py-2.5 rounded-2xl glass-pill hover:bg-white/10 text-slate-200 text-xs font-bold transition-colors cursor-pointer flex items-center gap-2">
-            <i data-lucide="upload" class="w-4 h-4 text-indigo-400"></i> Upload Photo
+          <label class="px-4 py-2.5 rounded-2xl glass-pill hover:bg-white hover:text-black text-white text-xs font-bold transition-all cursor-pointer flex items-center gap-2 border border-white/20">
+            <i data-lucide="upload" class="w-4 h-4"></i> Upload Photo
             <input type="file" accept="image/*" class="hidden" onchange="handleSignUpload(event)" />
           </label>
         </div>
@@ -605,10 +607,10 @@
 
       <!-- Active Camera Controls Overlay -->
       <div id="cameraControls" class="hidden absolute bottom-4 left-4 right-4 z-20 flex items-center justify-center gap-3">
-        <button onclick="captureSignPhoto()" class="px-5 py-2.5 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold shadow-xl shadow-indigo-600/40 transition-all flex items-center gap-2 active:scale-95">
+        <button onclick="captureSignPhoto()" class="px-5 py-2.5 rounded-2xl bg-white hover:bg-slate-200 text-black text-xs font-black shadow-xl shadow-white/20 transition-all flex items-center gap-2 active:scale-95">
           <i data-lucide="camera" class="w-4 h-4"></i> Snap & Analyze
         </button>
-        <button onclick="stopCamera()" class="px-3.5 py-2.5 rounded-2xl glass-panel text-slate-300 text-xs font-semibold transition-colors">
+        <button onclick="stopCamera()" class="px-3.5 py-2.5 rounded-2xl glass-panel text-white text-xs font-semibold transition-colors border border-white/20">
           Stop Camera
         </button>
       </div>
@@ -616,8 +618,8 @@
 
     <!-- PRE-LOADED TEST SIGNS STRIP -->
     <div class="glass-panel rounded-3xl p-4">
-      <p class="text-[11px] font-black text-slate-300 uppercase tracking-wider mb-2.5 flex items-center gap-1.5">
-        <i data-lucide="sparkles" class="w-3.5 h-3.5 text-amber-400"></i> Or Test with Sample Indian Street Signs:
+      <p class="text-[11px] font-black text-white/80 uppercase tracking-wider mb-2.5 flex items-center gap-1.5">
+        <i data-lucide="sparkles" class="w-3.5 h-3.5 text-white"></i> Or Test with Sample Indian Street Signs:
       </p>
       
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
@@ -675,10 +677,10 @@
       </div>
 
       <div class="flex items-center gap-2">
-        <button onclick="switchView('map')" class="flex-1 py-3 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-black shadow-md transition-all">
+        <button onclick="switchView('map')" class="flex-1 py-3 rounded-2xl bg-white hover:bg-slate-200 text-black text-xs font-black shadow-md transition-all">
           View Nearby Available Spots on Map
         </button>
-        <button onclick="resetScanner()" class="px-4 py-3 rounded-2xl glass-pill hover:bg-white/10 text-slate-200 text-xs font-bold transition-colors">
+        <button onclick="resetScanner()" class="px-4 py-3 rounded-2xl glass-pill hover:bg-white hover:text-black text-white text-xs font-bold transition-all border border-white/20">
           Scan Another
         </button>
       </div>
@@ -693,12 +695,12 @@
       <!-- Modal Header -->
       <div class="px-6 py-4 border-b border-white/10 flex items-center justify-between">
         <div>
-          <span class="text-[11px] font-black text-indigo-400 uppercase tracking-wider">
+          <span class="text-[11px] font-black text-white/80 uppercase tracking-wider">
             Live Slot Reservation
           </span>
           <h2 id="modalSpotName" class="text-base font-black text-white mt-0.5">Spot Name</h2>
         </div>
-        <button onclick="closeBookingModal()" class="w-8 h-8 rounded-full glass-pill hover:bg-white/10 text-slate-400 hover:text-white flex items-center justify-center transition-colors">
+        <button onclick="closeBookingModal()" class="w-8 h-8 rounded-full glass-pill hover:bg-white/20 text-white/70 hover:text-white flex items-center justify-center transition-colors">
           <i data-lucide="x" class="w-4 h-4"></i>
         </button>
       </div>
@@ -707,11 +709,11 @@
       <form id="bookingForm" onsubmit="handleBookingSubmit(event)" class="p-6 space-y-4">
         <input type="hidden" id="bookingSpotId" />
 
-        <div id="bookingError" class="hidden p-3 rounded-2xl bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs font-medium"></div>
+        <div id="bookingError" class="hidden p-3 rounded-2xl bg-white/10 border border-white/30 text-white text-xs font-medium"></div>
 
         <!-- Driver Name / Plate -->
         <div>
-          <label class="block text-xs font-black text-slate-300 uppercase tracking-wider mb-1.5">
+          <label class="block text-xs font-black text-white/80 uppercase tracking-wider mb-1.5">
             Driver Name / Vehicle Plate
           </label>
           <input
@@ -719,7 +721,7 @@
             id="bookingUserName"
             required
             placeholder="e.g. Rahul Sharma or MP-09-AB-1234"
-            class="w-full px-4 py-2.5 rounded-2xl glass-pill focus:outline-none focus:border-indigo-400 focus:ring-1 focus:ring-indigo-400 text-sm text-white placeholder-slate-400"
+            class="w-full px-4 py-2.5 rounded-2xl glass-pill border border-white/20 focus:outline-none focus:border-white focus:ring-1 focus:ring-white text-sm text-white placeholder-white/40"
           />
         </div>
 
@@ -742,7 +744,7 @@
               type="button"
               id="vehicleBikeBtn"
               onclick="selectVehicleType('bike')"
-              class="flex items-center justify-center gap-2 p-3 rounded-2xl glass-pill text-white/70 font-bold text-xs transition-all hover:text-white"
+              class="flex items-center justify-center gap-2 p-3 rounded-2xl glass-pill text-white/70 font-bold text-xs transition-all hover:text-white border border-white/20"
             >
               <i data-lucide="bike" class="w-4 h-4"></i>
               <span>Bike (<span id="modalBikeAvailable">0</span> free)</span>
@@ -752,24 +754,24 @@
 
         <!-- Duration Selector -->
         <div>
-          <label class="block text-xs font-black text-slate-300 uppercase tracking-wider mb-1.5">
+          <label class="block text-xs font-black text-white/80 uppercase tracking-wider mb-1.5">
             Parking Duration
           </label>
           <div class="grid grid-cols-4 gap-2">
             <button type="button" onclick="setDuration(1)" class="duration-btn py-2.5 rounded-2xl text-xs font-black border border-white bg-white text-black shadow-md shadow-white/20" data-hrs="1">1 Hr</button>
-            <button type="button" onclick="setDuration(2)" class="duration-btn py-2.5 rounded-2xl text-xs font-black glass-pill text-white/70 hover:bg-white/10" data-hrs="2">2 Hrs</button>
-            <button type="button" onclick="setDuration(3)" class="duration-btn py-2.5 rounded-2xl text-xs font-black glass-pill text-white/70 hover:bg-white/10" data-hrs="3">3 Hrs</button>
-            <button type="button" onclick="setDuration(4)" class="duration-btn py-2.5 rounded-2xl text-xs font-black glass-pill text-white/70 hover:bg-white/10" data-hrs="4">4 Hrs</button>
+            <button type="button" onclick="setDuration(2)" class="duration-btn py-2.5 rounded-2xl text-xs font-black glass-pill text-white/70 hover:bg-white/10 border border-white/20" data-hrs="2">2 Hrs</button>
+            <button type="button" onclick="setDuration(3)" class="duration-btn py-2.5 rounded-2xl text-xs font-black glass-pill text-white/70 hover:bg-white/10 border border-white/20" data-hrs="3">3 Hrs</button>
+            <button type="button" onclick="setDuration(4)" class="duration-btn py-2.5 rounded-2xl text-xs font-black glass-pill text-white/70 hover:bg-white/10 border border-white/20" data-hrs="4">4 Hrs</button>
           </div>
         </div>
 
         <!-- Price Summary Box -->
-        <div class="glass-pill rounded-2xl p-4 flex items-center justify-between">
+        <div class="glass-pill rounded-2xl p-4 flex items-center justify-between border border-white/20">
           <div class="flex items-center gap-2">
-            <i data-lucide="clock" class="w-4 h-4 text-slate-400"></i>
-            <span id="modalRateText" class="text-xs text-slate-300 font-medium">1 hr @ ₹20/hr</span>
+            <i data-lucide="clock" class="w-4 h-4 text-white/60"></i>
+            <span id="modalRateText" class="text-xs text-white/80 font-medium">1 hr @ ₹20/hr</span>
           </div>
-          <div id="modalCostText" class="font-black text-base text-emerald-400 font-mono">
+          <div id="modalCostText" class="font-black text-base text-white font-mono">
             ₹20
           </div>
         </div>
@@ -793,123 +795,123 @@
       <!-- Header -->
       <div class="px-6 py-4 border-b border-white/10 flex items-center justify-between">
         <div>
-          <span class="text-[11px] font-black text-indigo-400 uppercase tracking-wider">
+          <span class="text-[11px] font-black text-white/80 uppercase tracking-wider">
             PostGIS Geodatabase
           </span>
           <h2 class="text-base font-black text-white mt-0.5">Register Parking Zone</h2>
         </div>
-        <button onclick="closeAddSpotModal()" class="w-8 h-8 rounded-full glass-pill hover:bg-white/10 text-slate-400 hover:text-white flex items-center justify-center transition-colors">
+        <button onclick="closeAddSpotModal()" class="w-8 h-8 rounded-full glass-pill hover:bg-white/20 text-white/70 hover:text-white flex items-center justify-center transition-colors">
           <i data-lucide="x" class="w-4 h-4"></i>
         </button>
       </div>
 
       <!-- Form -->
       <form id="addSpotForm" onsubmit="handleAddSpotSubmit(event)" class="p-6 space-y-3.5 max-h-[80vh] overflow-y-auto">
-        <div id="addSpotError" class="hidden p-3 rounded-2xl bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs font-medium"></div>
+        <div id="addSpotError" class="hidden p-3 rounded-2xl bg-white/10 border border-white/30 text-white text-xs font-medium"></div>
 
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">Spot Name</label>
-            <input type="text" id="newSpotName" required placeholder="e.g. Phoenix Mall Lot" class="w-full px-3 py-2 rounded-xl glass-pill text-xs text-white focus:outline-none focus:border-indigo-400" />
+            <label class="block text-xs font-bold text-white/80 uppercase tracking-wider mb-1">Spot Name</label>
+            <input type="text" id="newSpotName" required placeholder="e.g. Phoenix Mall Lot" class="w-full px-3 py-2 rounded-xl glass-pill text-xs text-white border border-white/20 focus:outline-none focus:border-white focus:bg-white/10" />
           </div>
           <div>
-            <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">City</label>
-            <input type="text" id="newSpotCity" required placeholder="e.g. Indore" class="w-full px-3 py-2 rounded-xl glass-pill text-xs text-white focus:outline-none focus:border-indigo-400" />
+            <label class="block text-xs font-bold text-white/80 uppercase tracking-wider mb-1">City</label>
+            <input type="text" id="newSpotCity" required placeholder="e.g. Indore" class="w-full px-3 py-2 rounded-xl glass-pill text-xs text-white border border-white/20 focus:outline-none focus:border-white focus:bg-white/10" />
           </div>
         </div>
 
         <div>
-          <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">Street Address</label>
-          <input type="text" id="newSpotAddress" placeholder="e.g. MG Road, Near Central Square" class="w-full px-3 py-2 rounded-xl glass-pill text-xs text-white focus:outline-none focus:border-indigo-400" />
+          <label class="block text-xs font-bold text-white/80 uppercase tracking-wider mb-1">Street Address</label>
+          <input type="text" id="newSpotAddress" placeholder="e.g. MG Road, Near Central Square" class="w-full px-3 py-2 rounded-xl glass-pill text-xs text-white border border-white/20 focus:outline-none focus:border-white focus:bg-white/10" />
         </div>
 
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">Latitude</label>
-            <input type="number" step="any" id="newSpotLat" required placeholder="22.7196" class="w-full px-3 py-2 rounded-xl glass-pill text-xs text-white font-mono focus:outline-none focus:border-indigo-400" />
+            <label class="block text-xs font-bold text-white/80 uppercase tracking-wider mb-1">Latitude</label>
+            <input type="number" step="any" id="newSpotLat" required placeholder="22.7196" class="w-full px-3 py-2 rounded-xl glass-pill text-xs text-white font-mono border border-white/20 focus:outline-none focus:border-white focus:bg-white/10" />
           </div>
           <div>
-            <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">Longitude</label>
-            <input type="number" step="any" id="newSpotLng" required placeholder="75.8577" class="w-full px-3 py-2 rounded-xl glass-pill text-xs text-white font-mono focus:outline-none focus:border-indigo-400" />
+            <label class="block text-xs font-bold text-white/80 uppercase tracking-wider mb-1">Longitude</label>
+            <input type="number" step="any" id="newSpotLng" required placeholder="75.8577" class="w-full px-3 py-2 rounded-xl glass-pill text-xs text-white font-mono border border-white/20 focus:outline-none focus:border-white focus:bg-white/10" />
           </div>
         </div>
 
         <div class="grid grid-cols-3 gap-2">
           <div>
-            <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">Car Slots</label>
-            <input type="number" id="newSpotCarSlots" value="15" min="0" class="w-full px-3 py-2 rounded-xl glass-pill text-xs text-white focus:outline-none focus:border-indigo-400" />
+            <label class="block text-xs font-bold text-white/80 uppercase tracking-wider mb-1">Car Slots</label>
+            <input type="number" id="newSpotCarSlots" value="15" min="0" class="w-full px-3 py-2 rounded-xl glass-pill text-xs text-white border border-white/20 focus:outline-none focus:border-white focus:bg-white/10" />
           </div>
           <div>
-            <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">Bike Slots</label>
-            <input type="number" id="newSpotBikeSlots" value="30" min="0" class="w-full px-3 py-2 rounded-xl glass-pill text-xs text-white focus:outline-none focus:border-indigo-400" />
+            <label class="block text-xs font-bold text-white/80 uppercase tracking-wider mb-1">Bike Slots</label>
+            <input type="number" id="newSpotBikeSlots" value="30" min="0" class="w-full px-3 py-2 rounded-xl glass-pill text-xs text-white border border-white/20 focus:outline-none focus:border-white focus:bg-white/10" />
           </div>
           <div>
-            <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">Price (₹/hr)</label>
-            <input type="number" id="newSpotPrice" value="20" min="0" class="w-full px-3 py-2 rounded-xl glass-pill text-xs text-white focus:outline-none focus:border-indigo-400" />
+            <label class="block text-xs font-bold text-white/80 uppercase tracking-wider mb-1">Price (₹/hr)</label>
+            <input type="number" id="newSpotPrice" value="20" min="0" class="w-full px-3 py-2 rounded-xl glass-pill text-xs text-white border border-white/20 focus:outline-none focus:border-white focus:bg-white/10" />
           </div>
         </div>
 
         <div>
-          <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">Rule Type</label>
-          <select id="newSpotRuleType" class="w-full px-3 py-2 rounded-xl glass-pill text-xs text-white focus:outline-none focus:border-indigo-400">
-            <option value="PAID" class="bg-slate-900">🔵 PAID - Municipal / Private Lot</option>
-            <option value="ALLOWED" class="bg-slate-900">🟢 ALLOWED - Free Public Parking</option>
-            <option value="NO_PARKING" class="bg-slate-900">🔴 NO_PARKING - Tow-Away / Strict Zone</option>
+          <label class="block text-xs font-bold text-white/80 uppercase tracking-wider mb-1">Rule Type</label>
+          <select id="newSpotRuleType" class="w-full px-3 py-2 rounded-xl glass-pill text-xs text-white border border-white/20 focus:outline-none focus:border-white bg-black">
+            <option value="PAID" class="bg-black text-white">🔵 PAID - Municipal / Private Lot</option>
+            <option value="ALLOWED" class="bg-black text-white">🟢 ALLOWED - Free Public Parking</option>
+            <option value="NO_PARKING" class="bg-black text-white">🔴 NO_PARKING - Tow-Away / Strict Zone</option>
           </select>
         </div>
 
         <div>
-          <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">Rule Details</label>
-          <input type="text" id="newSpotDescription" placeholder="e.g. Paid parking: ₹20/hr cars, ₹10/hr bikes" class="w-full px-3 py-2 rounded-xl glass-pill text-xs text-white focus:outline-none focus:border-indigo-400" />
+          <label class="block text-xs font-bold text-white/80 uppercase tracking-wider mb-1">Rule Details</label>
+          <input type="text" id="newSpotDescription" placeholder="e.g. Paid parking: ₹20/hr cars, ₹10/hr bikes" class="w-full px-3 py-2 rounded-xl glass-pill text-xs text-white border border-white/20 focus:outline-none focus:border-white focus:bg-white/10" />
         </div>
 
-        <button type="submit" class="w-full py-3.5 rounded-2xl font-black text-xs uppercase tracking-wider text-white bg-indigo-600 hover:bg-indigo-500 shadow-xl shadow-indigo-600/30 transition-all active:scale-95">
+        <button type="submit" class="w-full py-3.5 rounded-2xl font-black text-xs uppercase tracking-wider text-black bg-white hover:bg-slate-200 shadow-xl shadow-white/20 transition-all active:scale-95">
           Save to Supabase PostGIS
         </button>
       </form>
     </div>
   </div>
 
-  <!-- ================= PARKING PASS MODAL ================= -->
+  <!-- ================= PARKING PASS MODAL (BLACK & WHITE TRANSLUCENT) ================= -->
   <div id="passModal" class="hidden fixed inset-0 z-[10010] flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-xl animate-fade-in">
-    <div class="glass-panel glow-emerald rounded-3xl max-w-sm w-full shadow-2xl p-6 ring-1 ring-white/15 text-center relative overflow-hidden">
-      <button onclick="closePassModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full glass-pill text-slate-400 hover:text-white flex items-center justify-center">
+    <div class="glass-panel glow-white rounded-3xl max-w-sm w-full shadow-2xl p-6 ring-1 ring-white/15 text-center relative overflow-hidden border border-white/20">
+      <button onclick="closePassModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full glass-pill text-white/70 hover:text-white flex items-center justify-center">
         <i data-lucide="x" class="w-4 h-4"></i>
       </button>
 
-      <div class="w-12 h-12 rounded-2xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 flex items-center justify-center mx-auto mb-3 shadow-lg shadow-emerald-500/20">
+      <div class="w-12 h-12 rounded-2xl bg-white/10 border border-white/30 text-white flex items-center justify-center mx-auto mb-3 shadow-lg shadow-white/10">
         <i data-lucide="check-circle" class="w-6 h-6"></i>
       </div>
 
-      <span class="text-[11px] font-black uppercase tracking-widest text-indigo-400">ParkKaro Live Pass</span>
+      <span class="text-[11px] font-black uppercase tracking-widest text-white/70">ParkKaro Live Pass</span>
       <h3 id="passSpotName" class="text-lg font-black text-white mt-1">Rajwada Main Parking</h3>
-      <p id="passUserName" class="text-xs font-mono font-bold text-emerald-400 mt-1 uppercase">MP-09-AB-1234</p>
+      <p id="passUserName" class="text-xs font-mono font-bold text-white mt-1 uppercase">MP-09-AB-1234</p>
 
-      <div class="my-4 p-4 rounded-2xl glass-pill text-left space-y-2 text-xs">
+      <div class="my-4 p-4 rounded-2xl glass-pill text-left space-y-2 text-xs border border-white/15">
         <div class="flex justify-between">
-          <span class="text-slate-400">Pass Reference:</span>
+          <span class="text-white/60">Pass Reference:</span>
           <span id="passId" class="font-mono font-bold text-white">#PK-1024</span>
         </div>
         <div class="flex justify-between">
-          <span class="text-slate-400">Vehicle:</span>
+          <span class="text-white/60">Vehicle:</span>
           <span id="passVehicle" class="font-bold text-white uppercase">CAR</span>
         </div>
         <div class="flex justify-between">
-          <span class="text-slate-400">Valid Until:</span>
-          <span id="passValidUntil" class="font-mono font-bold text-emerald-300">--</span>
+          <span class="text-white/60">Valid Until:</span>
+          <span id="passValidUntil" class="font-mono font-bold text-white">--</span>
         </div>
         <div class="flex justify-between">
-          <span class="text-slate-400">Amount Paid:</span>
+          <span class="text-white/60">Amount Paid:</span>
           <span id="passCost" class="font-mono font-bold text-white">₹20</span>
         </div>
       </div>
 
-      <div class="p-3 bg-white rounded-xl flex flex-col items-center justify-center gap-1">
+      <div class="p-3 bg-white rounded-xl flex flex-col items-center justify-center gap-1 shadow-md">
         <div class="font-mono text-black font-extrabold tracking-[4px] text-xs">||| | |||| | ||| || |||</div>
-        <span class="text-[9px] font-mono text-slate-600 font-bold">PARKKARO-VALIDATED</span>
+        <span class="text-[9px] font-mono text-slate-800 font-bold">PARKKARO-VALIDATED</span>
       </div>
 
-      <button onclick="closePassModal()" class="mt-4 w-full py-2.5 rounded-xl glass-pill hover:bg-white/10 text-xs font-bold text-slate-200 transition-colors">
+      <button onclick="closePassModal()" class="mt-4 w-full py-2.5 rounded-xl bg-white hover:bg-slate-200 text-black text-xs font-black shadow-md transition-all">
         Close Pass
       </button>
     </div>
@@ -1083,10 +1085,10 @@
       const pill = document.getElementById('connectionPill');
       const text = document.getElementById('connectionText');
       if (isConnected) {
-        pill.className = "hidden sm:flex items-center space-x-2 px-3 py-1.5 rounded-full text-xs font-semibold glass-pill text-emerald-400 border border-emerald-500/30";
+        pill.className = "hidden sm:flex items-center space-x-2 px-3 py-1.5 rounded-full text-xs font-semibold glass-pill text-white border border-white/20";
         text.innerText = "PostGIS Live";
       } else {
-        pill.className = "hidden sm:flex items-center space-x-2 px-3 py-1.5 rounded-full text-xs font-semibold glass-pill text-rose-400 border border-rose-500/30";
+        pill.className = "hidden sm:flex items-center space-x-2 px-3 py-1.5 rounded-full text-xs font-semibold glass-pill text-white/50 border border-white/10";
         text.innerText = "Offline";
       }
     }
@@ -1167,27 +1169,27 @@
         const diffMinutes = Math.max(0, Math.round((endTime.getTime() - now.getTime()) / 60000));
 
         return `
-          <div class="glass-pill rounded-2xl p-3 flex items-center justify-between gap-3 shadow-md">
+          <div class="glass-pill rounded-2xl p-3 flex items-center justify-between gap-3 shadow-md border border-white/15">
             <div>
-              <div class="flex items-center gap-1.5 text-xs text-indigo-300">
-                <i data-lucide="${b.vehicle_type === 'car' ? 'car' : 'bike'}" class="w-3.5 h-3.5"></i>
+              <div class="flex items-center gap-1.5 text-xs text-white/80">
+                <i data-lucide="${b.vehicle_type === 'car' ? 'car' : 'bike'}" class="w-3.5 h-3.5 text-white"></i>
                 <span class="font-black text-white uppercase">${escapeHtml(b.user_name)}</span>
-                <span class="text-slate-400 font-medium">• ${escapeHtml(b.city || '')}</span>
+                <span class="text-white/60 font-medium">• ${escapeHtml(b.city || '')}</span>
               </div>
-              <div class="text-xs font-bold text-slate-200 truncate max-w-[200px] mt-0.5">
+              <div class="text-xs font-bold text-white truncate max-w-[200px] mt-0.5">
                 ${escapeHtml(b.spot_name || 'Parking Zone')}
               </div>
-              <div class="flex items-center gap-1 text-[11px] text-emerald-400 font-mono mt-1 font-bold">
-                <i data-lucide="clock" class="w-3 h-3"></i>
+              <div class="flex items-center gap-1 text-[11px] text-white font-mono mt-1 font-bold">
+                <i data-lucide="clock" class="w-3 h-3 text-white/70"></i>
                 <span>${diffMinutes} mins remaining</span>
               </div>
             </div>
 
             <div class="flex items-center gap-1.5 shrink-0">
-              <button onclick="viewParkingPass(${b.id})" title="View Digital Pass" class="p-2 rounded-xl glass-pill hover:bg-white/10 text-indigo-300 hover:text-white transition-colors">
+              <button onclick="viewParkingPass(${b.id})" title="View Digital Pass" class="p-2 rounded-xl glass-pill hover:bg-white hover:text-black text-white transition-all border border-white/20">
                 <i data-lucide="ticket" class="w-4 h-4"></i>
               </button>
-              <button onclick="endBooking(${b.id})" class="px-2.5 py-1.5 rounded-xl bg-rose-600/80 hover:bg-rose-500 text-white text-xs font-black transition-all shadow-sm">
+              <button onclick="endBooking(${b.id})" class="px-2.5 py-1.5 rounded-xl bg-white hover:bg-slate-200 text-black text-xs font-black transition-all shadow-sm">
                 End Park
               </button>
             </div>
@@ -1236,48 +1238,48 @@
           <div
             id="spot-card-${spot.id}"
             onclick="focusSpot(${spot.id})"
-            class="group rounded-3xl glass-card p-4 cursor-pointer ${
+            class="group rounded-3xl glass-card p-4 cursor-pointer border border-white/10 ${
               isSelected
-                ? 'border-indigo-500 glow-blue ring-1 ring-indigo-500/50'
-                : 'hover:border-slate-500'
+                ? 'border-white glow-white ring-1 ring-white/50 bg-white/[0.08]'
+                : 'hover:border-white/30'
             }"
           >
             <div class="flex items-start justify-between gap-2 mb-1.5">
               <div>
-                <span class="text-[10px] font-black text-indigo-400 uppercase tracking-widest">${escapeHtml(spot.city)}</span>
-                <h3 class="text-sm font-black text-white group-hover:text-indigo-300 transition-colors">${escapeHtml(spot.name)}</h3>
+                <span class="text-[10px] font-black text-white/70 uppercase tracking-widest">${escapeHtml(spot.city)}</span>
+                <h3 class="text-sm font-black text-white transition-colors">${escapeHtml(spot.name)}</h3>
               </div>
               ${badgeHtml}
             </div>
 
-            <div class="flex items-center gap-1.5 text-xs text-slate-400 mb-2">
-              <i data-lucide="map-pin" class="w-3.5 h-3.5 shrink-0 text-slate-500"></i>
+            <div class="flex items-center gap-1.5 text-xs text-white/60 mb-2">
+              <i data-lucide="map-pin" class="w-3.5 h-3.5 shrink-0 text-white/50"></i>
               <span class="truncate">${escapeHtml(spot.address || 'Central City Zone')}</span>
             </div>
 
             ${!isNoParking ? `
               <div class="grid grid-cols-2 gap-2 mb-2.5">
-                <div class="glass-pill rounded-xl p-2">
-                  <div class="flex items-center justify-between text-[11px] text-slate-400 mb-1">
+                <div class="glass-pill rounded-xl p-2 border border-white/15">
+                  <div class="flex items-center justify-between text-[11px] text-white/70 mb-1">
                     <span class="flex items-center gap-1 font-bold">
-                      <i data-lucide="car" class="w-3 h-3 text-blue-400"></i> Car
+                      <i data-lucide="car" class="w-3 h-3 text-white"></i> Car
                     </span>
-                    <span class="font-black font-mono text-slate-100">${spot.available_car_slots}/${spot.total_car_slots}</span>
+                    <span class="font-black font-mono text-white">${spot.available_car_slots}/${spot.total_car_slots}</span>
                   </div>
-                  <div class="w-full bg-slate-700/60 rounded-full h-1.5 overflow-hidden">
-                    <div class="h-full rounded-full transition-all ${spot.available_car_slots > 2 ? 'bg-emerald-500' : 'bg-amber-500'}" style="width: ${carPercent}%"></div>
+                  <div class="w-full bg-white/20 rounded-full h-1.5 overflow-hidden">
+                    <div class="h-full rounded-full bg-white transition-all" style="width: ${carPercent}%"></div>
                   </div>
                 </div>
 
-                <div class="glass-pill rounded-xl p-2">
-                  <div class="flex items-center justify-between text-[11px] text-slate-400 mb-1">
+                <div class="glass-pill rounded-xl p-2 border border-white/15">
+                  <div class="flex items-center justify-between text-[11px] text-white/70 mb-1">
                     <span class="flex items-center gap-1 font-bold">
-                      <i data-lucide="bike" class="w-3 h-3 text-cyan-400"></i> Bike
+                      <i data-lucide="bike" class="w-3 h-3 text-white"></i> Bike
                     </span>
-                    <span class="font-black font-mono text-slate-100">${spot.available_bike_slots}/${spot.total_bike_slots}</span>
+                    <span class="font-black font-mono text-white">${spot.available_bike_slots}/${spot.total_bike_slots}</span>
                   </div>
-                  <div class="w-full bg-slate-700/60 rounded-full h-1.5 overflow-hidden">
-                    <div class="h-full rounded-full bg-cyan-400 transition-all" style="width: ${bikePercent}%"></div>
+                  <div class="w-full bg-white/20 rounded-full h-1.5 overflow-hidden">
+                    <div class="h-full rounded-full bg-white transition-all" style="width: ${bikePercent}%"></div>
                   </div>
                 </div>
               </div>
@@ -1291,7 +1293,7 @@
             <div class="flex items-center gap-2 pt-1">
               <button
                 onclick="event.stopPropagation(); focusSpot(${spot.id})"
-                class="flex-1 inline-flex items-center justify-center gap-1 px-2.5 py-2 rounded-xl text-xs font-bold text-slate-300 glass-pill hover:bg-white/10 hover:text-white transition-colors"
+                class="flex-1 inline-flex items-center justify-center gap-1 px-2.5 py-2 rounded-xl text-xs font-bold text-white glass-pill hover:bg-white hover:text-black border border-white/20 transition-all"
               >
                 <i data-lucide="navigation" class="w-3.5 h-3.5"></i> Locate
               </button>
@@ -1300,10 +1302,10 @@
                 <button
                   onclick="event.stopPropagation(); openBookingModal(${spot.id})"
                   ${spot.available_car_slots === 0 && spot.available_bike_slots === 0 ? 'disabled' : ''}
-                  class="flex-1 inline-flex items-center justify-center gap-1 px-2.5 py-2 rounded-xl text-xs font-black text-white transition-all shadow-md ${
+                  class="flex-1 inline-flex items-center justify-center gap-1 px-2.5 py-2 rounded-xl text-xs font-black transition-all shadow-md ${
                     spot.available_car_slots > 0 || spot.available_bike_slots > 0
-                      ? 'bg-indigo-600 hover:bg-indigo-500 shadow-indigo-600/30 active:scale-95'
-                      : 'bg-slate-800 text-slate-500 cursor-not-allowed shadow-none'
+                      ? 'bg-white hover:bg-slate-200 text-black shadow-white/20 active:scale-95'
+                      : 'bg-white/10 text-white/30 cursor-not-allowed shadow-none border border-white/10'
                   }"
                 >
                   ${spot.available_car_slots > 0 || spot.available_bike_slots > 0 ? 'Book Slot' : 'Full'}
@@ -1543,13 +1545,13 @@
       }
 
       container.innerHTML = others.map(s => `
-        <button onclick="focusSpot(${s.id})" class="px-3 py-2 rounded-2xl glass-pill hover:bg-white/10 text-left shrink-0 transition-colors">
+        <button onclick="focusSpot(${s.id})" class="px-3 py-2 rounded-2xl glass-pill hover:bg-white/15 text-left shrink-0 transition-colors border border-white/15">
           <div class="flex items-center gap-1.5">
-            <span class="w-2 h-2 rounded-full ${s.is_paid ? 'bg-blue-400' : 'bg-emerald-400'}"></span>
-            <span class="font-bold text-slate-200 truncate max-w-[130px]">${escapeHtml(s.name)}</span>
-            <span class="text-[10px] font-mono font-bold text-indigo-300">(${s.dist} km)</span>
+            <span class="w-2 h-2 rounded-full ${s.is_paid ? 'bg-white' : 'bg-white/60'}"></span>
+            <span class="font-bold text-white truncate max-w-[130px]">${escapeHtml(s.name)}</span>
+            <span class="text-[10px] font-mono font-bold text-white/80">(${s.dist} km)</span>
           </div>
-          <div class="text-[10px] text-slate-400 mt-0.5">
+          <div class="text-[10px] text-white/60 mt-0.5">
             ${s.is_paid ? `₹${s.price_per_hour}/hr` : 'Free'} • ${s.available_car_slots} cars left
           </div>
         </button>
@@ -2042,9 +2044,9 @@
       const container = document.getElementById('toastContainer');
       const toast = document.createElement('div');
       
-      let bg = "glass-panel border-indigo-500/40 text-indigo-200";
-      if (type === 'success') bg = "glass-panel glow-emerald text-emerald-200";
-      if (type === 'error') bg = "glass-panel glow-rose text-rose-200";
+      let bg = "glass-panel border-white/20 text-white";
+      if (type === 'success') bg = "glass-panel glow-white border-white/40 text-white";
+      if (type === 'error') bg = "glass-panel border-white/40 text-white";
       
       toast.className = `${bg} text-xs font-bold px-4 py-3 rounded-2xl shadow-xl flex items-center gap-2 transform transition-all duration-300 translate-y-2 opacity-0 pointer-events-auto`;
       toast.innerHTML = `<span>${escapeHtml(msg)}</span>`;
