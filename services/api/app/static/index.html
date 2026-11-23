@@ -157,6 +157,7 @@
       background: rgba(0, 0, 0, 0.6) !important;
       color: rgba(255, 255, 255, 0.4) !important;
       backdrop-filter: blur(10px) !important;
+      filter: grayscale(100%) !important;
     }
     .leaflet-control-attribution a {
       color: rgba(255, 255, 255, 0.7) !important;
@@ -466,7 +467,7 @@
                 <div class="flex-1 min-w-0">
                   <div class="flex items-center gap-2 flex-wrap mb-1">
                     <span id="bottomCardCity" class="text-[10px] font-black text-white/80 uppercase tracking-widest">INDORE</span>
-                    <span id="bottomCardDistance" class="text-[10px] font-mono font-bold text-white glass-pill px-2 py-0.5 rounded-lg border border-white/20">📍 0.8 km away</span>
+                    <span id="bottomCardDistance" class="text-[10px] font-mono font-bold text-white glass-pill px-2 py-0.5 rounded-lg border border-white/20 inline-flex items-center gap-1">0.8 km away</span>
                     <span id="bottomCardDifficulty" class="text-[10px] font-black px-2 py-0.5 rounded-lg border border-white/20 glass-pill text-white">AVAILABLE</span>
                   </div>
                   <h3 id="bottomCardName" class="text-base font-black text-white truncate mt-0.5">Spot Name</h3>
@@ -1028,6 +1029,10 @@
         zoomControl: false // custom controls or top-right
       });
 
+      if (leafletMap.attributionControl) {
+        leafletMap.attributionControl.setPrefix(false);
+      }
+
       L.control.zoom({ position: 'bottomright' }).addTo(leafletMap);
 
       // OpenStreetMap clean tiles
@@ -1456,11 +1461,11 @@
             ${spot.rule_type !== 'NO_PARKING' ? `
               <div style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 5px; margin-bottom: 6px; font-size: 11px;">
                 <div style="display: flex; justify-content: space-between; margin-bottom: 2px;">
-                  <span>🚗 Cars:</span>
+                  <span>Cars:</span>
                   <span style="font-weight: 700; color: #ffffff; font-family: monospace;">${spot.available_car_slots}/${spot.total_car_slots}</span>
                 </div>
                 <div style="display: flex; justify-content: space-between;">
-                  <span>🏍️ Bikes:</span>
+                  <span>Bikes:</span>
                   <span style="font-weight: 700; color: #ffffff; font-family: monospace;">${spot.available_bike_slots}/${spot.total_bike_slots}</span>
                 </div>
               </div>
@@ -1536,7 +1541,7 @@
       document.getElementById('bottomCardAddress').innerText = spot.address || 'Central City Area';
 
       const dist = calcDistanceKm(userLocation.lat, userLocation.lng, spot.latitude, spot.longitude);
-      document.getElementById('bottomCardDistance').innerText = `📍 ${dist} km away`;
+      document.getElementById('bottomCardDistance').innerText = `${dist} km away`;
 
       // ParkUsher PU Insight Difficulty Pill (Strict Monochrome)
       const diffElem = document.getElementById('bottomCardDifficulty');
