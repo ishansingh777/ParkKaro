@@ -7,7 +7,7 @@
   
   <!-- PWA Meta Tags -->
   <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#4f46e5">
+  <meta name="theme-color" content="#000000">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="ParkKaro">
@@ -22,12 +22,12 @@
         extend: {
           colors: {
             brand: {
-              50: '#eef2ff',
-              100: '#e0e7ff',
-              500: '#6366f1',
-              600: '#4f46e5',
-              700: '#4338ca',
-              900: '#312e81',
+              50: '#ffffff',
+              100: '#f5f5f5',
+              500: '#ffffff',
+              600: '#e5e5e5',
+              700: '#cccccc',
+              900: '#000000',
             }
           }
         }
@@ -44,10 +44,18 @@
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 
   <style>
+    :root {
+      --liquid-bg: rgba(10, 10, 10, 0.65);
+      --liquid-sheen: linear-gradient(135deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.03) 45%, rgba(0, 0, 0, 0.45) 100%);
+      --liquid-specular-top: inset 0 1.5px 1.5px 0 rgba(255, 255, 255, 0.45);
+      --liquid-inner-depth: inset 0 -1.5px 2px 0 rgba(0, 0, 0, 0.65);
+      --liquid-shadow: 0 25px 60px -10px rgba(0, 0, 0, 0.95), 0 0 20px rgba(255, 255, 255, 0.04);
+    }
+
     body {
       font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
       background-color: #000000;
@@ -57,69 +65,121 @@
       font-family: 'JetBrains Mono', monospace;
     }
     
-    /* Pure Transparent Black & White Glassmorphic System */
-    .glass-panel {
-      background: rgba(0, 0, 0, 0.65);
-      backdrop-filter: blur(28px) saturate(180%);
-      -webkit-backdrop-filter: blur(28px) saturate(180%);
-      border: 1px solid rgba(255, 255, 255, 0.16);
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), inset 0 1px 0 0 rgba(255, 255, 255, 0.15);
+    /* ================= LIQUID GLASS DESIGN SYSTEM (STRICT MONOCHROME BLACK & WHITE) ================= */
+    .liquid-panel, .glass-panel {
+      position: relative;
+      background: var(--liquid-sheen), var(--liquid-bg);
+      backdrop-filter: blur(36px) saturate(200%) contrast(105%);
+      -webkit-backdrop-filter: blur(36px) saturate(200%) contrast(105%);
+      border-top: 1.5px solid rgba(255, 255, 255, 0.38);
+      border-left: 1.5px solid rgba(255, 255, 255, 0.22);
+      border-right: 1px solid rgba(255, 255, 255, 0.12);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: var(--liquid-specular-top), var(--liquid-inner-depth), var(--liquid-shadow);
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .glass-pill {
-      background: rgba(255, 255, 255, 0.06);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      color: #ffffff;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    .liquid-card, .glass-card {
+      position: relative;
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0.02) 50%, rgba(0, 0, 0, 0.5) 100%), rgba(12, 12, 12, 0.60);
+      backdrop-filter: blur(28px) saturate(190%);
+      -webkit-backdrop-filter: blur(28px) saturate(190%);
+      border-top: 1.5px solid rgba(255, 255, 255, 0.28);
+      border-left: 1.5px solid rgba(255, 255, 255, 0.18);
+      border-right: 1px solid rgba(255, 255, 255, 0.10);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.25), inset 0 -1px 2px 0 rgba(0, 0, 0, 0.5), 0 15px 35px rgba(0, 0, 0, 0.7);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    .glass-pill:hover {
-      background: rgba(255, 255, 255, 0.12);
-      border-color: rgba(255, 255, 255, 0.35);
-    }
-
-    .glass-pill-white {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid #ffffff;
-      color: #000000;
-      box-shadow: 0 4px 20px rgba(255, 255, 255, 0.25);
-    }
-
-    .glass-card {
-      background: rgba(12, 12, 12, 0.60);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .glass-card:hover {
-      background: rgba(25, 25, 25, 0.75);
-      border-color: rgba(255, 255, 255, 0.40);
-      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.9), 0 0 20px rgba(255, 255, 255, 0.05);
+    .liquid-card:hover, .glass-card:hover {
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.04) 50%, rgba(0, 0, 0, 0.4) 100%), rgba(20, 20, 20, 0.75);
+      border-top-color: rgba(255, 255, 255, 0.55);
+      border-left-color: rgba(255, 255, 255, 0.40);
+      box-shadow: inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.45), 0 20px 45px rgba(0, 0, 0, 0.95), 0 0 25px rgba(255, 255, 255, 0.08);
       transform: translateY(-2px);
     }
 
-    /* Transparent monochrome glow highlights */
-    .glow-white, .glow-emerald, .glow-blue, .glow-rose {
-      box-shadow: 0 0 35px -5px rgba(255, 255, 255, 0.22), inset 0 0 15px rgba(255, 255, 255, 0.08);
+    .liquid-pill, .glass-pill {
+      position: relative;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0.02) 100%);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.20);
+      color: #ffffff;
+      box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.25), 0 4px 15px rgba(0, 0, 0, 0.5);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .liquid-pill:hover, .glass-pill:hover {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0.05) 100%);
       border-color: rgba(255, 255, 255, 0.45);
+      box-shadow: inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.4), 0 6px 20px rgba(0, 0, 0, 0.7);
     }
 
-    /* Clean Dark Monochrome Map Layer */
+    .liquid-btn-white, .glass-pill-white {
+      position: relative;
+      background: linear-gradient(180deg, #ffffff 0%, #ebebeb 100%);
+      color: #000000;
+      font-weight: 900;
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      box-shadow: inset 0 1.5px 1px 0 rgba(255, 255, 255, 0.9), inset 0 -2px 3px 0 rgba(0, 0, 0, 0.25), 0 10px 30px rgba(255, 255, 255, 0.2);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .liquid-btn-white:hover {
+      background: #ffffff;
+      box-shadow: inset 0 2px 2px 0 #ffffff, 0 14px 40px rgba(255, 255, 255, 0.35);
+      transform: translateY(-1px);
+    }
+
+    /* Transparent monochrome liquid glow highlights */
+    .glow-white, .glow-liquid {
+      box-shadow: var(--liquid-specular-top), inset 0 0 20px rgba(255, 255, 255, 0.08), 0 0 35px rgba(255, 255, 255, 0.20) !important;
+      border-color: rgba(255, 255, 255, 0.5) !important;
+    }
+
+    /* 100% Monochrome Black & White Leaflet Map */
     .leaflet-tile-pane {
-      filter: invert(100%) hue-rotate(180deg) brightness(92%) contrast(90%) grayscale(20%);
+      filter: invert(100%) hue-rotate(180deg) brightness(96%) contrast(115%) grayscale(100%);
+    }
+    .leaflet-container {
+      background: #000000 !important;
+    }
+    .leaflet-control-zoom a {
+      background: rgba(15, 15, 15, 0.85) !important;
+      color: #ffffff !important;
+      border: 1px solid rgba(255, 255, 255, 0.2) !important;
+      backdrop-filter: blur(12px) !important;
+    }
+    .leaflet-control-zoom a:hover {
+      background: rgba(255, 255, 255, 0.2) !important;
+      color: #ffffff !important;
+    }
+    .leaflet-control-attribution {
+      background: rgba(0, 0, 0, 0.6) !important;
+      color: rgba(255, 255, 255, 0.4) !important;
+      backdrop-filter: blur(10px) !important;
+    }
+    .leaflet-control-attribution a {
+      color: rgba(255, 255, 255, 0.7) !important;
+      text-decoration: underline;
+    }
+    .leaflet-popup-content-wrapper {
+      background: rgba(10, 10, 10, 0.95) !important;
+      color: #ffffff !important;
+      border: 1px solid rgba(255, 255, 255, 0.25) !important;
+      border-radius: 20px !important;
+      backdrop-filter: blur(28px) !important;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.9) !important;
+    }
+    .leaflet-popup-tip {
+      background: rgba(10, 10, 10, 0.95) !important;
     }
 
-    /* Custom Leaflet Map Pin Styles */
+    /* Custom Liquid Leaflet Map Pin Styles */
     .custom-park-pin {
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .custom-park-pin:hover {
       transform: scale(1.18) translateY(-4px);
@@ -158,38 +218,38 @@
       animation: slide-up 0.32s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
-    /* Leaflet street polyline glow */
+    /* Leaflet street polyline monochrome glow */
     .leaflet-interactive.street-legal {
-      filter: drop-shadow(0 0 6px #10b981);
+      filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.85));
     }
     .leaflet-interactive.street-paid {
-      filter: drop-shadow(0 0 6px #3b82f6);
+      filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
     }
     .leaflet-interactive.street-danger {
-      filter: drop-shadow(0 0 6px #ef4444);
+      filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.25));
     }
 
-    /* Glassmorphism scrollbar */
+    /* Liquid scrollbar */
     ::-webkit-scrollbar {
       width: 6px;
       height: 6px;
     }
     ::-webkit-scrollbar-track {
-      background: rgba(15, 23, 42, 0.4);
+      background: rgba(0, 0, 0, 0.5);
       border-radius: 10px;
     }
     ::-webkit-scrollbar-thumb {
-      background: rgba(148, 163, 184, 0.3);
+      background: rgba(255, 255, 255, 0.2);
       border-radius: 10px;
     }
     ::-webkit-scrollbar-thumb:hover {
-      background: rgba(148, 163, 184, 0.5);
+      background: rgba(255, 255, 255, 0.4);
     }
   </style>
 </head>
-<body class="text-slate-100 min-h-screen flex flex-col selection:bg-brand-500 selection:text-white pb-20 md:pb-6 relative overflow-x-hidden">
+<body class="text-white min-h-screen flex flex-col selection:bg-white selection:text-black pb-20 md:pb-6 relative overflow-x-hidden">
 
-  <!-- Ambient Monochrome Frost Overlays -->
+  <!-- Ambient Liquid Monochrome Frost Overlays -->
   <div class="fixed top-0 left-1/4 w-[600px] h-[600px] bg-white/[0.03] rounded-full blur-[160px] pointer-events-none -z-10"></div>
   <div class="fixed bottom-0 right-1/4 w-[600px] h-[600px] bg-white/[0.02] rounded-full blur-[160px] pointer-events-none -z-10"></div>
   <div class="fixed top-1/2 right-10 w-[450px] h-[450px] bg-white/[0.02] rounded-full blur-[140px] pointer-events-none -z-10"></div>
@@ -363,11 +423,11 @@
                   <span class="hidden sm:inline">Delivery</span>
                 </button>
 
-                <select id="ruleTypeFilter" onchange="renderUI()" class="bg-black/90 text-xs font-bold text-white px-2 py-1.5 rounded-lg border border-white/10 focus:outline-none cursor-pointer">
+                <select id="ruleTypeFilter" onchange="renderUI()" class="bg-black/90 text-xs font-bold text-white px-2 py-1.5 rounded-lg border border-white/20 focus:outline-none cursor-pointer">
                   <option value="ALL" class="bg-black text-white">All Street Rules</option>
-                  <option value="ALLOWED" class="bg-black text-white">🟢 Legal Parking</option>
-                  <option value="PAID" class="bg-black text-white">🔵 Metered Paid</option>
-                  <option value="NO_PARKING" class="bg-black text-white">🔴 Tow-Away Zone</option>
+                  <option value="ALLOWED" class="bg-black text-white">⚪ Legal Street Parking</option>
+                  <option value="PAID" class="bg-black text-white">◻ Metered Paid Lot</option>
+                  <option value="NO_PARKING" class="bg-black text-white">✕ Tow-Away Zone</option>
                 </select>
 
                 <button onclick="resetMapView()" title="Fit all zones" class="p-1.5 rounded-xl hover:bg-white/15 text-white transition-colors">
@@ -380,18 +440,18 @@
               </div>
             </div>
 
-            <!-- FLOATING GLASS OVERLAY: ParkUsher-Style Legend Capsule -->
+            <!-- FLOATING GLASS OVERLAY: ParkUsher-Style Legend Capsule (Black & White Liquid) -->
             <div class="absolute bottom-4 left-4 z-[400] glass-panel px-3.5 py-2.5 rounded-2xl flex items-center gap-3.5 text-[11px] font-bold shadow-xl border border-white/15">
               <div class="flex items-center gap-1.5">
-                <span class="w-3 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_#10b981]"></span>
-                <span class="text-white">Legal Street</span>
+                <span class="w-2.5 h-2.5 rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.85)]"></span>
+                <span class="text-white">Legal Free Street</span>
               </div>
               <div class="flex items-center gap-1.5">
-                <span class="w-3 h-1.5 rounded-full bg-blue-400 shadow-[0_0_8px_#3b82f6]"></span>
+                <span class="w-2.5 h-2.5 rounded-full border-2 border-white bg-black"></span>
                 <span class="text-white">Metered Paid</span>
               </div>
               <div class="flex items-center gap-1.5">
-                <span class="w-3 h-1.5 rounded-full bg-rose-400 shadow-[0_0_8px_#ef4444]"></span>
+                <span class="w-2.5 h-2.5 rounded-full border border-dashed border-white/70 bg-white/20"></span>
                 <span class="text-white">Tow-Away Zone</span>
               </div>
             </div>
@@ -407,7 +467,7 @@
                   <div class="flex items-center gap-2 flex-wrap mb-1">
                     <span id="bottomCardCity" class="text-[10px] font-black text-white/80 uppercase tracking-widest">INDORE</span>
                     <span id="bottomCardDistance" class="text-[10px] font-mono font-bold text-white glass-pill px-2 py-0.5 rounded-lg border border-white/20">📍 0.8 km away</span>
-                    <span id="bottomCardDifficulty" class="text-[10px] font-black px-2 py-0.5 rounded-lg border border-white/20 glass-pill text-white">🟢 AVAILABLE</span>
+                    <span id="bottomCardDifficulty" class="text-[10px] font-black px-2 py-0.5 rounded-lg border border-white/20 glass-pill text-white">AVAILABLE</span>
                   </div>
                   <h3 id="bottomCardName" class="text-base font-black text-white truncate mt-0.5">Spot Name</h3>
                   <p id="bottomCardAddress" class="text-xs text-white/60 truncate">Address</p>
@@ -623,28 +683,28 @@
       </p>
       
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-        <button onclick="testPresetSign('tow_away')" class="p-3 rounded-2xl glass-card border-rose-500/30 text-left transition-all group">
-          <span class="text-[10px] font-black text-rose-400 uppercase">Preset 1</span>
-          <p class="text-xs font-bold text-white group-hover:text-rose-300 mt-0.5">⛔ No Parking 8AM-8PM</p>
-          <span class="text-[10px] text-slate-400">Tow-Away Zone</span>
+        <button onclick="testPresetSign('tow_away')" class="p-3 rounded-2xl glass-card border border-white/20 text-left transition-all group">
+          <span class="text-[10px] font-black text-white/70 uppercase">Preset 1</span>
+          <p class="text-xs font-bold text-white group-hover:text-white/80 mt-0.5">⛔ No Parking 8AM-8PM</p>
+          <span class="text-[10px] text-white/50">Tow-Away Zone</span>
         </button>
 
-        <button onclick="testPresetSign('pay_park')" class="p-3 rounded-2xl glass-card border-blue-500/30 text-left transition-all group">
-          <span class="text-[10px] font-black text-blue-400 uppercase">Preset 2</span>
-          <p class="text-xs font-bold text-white group-hover:text-blue-300 mt-0.5">🔵 Pay & Park (₹20/hr)</p>
-          <span class="text-[10px] text-slate-400">Metered Parking</span>
+        <button onclick="testPresetSign('pay_park')" class="p-3 rounded-2xl glass-card border border-white/20 text-left transition-all group">
+          <span class="text-[10px] font-black text-white/70 uppercase">Preset 2</span>
+          <p class="text-xs font-bold text-white group-hover:text-white/80 mt-0.5">◻ Pay & Park (₹20/hr)</p>
+          <span class="text-[10px] text-white/50">Metered Parking</span>
         </button>
 
-        <button onclick="testPresetSign('free_public')" class="p-3 rounded-2xl glass-card border-emerald-500/30 text-left transition-all group">
-          <span class="text-[10px] font-black text-emerald-400 uppercase">Preset 3</span>
-          <p class="text-xs font-bold text-white group-hover:text-emerald-300 mt-0.5">🟢 Free Public Parking</p>
-          <span class="text-[10px] text-slate-400">Legal Parking</span>
+        <button onclick="testPresetSign('free_public')" class="p-3 rounded-2xl glass-card border border-white/20 text-left transition-all group">
+          <span class="text-[10px] font-black text-white/70 uppercase">Preset 3</span>
+          <p class="text-xs font-bold text-white group-hover:text-white/80 mt-0.5">⚪ Free Public Parking</p>
+          <span class="text-[10px] text-white/50">Legal Parking</span>
         </button>
 
-        <button onclick="testPresetSign('odd_even')" class="p-3 rounded-2xl glass-card border-amber-500/30 text-left transition-all group">
-          <span class="text-[10px] font-black text-amber-400 uppercase">Preset 4</span>
-          <p class="text-xs font-bold text-white group-hover:text-amber-300 mt-0.5">🟡 Odd-Even Day Parking</p>
-          <span class="text-[10px] text-slate-400">Calendar check</span>
+        <button onclick="testPresetSign('odd_even')" class="p-3 rounded-2xl glass-card border border-white/20 text-left transition-all group">
+          <span class="text-[10px] font-black text-white/70 uppercase">Preset 4</span>
+          <p class="text-xs font-bold text-white group-hover:text-white/80 mt-0.5">◇ Odd-Even Day Parking</p>
+          <span class="text-[10px] text-white/50">Calendar check</span>
         </button>
       </div>
     </div>
@@ -653,26 +713,26 @@
     <div id="scannerResultCard" class="hidden glass-panel rounded-3xl p-5 shadow-2xl animate-fade-in">
       <div class="flex items-start justify-between gap-3 mb-3">
         <div class="flex items-center gap-3">
-          <div id="resultIconBox" class="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0">
+          <div id="resultIconBox" class="w-12 h-12 rounded-2xl bg-white/10 border border-white/30 text-white flex items-center justify-center shrink-0 shadow-lg shadow-white/10">
             <i id="resultIcon" data-lucide="check-circle" class="w-6 h-6"></i>
           </div>
           <div>
-            <span id="resultCategoryBadge" class="text-[10px] font-black uppercase tracking-widest text-emerald-400">LEGAL TO PARK</span>
+            <span id="resultCategoryBadge" class="text-[10px] font-black uppercase tracking-widest text-white/80">LEGAL TO PARK</span>
             <h3 id="resultTitle" class="text-base font-black text-white mt-0.5">Parking Permitted Right Now</h3>
           </div>
         </div>
 
-        <button onclick="closeScannerResult()" class="text-slate-400 hover:text-white p-1">
+        <button onclick="closeScannerResult()" class="text-white/50 hover:text-white p-1">
           <i data-lucide="x" class="w-4 h-4"></i>
         </button>
       </div>
 
       <div class="glass-pill rounded-2xl p-3 mb-3 text-xs">
-        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">OCR Detected Street Sign:</span>
-        <p id="resultDetectedText" class="font-mono text-slate-200 font-semibold italic">"NO PARKING FROM 8:00 AM TO 8:00 PM - TOW AWAY ZONE"</p>
+        <span class="text-[10px] font-bold text-white/50 uppercase tracking-wider block mb-1">OCR Detected Street Sign:</span>
+        <p id="resultDetectedText" class="font-mono text-white/90 font-semibold italic">"NO PARKING FROM 8:00 AM TO 8:00 PM - TOW AWAY ZONE"</p>
       </div>
 
-      <div id="resultExplanationBox" class="p-3.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-xs text-emerald-300 font-medium mb-3">
+      <div id="resultExplanationBox" class="p-3.5 rounded-2xl bg-white/5 border border-white/20 text-xs text-white/90 font-medium mb-3">
         No active restriction found for the current time. You may safely park here.
       </div>
 
@@ -854,9 +914,9 @@
         <div>
           <label class="block text-xs font-bold text-white/80 uppercase tracking-wider mb-1">Rule Type</label>
           <select id="newSpotRuleType" class="w-full px-3 py-2 rounded-xl glass-pill text-xs text-white border border-white/20 focus:outline-none focus:border-white bg-black">
-            <option value="PAID" class="bg-black text-white">🔵 PAID - Municipal / Private Lot</option>
-            <option value="ALLOWED" class="bg-black text-white">🟢 ALLOWED - Free Public Parking</option>
-            <option value="NO_PARKING" class="bg-black text-white">🔴 NO_PARKING - Tow-Away / Strict Zone</option>
+            <option value="PAID" class="bg-black text-white">◻ PAID - Municipal / Private Lot</option>
+            <option value="ALLOWED" class="bg-black text-white">⚪ ALLOWED - Free Public Parking</option>
+            <option value="NO_PARKING" class="bg-black text-white">✕ NO_PARKING - Tow-Away / Strict Zone</option>
           </select>
         </div>
 
@@ -948,10 +1008,10 @@
       const btn = document.getElementById('deliveryModeBtn');
       if (btn) {
         if (deliveryModeActive) {
-          btn.className = "px-2.5 py-1 rounded-xl bg-amber-500/20 text-amber-300 border border-amber-500/40 text-xs font-bold transition-all flex items-center gap-1.5 shadow-lg shadow-amber-500/20";
+          btn.className = "px-2.5 py-1 rounded-xl bg-white text-black font-black text-xs transition-all flex items-center gap-1.5 shadow-lg shadow-white/30";
           showToast("🚚 Delivery Mode Active: Highlighting legal quick loading & drop-off zones", "info");
         } else {
-          btn.className = "px-2.5 py-1 rounded-xl glass-pill hover:bg-white/10 text-xs font-bold text-slate-300 transition-all flex items-center gap-1.5";
+          btn.className = "px-2.5 py-1 rounded-xl glass-pill hover:bg-white hover:text-black text-xs font-bold text-white transition-all flex items-center gap-1.5";
           showToast("Delivery mode deactivated", "info");
         }
       }
@@ -987,19 +1047,29 @@
       });
     }
 
-    // Custom Marker Creator: Green / Blue / Red
+    // Custom Liquid Marker Creator: Strict Pure Black & White
     function createMapIcon(ruleType, isSelected) {
-      let bgColor = "#3B82F6"; // 🔵 Blue for PAID
+      let bgStyle = "background: linear-gradient(135deg, rgba(35, 35, 35, 0.95) 0%, rgba(10, 10, 10, 0.98) 100%);";
+      let borderStyle = "2px solid #ffffff;";
+      let textColor = "#ffffff";
       let label = "₹";
-      let ringHtml = "";
+      let ringHtml = '<div class="pulse-ring" style="border: 1px solid rgba(255, 255, 255, 0.35); background: rgba(255, 255, 255, 0.03);"></div>';
+      let shadowStyle = "inset 0 1.5px 2px rgba(255,255,255,0.4), 0 8px 25px rgba(0,0,0,0.9), 0 0 15px rgba(255,255,255,0.15)";
 
       if (ruleType === "ALLOWED") {
-        bgColor = "#10B981"; // 🟢 Green for ALLOWED
+        bgStyle = "background: linear-gradient(135deg, #ffffff 0%, #ebebeb 100%);";
+        borderStyle = "2px solid #ffffff;";
+        textColor = "#000000";
         label = "P";
+        ringHtml = '<div class="pulse-ring" style="border: 2px solid rgba(255, 255, 255, 0.7); background: rgba(255, 255, 255, 0.08);"></div>';
+        shadowStyle = "inset 0 1.5px 2px rgba(255, 255, 255, 0.9), 0 10px 25px rgba(255, 255, 255, 0.35), 0 0 18px rgba(255, 255, 255, 0.25)";
       } else if (ruleType === "NO_PARKING") {
-        bgColor = "#EF4444"; // 🔴 Red for NO_PARKING
-        label = "⛔";
-        ringHtml = `<div class="pulse-ring" style="background-color: ${bgColor};"></div>`;
+        bgStyle = "background: linear-gradient(135deg, rgba(18, 18, 18, 0.96) 0%, rgba(5, 5, 5, 0.98) 100%);";
+        borderStyle = "2px dashed rgba(255, 255, 255, 0.75);";
+        textColor = "#ffffff";
+        label = "✕";
+        ringHtml = '<div class="pulse-ring" style="border: 1px dashed rgba(255, 255, 255, 0.35); background: rgba(255, 255, 255, 0.02);"></div>';
+        shadowStyle = "0 8px 25px rgba(0,0,0,0.95)";
       }
 
       const size = isSelected ? 48 : 38;
@@ -1008,7 +1078,7 @@
         <div style="position: relative; width: ${size}px; height: ${size}px;">
           ${ringHtml}
           <div style="
-            background-color: ${bgColor};
+            ${bgStyle}
             width: ${size}px;
             height: ${size}px;
             border-radius: 50% 50% 50% 0;
@@ -1016,14 +1086,14 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 18px rgba(0,0,0,0.5);
-            border: 2.5px solid #ffffff;
+            box-shadow: ${shadowStyle};
+            border: ${borderStyle};
             cursor: pointer;
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
           ">
             <span style="
               transform: rotate(45deg);
-              color: #ffffff;
+              color: ${textColor};
               font-weight: 900;
               font-size: ${isSelected ? 16 : 13}px;
               user-select: none;
@@ -1221,16 +1291,16 @@
 
         let badgeHtml = '';
         if (isNoParking) {
-          badgeHtml = `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-black bg-rose-500/20 text-rose-300 border border-rose-500/30">
-            <i data-lucide="alert-triangle" class="w-3 h-3"></i> Tow-Away
+          badgeHtml = `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-black glass-pill border border-white/20 text-white/70">
+            <i data-lucide="shield-alert" class="w-3 h-3 text-white/70"></i> Tow-Away
           </span>`;
         } else if (isPaid) {
-          badgeHtml = `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-black bg-blue-500/20 text-blue-300 border border-blue-500/30">
+          badgeHtml = `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-black glass-pill border border-white/30 text-white font-mono">
             ₹${spot.price_per_hour}/hr
           </span>`;
         } else {
-          badgeHtml = `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-black bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-            <i data-lucide="check-circle" class="w-3 h-3"></i> Free Street
+          badgeHtml = `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-black bg-white text-black font-black">
+            <i data-lucide="check" class="w-3 h-3"></i> Free Street
           </span>`;
         }
 
@@ -1284,8 +1354,8 @@
                 </div>
               </div>
             ` : `
-              <div class="bg-rose-500/10 border border-rose-500/20 rounded-xl p-2 mb-2 text-xs text-rose-300 font-medium flex items-center gap-1.5">
-                <i data-lucide="shield-alert" class="w-3.5 h-3.5 shrink-0 text-rose-400"></i>
+              <div class="glass-pill border border-white/20 rounded-xl p-2 mb-2 text-xs text-white/70 font-medium flex items-center gap-1.5">
+                <i data-lucide="shield-alert" class="w-3.5 h-3.5 shrink-0 text-white/60"></i>
                 <span class="truncate">Strict tow-away zone. Violators fined.</span>
               </div>
             `}
@@ -1338,15 +1408,21 @@
         const marker = L.marker([spot.latitude, spot.longitude], { icon })
           .addTo(leafletMap);
 
-        // ParkUsher Signature Feature: Street Segment Polyline along the road!
-        let lineColor = "#3b82f6"; // blue
+        // ParkUsher Signature Feature: Street Segment Polyline along the road (Monochrome)
+        let lineColor = "#ffffff";
         let lineClass = "street-paid";
+        let dashArray = null;
         if (spot.rule_type === 'ALLOWED') {
-          lineColor = "#10b981"; // green
+          lineColor = "#ffffff";
           lineClass = "street-legal";
+        } else if (spot.rule_type === 'PAID') {
+          lineColor = "#cccccc";
+          lineClass = "street-paid";
+          dashArray = "6, 6";
         } else if (spot.rule_type === 'NO_PARKING') {
-          lineColor = "#ef4444"; // red
+          lineColor = "rgba(255, 255, 255, 0.4)";
           lineClass = "street-danger";
+          dashArray = "4, 8";
         }
 
         // Draw street segment around spot (e.g. 150m street span)
@@ -1359,8 +1435,9 @@
 
         const streetLine = L.polyline(streetPoints, {
           color: lineColor,
-          weight: 6,
-          opacity: 0.85,
+          weight: 5,
+          opacity: 0.9,
+          dashArray: dashArray,
           lineCap: 'round',
           className: lineClass
         }).addTo(leafletMap);
@@ -1371,38 +1448,38 @@
         mapStreetLines.push(streetLine);
 
         const popupContent = `
-          <div style="font-family: inherit; min-width: 190px; color: #0f172a; padding: 2px;">
-            <div style="font-size: 10px; font-weight: 800; color: #4f46e5; text-transform: uppercase;">${escapeHtml(spot.city)}</div>
-            <div style="font-size: 13px; font-weight: 900; color: #0f172a; margin-top: 1px;">${escapeHtml(spot.name)}</div>
-            <div style="font-size: 11px; color: #64748b; margin-bottom: 6px;">${escapeHtml(spot.address || '')}</div>
+          <div style="font-family: inherit; min-width: 190px; color: #ffffff; padding: 2px;">
+            <div style="font-size: 10px; font-weight: 800; color: rgba(255,255,255,0.7); text-transform: uppercase;">${escapeHtml(spot.city)}</div>
+            <div style="font-size: 13px; font-weight: 900; color: #ffffff; margin-top: 1px;">${escapeHtml(spot.name)}</div>
+            <div style="font-size: 11px; color: rgba(255,255,255,0.6); margin-bottom: 6px;">${escapeHtml(spot.address || '')}</div>
             
             ${spot.rule_type !== 'NO_PARKING' ? `
-              <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 5px; margin-bottom: 6px; font-size: 11px;">
-                <div style="display: flex; justify-content: space-between;">
+              <div style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 5px; margin-bottom: 6px; font-size: 11px;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 2px;">
                   <span>🚗 Cars:</span>
-                  <span style="font-weight: 700; color: #059669;">${spot.available_car_slots}/${spot.total_car_slots}</span>
+                  <span style="font-weight: 700; color: #ffffff; font-family: monospace;">${spot.available_car_slots}/${spot.total_car_slots}</span>
                 </div>
                 <div style="display: flex; justify-content: space-between;">
                   <span>🏍️ Bikes:</span>
-                  <span style="font-weight: 700; color: #4f46e5;">${spot.available_bike_slots}/${spot.total_bike_slots}</span>
+                  <span style="font-weight: 700; color: #ffffff; font-family: monospace;">${spot.available_bike_slots}/${spot.total_bike_slots}</span>
                 </div>
               </div>
               <button onclick="focusSpot(${spot.id})" style="
                 width: 100%;
-                background: #4f46e5;
-                color: #ffffff;
+                background: #ffffff;
+                color: #000000;
                 border: none;
                 border-radius: 8px;
                 padding: 6px 10px;
                 font-size: 11px;
-                font-weight: 800;
+                font-weight: 900;
                 cursor: pointer;
               ">
                 View & Book
               </button>
             ` : `
-              <div style="background: #fee2e2; color: #b91c1c; border-radius: 8px; padding: 6px; font-size: 11px; font-weight: 800; text-align: center;">
-                ⛔ Strict Tow-Away Zone
+              <div style="background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.8); border: 1px dashed rgba(255,255,255,0.25); border-radius: 8px; padding: 6px; font-size: 11px; font-weight: 800; text-align: center;">
+                ✕ Strict Tow-Away Zone
               </div>
             `}
           </div>
@@ -1451,15 +1528,8 @@
       const bottomCard = document.getElementById('spotBottomCard');
       bottomCard.classList.remove('hidden');
 
-      // Add appropriate translucent glow
-      bottomCard.classList.remove('glow-emerald', 'glow-blue', 'glow-rose');
-      if (spot.rule_type === 'ALLOWED') {
-        bottomCard.classList.add('glow-emerald');
-      } else if (spot.rule_type === 'PAID') {
-        bottomCard.classList.add('glow-blue');
-      } else {
-        bottomCard.classList.add('glow-rose');
-      }
+      // Add liquid glow
+      bottomCard.classList.add('glow-white');
 
       document.getElementById('bottomCardCity').innerText = spot.city.toUpperCase();
       document.getElementById('bottomCardName').innerText = spot.name;
@@ -1468,32 +1538,32 @@
       const dist = calcDistanceKm(userLocation.lat, userLocation.lng, spot.latitude, spot.longitude);
       document.getElementById('bottomCardDistance').innerText = `📍 ${dist} km away`;
 
-      // ParkUsher PU Insight Difficulty Pill
+      // ParkUsher PU Insight Difficulty Pill (Strict Monochrome)
       const diffElem = document.getElementById('bottomCardDifficulty');
       if (spot.rule_type === 'NO_PARKING') {
-        diffElem.className = "text-[10px] font-black px-2.5 py-0.5 rounded-lg bg-rose-500/20 text-rose-300 border border-rose-500/40";
-        diffElem.innerText = "🔴 RESTRICTED (Tow Zone)";
+        diffElem.className = "text-[10px] font-black px-2.5 py-0.5 rounded-lg glass-pill text-white/60 border border-white/20";
+        diffElem.innerText = "✕ RESTRICTED (Tow Zone)";
       } else if (spot.available_car_slots === 0 && spot.available_bike_slots === 0) {
-        diffElem.className = "text-[10px] font-black px-2.5 py-0.5 rounded-lg bg-rose-500/20 text-rose-300 border border-rose-500/40";
-        diffElem.innerText = "🔴 BUSY (+15 min search time)";
+        diffElem.className = "text-[10px] font-black px-2.5 py-0.5 rounded-lg glass-pill text-white/50 border border-white/20";
+        diffElem.innerText = "BUSY (+15 min search time)";
       } else if (spot.available_car_slots <= 3) {
-        diffElem.className = "text-[10px] font-black px-2.5 py-0.5 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/40";
-        diffElem.innerText = "🟡 TIGHT (+5 min search time)";
+        diffElem.className = "text-[10px] font-black px-2.5 py-0.5 rounded-lg glass-pill text-white/80 border border-white/30";
+        diffElem.innerText = "TIGHT (+5 min search time)";
       } else {
-        diffElem.className = "text-[10px] font-black px-2.5 py-0.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40";
-        diffElem.innerText = "🟢 AVAILABLE (Easy to park)";
+        diffElem.className = "text-[10px] font-black px-2.5 py-0.5 rounded-lg bg-white text-black border border-white font-black";
+        diffElem.innerText = "AVAILABLE (Easy to park)";
       }
 
       const badge = document.getElementById('bottomCardBadge');
       if (spot.rule_type === 'NO_PARKING') {
-        badge.className = "inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-black bg-rose-500/20 text-rose-300 border border-rose-500/30";
-        badge.innerText = "⛔ Tow-Away Zone";
+        badge.className = "inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-black glass-pill border border-white/20 text-white/70";
+        badge.innerText = "✕ Tow-Away Zone";
       } else if (spot.is_paid) {
-        badge.className = "inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-black bg-blue-500/20 text-blue-300 border border-blue-500/30";
+        badge.className = "inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-black glass-pill border border-white/30 text-white font-mono";
         badge.innerText = `₹${spot.price_per_hour}/hr`;
       } else {
-        badge.className = "inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-black bg-emerald-500/20 text-emerald-300 border border-emerald-500/30";
-        badge.innerText = "🟢 Legal Parking";
+        badge.className = "inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-black bg-white text-black font-black";
+        badge.innerText = "Free Parking";
       }
 
       document.getElementById('bottomCardCarSlots').innerText = `${spot.available_car_slots} / ${spot.total_car_slots}`;
@@ -1513,8 +1583,8 @@
       const bookBtn = document.getElementById('bottomCardBookBtn');
       if (spot.rule_type === 'NO_PARKING') {
         bookBtn.disabled = true;
-        bookBtn.className = "flex-1 py-3 rounded-2xl font-black text-xs uppercase tracking-wider text-rose-300 bg-rose-950/80 border border-rose-800 cursor-not-allowed flex items-center justify-center gap-2";
-        bookBtn.innerHTML = `<i data-lucide="alert-triangle" class="w-4 h-4 text-rose-400"></i> No Parking Allowed`;
+        bookBtn.className = "flex-1 py-3 rounded-2xl font-black text-xs uppercase tracking-wider text-white/40 bg-white/5 border border-white/10 cursor-not-allowed flex items-center justify-center gap-2";
+        bookBtn.innerHTML = `<i data-lucide="shield-alert" class="w-4 h-4 text-white/40"></i> No Parking Allowed`;
       } else {
         const hasSlots = spot.available_car_slots > 0 || spot.available_bike_slots > 0;
         bookBtn.disabled = !hasSlots;
@@ -1686,13 +1756,13 @@
       preview.classList.remove('hidden');
 
       if (presetType === 'tow_away') {
-        preview.src = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='600' height='400' viewBox='0 0 600 400'><rect width='100%' height='100%' fill='%230b0f19'/><circle cx='300' cy='200' r='140' fill='%23ef4444' stroke='%23ffffff' stroke-width='10'/><line x1='200' y1='100' x2='400' y2='300' stroke='%23ffffff' stroke-width='18'/><text x='300' y='225' font-size='120' font-family='sans-serif' font-weight='900' fill='white' text-anchor='middle'>P</text><text x='300' y='370' font-size='24' font-family='sans-serif' font-weight='800' fill='%23fca5a5' text-anchor='middle'>TOW AWAY ZONE 8AM-8PM</text></svg>";
+        preview.src = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='600' height='400' viewBox='0 0 600 400'><rect width='100%' height='100%' fill='%23000000'/><circle cx='300' cy='200' r='140' fill='%23111111' stroke='%23ffffff' stroke-width='10'/><line x1='200' y1='100' x2='400' y2='300' stroke='%23ffffff' stroke-width='18'/><text x='300' y='225' font-size='120' font-family='sans-serif' font-weight='900' fill='white' text-anchor='middle'>P</text><text x='300' y='370' font-size='22' font-family='sans-serif' font-weight='800' fill='%23ffffff' text-anchor='middle'>TOW AWAY ZONE 8AM-8PM</text></svg>";
       } else if (presetType === 'pay_park') {
-        preview.src = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='600' height='400' viewBox='0 0 600 400'><rect width='100%' height='100%' fill='%230b0f19'/><rect x='160' y='60' width='280' height='280' rx='30' fill='%233b82f6' stroke='white' stroke-width='8'/><text x='300' y='230' font-size='150' font-family='sans-serif' font-weight='900' fill='white' text-anchor='middle'>P</text><text x='300' y='310' font-size='22' font-family='sans-serif' font-weight='800' fill='%23bfdbfe' text-anchor='middle'>PAY &amp; PARK ₹20/HR</text></svg>";
+        preview.src = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='600' height='400' viewBox='0 0 600 400'><rect width='100%' height='100%' fill='%23000000'/><rect x='160' y='60' width='280' height='280' rx='30' fill='%23111111' stroke='white' stroke-width='8'/><text x='300' y='230' font-size='150' font-family='sans-serif' font-weight='900' fill='white' text-anchor='middle'>P</text><text x='300' y='310' font-size='22' font-family='sans-serif' font-weight='800' fill='%23ffffff' text-anchor='middle'>PAY &amp; PARK ₹20/HR</text></svg>";
       } else if (presetType === 'free_public') {
-        preview.src = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='600' height='400' viewBox='0 0 600 400'><rect width='100%' height='100%' fill='%230b0f19'/><rect x='160' y='60' width='280' height='280' rx='30' fill='%2310b981' stroke='white' stroke-width='8'/><text x='300' y='230' font-size='150' font-family='sans-serif' font-weight='900' fill='white' text-anchor='middle'>P</text><text x='300' y='310' font-size='20' font-family='sans-serif' font-weight='800' fill='%23a7f3d0' text-anchor='middle'>FREE (MAX 2 HOURS)</text></svg>";
+        preview.src = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='600' height='400' viewBox='0 0 600 400'><rect width='100%' height='100%' fill='%23000000'/><rect x='160' y='60' width='280' height='280' rx='30' fill='%23ffffff' stroke='white' stroke-width='8'/><text x='300' y='230' font-size='150' font-family='sans-serif' font-weight='900' fill='black' text-anchor='middle'>P</text><text x='300' y='310' font-size='20' font-family='sans-serif' font-weight='800' fill='%23ffffff' text-anchor='middle'>FREE (MAX 2 HOURS)</text></svg>";
       } else {
-        preview.src = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='600' height='400' viewBox='0 0 600 400'><rect width='100%' height='100%' fill='%230b0f19'/><circle cx='300' cy='200' r='140' fill='%23f59e0b' stroke='%23ffffff' stroke-width='10'/><text x='300' y='225' font-size='110' font-family='sans-serif' font-weight='900' fill='white' text-anchor='middle'>ODD</text><text x='300' y='370' font-size='22' font-family='sans-serif' font-weight='800' fill='%23fde68a' text-anchor='middle'>ODD DATES ONLY</text></svg>";
+        preview.src = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='600' height='400' viewBox='0 0 600 400'><rect width='100%' height='100%' fill='%23000000'/><circle cx='300' cy='200' r='140' fill='%23111111' stroke='%23ffffff' stroke-width='10'/><text x='300' y='225' font-size='110' font-family='sans-serif' font-weight='900' fill='white' text-anchor='middle'>ODD</text><text x='300' y='370' font-size='22' font-family='sans-serif' font-weight='800' fill='%23ffffff' text-anchor='middle'>ODD DATES ONLY</text></svg>";
       }
 
       runSignAIAnalysis(presetType);
@@ -1722,41 +1792,41 @@
       resultCard.classList.remove('hidden');
 
       if (type === 'tow_away' || type === 'captured') {
-        iconBox.className = "w-12 h-12 rounded-2xl bg-rose-500/20 border border-rose-500/40 text-rose-400 flex items-center justify-center shrink-0 shadow-lg shadow-rose-500/20";
-        icon.setAttribute('data-lucide', 'alert-triangle');
-        catBadge.className = "text-[10px] font-black uppercase tracking-widest text-rose-400";
+        iconBox.className = "w-12 h-12 rounded-2xl bg-white/10 border border-white/30 text-white flex items-center justify-center shrink-0 shadow-lg shadow-white/10";
+        icon.setAttribute('data-lucide', 'shield-alert');
+        catBadge.className = "text-[10px] font-black uppercase tracking-widest text-white/80";
         catBadge.innerText = "STRICT TOW-AWAY ZONE";
         title.innerText = "DO NOT PARK HERE — TOWING RISK";
         detectedText.innerText = '"NO PARKING 8:00 AM TO 8:00 PM - TOW AWAY ZONE (INDORE TRAFFIC POLICE)"';
-        explBox.className = "p-3.5 rounded-2xl bg-rose-500/10 border border-rose-500/20 text-xs text-rose-300 font-medium mb-3";
+        explBox.className = "p-3.5 rounded-2xl bg-white/5 border border-white/20 text-xs text-white/90 font-medium mb-3";
         explBox.innerHTML = `<strong>Violation Warning:</strong> Section 127/177 of Indian Motor Vehicles Act. Vehicles parked here will be towed immediately by the traffic crane. Towing penalty: ₹500 + ₹100/day holding fee.`;
       } else if (type === 'pay_park') {
-        iconBox.className = "w-12 h-12 rounded-2xl bg-blue-500/20 border border-blue-500/40 text-blue-400 flex items-center justify-center shrink-0 shadow-lg shadow-blue-500/20";
-        icon.setAttribute('data-lucide', 'indian-rupee');
-        catBadge.className = "text-[10px] font-black uppercase tracking-widest text-blue-400";
+        iconBox.className = "w-12 h-12 rounded-2xl bg-white/10 border border-white/30 text-white flex items-center justify-center shrink-0 shadow-lg shadow-white/10";
+        icon.setAttribute('data-lucide', 'credit-card');
+        catBadge.className = "text-[10px] font-black uppercase tracking-widest text-white/80";
         catBadge.innerText = "MUNICIPAL PAY & PARK";
         title.innerText = "Paid Parking Allowed";
         detectedText.innerText = '"MUNICIPAL CORPORATION PAY & PARK - CARS ₹20/HR, BIKES ₹10/HR"';
-        explBox.className = "p-3.5 rounded-2xl bg-blue-500/10 border border-blue-500/20 text-xs text-blue-300 font-medium mb-3";
+        explBox.className = "p-3.5 rounded-2xl bg-white/5 border border-white/20 text-xs text-white/90 font-medium mb-3";
         explBox.innerHTML = `<strong>Legal Rule:</strong> Parking is permitted upon paying standard municipal fees. You can pre-book this lot directly on ParkKaro to guarantee a slot!`;
       } else if (type === 'odd_even') {
         const isOddDay = new Date().getDate() % 2 !== 0;
-        iconBox.className = `w-12 h-12 rounded-2xl ${isOddDay ? 'bg-emerald-500/20 border-emerald-500/40 text-emerald-400 shadow-emerald-500/20' : 'bg-rose-500/20 border-rose-500/40 text-rose-400 shadow-rose-500/20'} border flex items-center justify-center shrink-0 shadow-lg`;
+        iconBox.className = "w-12 h-12 rounded-2xl bg-white/10 border border-white/30 text-white flex items-center justify-center shrink-0 shadow-lg shadow-white/10";
         icon.setAttribute('data-lucide', isOddDay ? 'check-circle' : 'x-circle');
-        catBadge.className = `text-[10px] font-black uppercase tracking-widest ${isOddDay ? 'text-emerald-400' : 'text-rose-400'}`;
+        catBadge.className = "text-[10px] font-black uppercase tracking-widest text-white/80";
         catBadge.innerText = isOddDay ? "LEGAL TODAY" : "ILLEGAL TODAY (EVEN DATE)";
         title.innerText = isOddDay ? "Odd Date Parking Permitted Today" : "Restricted on Even Dates";
         detectedText.innerText = '"ODD-EVEN DAY REGULATION: PARK ONLY ON DATES MATCHING YOUR SIDE"';
-        explBox.className = `p-3.5 rounded-2xl ${isOddDay ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-300' : 'bg-rose-500/10 border-rose-500/20 text-rose-300'} text-xs font-medium mb-3`;
+        explBox.className = "p-3.5 rounded-2xl bg-white/5 border border-white/20 text-xs text-white/90 font-medium mb-3";
         explBox.innerHTML = `<strong>Today's Date:</strong> Day ${new Date().getDate()} is ${isOddDay ? 'an ODD date' : 'an EVEN date'}. ${isOddDay ? 'You are legally parked on this side.' : 'Please move to the opposite side of the road to avoid fines.'}`;
       } else {
-        iconBox.className = "w-12 h-12 rounded-2xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 flex items-center justify-center shrink-0 shadow-lg shadow-emerald-500/20";
+        iconBox.className = "w-12 h-12 rounded-2xl bg-white/10 border border-white/30 text-white flex items-center justify-center shrink-0 shadow-lg shadow-white/10";
         icon.setAttribute('data-lucide', 'check-circle');
-        catBadge.className = "text-[10px] font-black uppercase tracking-widest text-emerald-400";
+        catBadge.className = "text-[10px] font-black uppercase tracking-widest text-white/80";
         catBadge.innerText = "FREE PUBLIC PARKING";
         title.innerText = "Free Parking Allowed Here";
         detectedText.innerText = '"PUBLIC PARKING ZONE - MAXIMUM STAY 2 HOURS"';
-        explBox.className = "p-3.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-xs text-emerald-300 font-medium mb-3";
+        explBox.className = "p-3.5 rounded-2xl bg-white/5 border border-white/20 text-xs text-white/90 font-medium mb-3";
         explBox.innerHTML = `<strong>Legal Rule:</strong> Free public parking permitted for cars and two-wheelers. Maintain clear access for through traffic.`;
       }
 
