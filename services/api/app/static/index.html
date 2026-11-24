@@ -1077,7 +1077,90 @@
   <script>
     // State
     const API_BASE_URL = window.location.origin + "/api/v1";
-    let allSpots = [];
+    const DEFAULT_SPOTS = [
+      {
+        id: 1,
+        name: "Rajwada Main Parking",
+        city: "Indore",
+        address: "Near Rajwada Palace",
+        latitude: 22.7196,
+        longitude: 75.8577,
+        total_car_slots: 10,
+        available_car_slots: 9,
+        total_bike_slots: 25,
+        available_bike_slots: 25,
+        is_paid: true,
+        price_per_hour: 20,
+        rule_type: "PAID",
+        rule_description: "Paid municipal parking: ₹20/hr for cars, ₹10/hr for bikes"
+      },
+      {
+        id: 2,
+        name: "Vijay Nagar Square Lot",
+        city: "Indore",
+        address: "AB Road, Vijay Nagar",
+        latitude: 22.7533,
+        longitude: 75.8937,
+        total_car_slots: 15,
+        available_car_slots: 15,
+        total_bike_slots: 30,
+        available_bike_slots: 30,
+        is_paid: false,
+        price_per_hour: 0,
+        rule_type: "ALLOWED",
+        rule_description: "Free public parking allowed till 10 PM"
+      },
+      {
+        id: 3,
+        name: "Sector 17 Plaza Parking",
+        city: "Chandigarh",
+        address: "Sector 17 Market",
+        latitude: 30.7398,
+        longitude: 76.7827,
+        total_car_slots: 20,
+        available_car_slots: 20,
+        total_bike_slots: 40,
+        available_bike_slots: 40,
+        is_paid: true,
+        price_per_hour: 30,
+        rule_type: "PAID",
+        rule_description: "Smart parking zone: ₹30/hr"
+      },
+      {
+        id: 4,
+        name: "Elante Side Road",
+        city: "Chandigarh",
+        address: "Industrial Area Phase 1",
+        latitude: 30.7055,
+        longitude: 76.8013,
+        total_car_slots: 0,
+        available_car_slots: 0,
+        total_bike_slots: 0,
+        available_bike_slots: 0,
+        is_paid: false,
+        price_per_hour: 0,
+        rule_type: "NO_PARKING",
+        rule_description: "Strict No Parking / Tow-Away Zone 9 AM - 9 PM"
+      },
+      {
+        id: 5,
+        name: "Panaji Municipal Market",
+        city: "Goa",
+        address: "MG Road, Panaji",
+        latitude: 15.4989,
+        longitude: 73.8278,
+        total_car_slots: 12,
+        available_car_slots: 12,
+        total_bike_slots: 30,
+        available_bike_slots: 30,
+        is_paid: true,
+        price_per_hour: 20,
+        rule_type: "PAID",
+        rule_description: "Pay & Park zone: ₹20/hr"
+      }
+    ];
+
+    let allSpots = [...DEFAULT_SPOTS];
     let activeBookings = [];
     let currentCityFilter = "All";
     let currentSearchQuery = "";
@@ -1225,20 +1308,32 @@
 
       try {
         const [spotsRes, bookingsRes, healthRes] = await Promise.all([
-          fetch(`${API_BASE_URL}/spots`),
-          fetch(`${API_BASE_URL}/bookings`),
-          fetch(`${API_BASE_URL}/health`)
+          fetch(`${API_BASE_URL}/spots`).catch(() => null),
+          fetch(`${API_BASE_URL}/bookings`).catch(() => null),
+          fetch(`${API_BASE_URL}/health`).catch(() => null)
         ]);
 
-        if (spotsRes.ok && bookingsRes.ok && healthRes.ok) {
-          allSpots = await spotsRes.json();
-          activeBookings = await bookingsRes.json();
+        if (spotsRes && spotsRes.ok) {
+          const rawSpots = await spotsRes.json();
+          if (Array.isArray(rawSpots) && rawSpots.length > 0) {
+            allSpots = rawSpots;
+          }
+        }
+
+        if (bookingsRes && bookingsRes.ok) {
+          const rawBookings = await bookingsRes.json();
+          if (Array.isArray(rawBookings)) {
+            activeBookings = rawBookings;
+          }
+        }
+
+        if (healthRes && healthRes.ok) {
           setConnectionStatus(true);
         } else {
           setConnectionStatus(false);
         }
       } catch (err) {
-        console.error("Fetch error:", err);
+        console.warn("API poll notice:", err);
         setConnectionStatus(false);
       } finally {
         if (refreshIcon) refreshIcon.classList.remove('animate-spin');

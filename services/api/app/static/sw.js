@@ -1,8 +1,7 @@
-const CACHE_NAME = 'parkkaro-v1';
+const CACHE_NAME = 'parkkaro-v2026';
 const ASSETS_TO_CACHE = [
   '/',
-  '/static/manifest.json',
-  '/static/index.html',
+  '/manifest.json',
   'https://cdn.tailwindcss.com',
   'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css',
   'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js',
@@ -10,14 +9,6 @@ const ASSETS_TO_CACHE = [
 ];
 
 self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      console.log('[Service Worker] Caching app shell');
-      return cache.addAll(ASSETS_TO_CACHE).catch(err => {
-        console.warn('[Service Worker] Asset caching skipped:', err);
-      });
-    })
-  );
   self.skipWaiting();
 });
 
@@ -25,12 +16,7 @@ self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((keyList) => {
       return Promise.all(
-        keyList.map((key) => {
-          if (key !== CACHE_NAME) {
-            console.log('[Service Worker] Removing old cache', key);
-            return caches.delete(key);
-          }
-        })
+        keyList.map((key) => caches.delete(key))
       );
     })
   );
@@ -38,11 +24,16 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
-  // Pass API calls directly to network
+  // Always network-first for API calls
   if (event.request.url.includes('/api/v1/')) {
     event.respondWith(
       fetch(event.request).catch(() => {
-        return new Response(JSON.stringify({ error: 'Offline mode: server unreachable' }), {
+        if (event.request.url.includes('/spots') || event.request.url.includes('/bookings')) {
+          return new Response(JSON.stringify([]), {
+            headers: { 'Content-Type': 'application/json' }
+          });
+        }
+        return new Response(JSON.stringify({ status: 'offline' }), {
           headers: { 'Content-Type': 'application/json' }
         });
       })
@@ -50,17 +41,30 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Cache-first strategy for app shell
+  // Network-first for HTML pages so latest 2026 updates load immediately
+  if (event.request.mode === 'navigate' || event.request.destination === 'document') {
+    event.respondWith(
+      fetch(event.request)
+        .then((networkRes) => {
+          return caches.open(CACHE_NAME).then((cache) => {
+            cache.put(event.request, networkRes.clone());
+            return networkRes;
+          });
+        })
+        .catch(() => caches.match(event.request))
+    );
+    return;
+  }
+
+  // Cache-first for static assets
   event.respondWith(
-    caches.match(event.request).then((response) => {
-      return response || fetch(event.request).then((fetchRes) => {
+    caches.match(event.request).then((cached) => {
+      return cached || fetch(event.request).then((networkRes) => {
         return caches.open(CACHE_NAME).then((cache) => {
-          if (event.request.method === 'GET' && !event.request.url.startsWith('chrome-extension')) {
-            cache.put(event.request, fetchRes.clone());
-          }
-          return fetchRes;
+          cache.put(event.request, networkRes.clone());
+          return networkRes;
         });
       });
-    }).catch(() => caches.match('/'))
+    })
   );
 });
