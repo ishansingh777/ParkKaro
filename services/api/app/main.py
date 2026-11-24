@@ -90,10 +90,12 @@ def get_parking_spots(
 
     spots_out = []
     for r in results:
-        active_cars = int(r.active_car_bookings)
-        active_bikes = int(r.active_bike_bookings)
-        avail_cars = max(0, r.total_car_slots - active_cars)
-        avail_bikes = max(0, r.total_bike_slots - active_bikes)
+        active_cars = int(r.active_car_bookings or 0)
+        active_bikes = int(r.active_bike_bookings or 0)
+        total_cars = int(r.total_car_slots or 0)
+        total_bikes = int(r.total_bike_slots or 0)
+        avail_cars = max(0, total_cars - active_cars)
+        avail_bikes = max(0, total_bikes - active_bikes)
 
         spots_out.append(
             ParkingSpotOut(
@@ -103,14 +105,14 @@ def get_parking_spots(
                 address=r.address,
                 latitude=float(r.latitude),
                 longitude=float(r.longitude),
-                total_car_slots=r.total_car_slots,
-                total_bike_slots=r.total_bike_slots,
+                total_car_slots=total_cars,
+                total_bike_slots=total_bikes,
                 available_car_slots=avail_cars,
                 available_bike_slots=avail_bikes,
-                is_paid=r.is_paid,
-                price_per_hour=r.price_per_hour,
-                rule_type=r.rule_type,
-                rule_description=r.rule_description
+                is_paid=bool(r.is_paid),
+                price_per_hour=r.price_per_hour or 0,
+                rule_type=r.rule_type or "ALLOWED",
+                rule_description=r.rule_description or ""
             )
         )
     return spots_out
@@ -144,8 +146,12 @@ def get_parking_spot(spot_id: int, db: Session = Depends(get_db)):
     if not row:
         raise HTTPException(status_code=404, detail="Parking spot not found")
 
-    avail_cars = max(0, row.total_car_slots - int(row.active_car_bookings))
-    avail_bikes = max(0, row.total_bike_slots - int(row.active_bike_bookings))
+    total_cars = int(row.total_car_slots or 0)
+    total_bikes = int(row.total_bike_slots or 0)
+    active_cars = int(row.active_car_bookings or 0)
+    active_bikes = int(row.active_bike_bookings or 0)
+    avail_cars = max(0, total_cars - active_cars)
+    avail_bikes = max(0, total_bikes - active_bikes)
 
     return ParkingSpotOut(
         id=row.id,
@@ -154,14 +160,14 @@ def get_parking_spot(spot_id: int, db: Session = Depends(get_db)):
         address=row.address,
         latitude=float(row.latitude),
         longitude=float(row.longitude),
-        total_car_slots=row.total_car_slots,
-        total_bike_slots=row.total_bike_slots,
+        total_car_slots=total_cars,
+        total_bike_slots=total_bikes,
         available_car_slots=avail_cars,
         available_bike_slots=avail_bikes,
-        is_paid=row.is_paid,
-        price_per_hour=row.price_per_hour,
-        rule_type=row.rule_type,
-        rule_description=row.rule_description
+        is_paid=bool(row.is_paid),
+        price_per_hour=row.price_per_hour or 0,
+        rule_type=row.rule_type or "ALLOWED",
+        rule_description=row.rule_description or ""
     )
 
 
