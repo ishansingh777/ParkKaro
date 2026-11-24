@@ -112,7 +112,7 @@
       border-color: rgba(239, 68, 68, 0.45);
     }
 
-    /* Ultra-Modern 2026 Navigation Dark Map Theme (Apple Maps / Tesla Dark Mode) */
+    /* Ultra-Modern 2026 Navigation Dark & Color Tile Themes */
     .leaflet-container {
       background: #080b12 !important;
       font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif !important;
@@ -123,6 +123,16 @@
     }
     .dark-nav-tiles .leaflet-tile {
       border: none !important;
+    }
+    /* Vibrant Full-Color Street Cartography */
+    .street-vibrant-tiles .leaflet-tile-pane {
+      filter: saturate(125%) contrast(106%) brightness(101%);
+      transition: filter 0.4s ease;
+    }
+    /* Photorealistic Satellite Tile Enhancement */
+    .satellite-tiles .leaflet-tile-pane {
+      filter: saturate(112%) contrast(108%) brightness(98%);
+      transition: filter 0.4s ease;
     }
 
     /* Luxury Frosted Leaflet Popups */
@@ -251,15 +261,40 @@
       animation: slide-up 0.32s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
-    /* Leaflet street polyline glow */
+    /* Leaflet street polyline glow & high-contrast neon */
     .leaflet-interactive.street-legal {
-      filter: drop-shadow(0 0 6px #10b981);
+      filter: drop-shadow(0 0 7px #10b981) drop-shadow(0 0 2px #10b981);
     }
     .leaflet-interactive.street-paid {
-      filter: drop-shadow(0 0 6px #3b82f6);
+      filter: drop-shadow(0 0 7px #3b82f6) drop-shadow(0 0 2px #3b82f6);
     }
     .leaflet-interactive.street-danger {
-      filter: drop-shadow(0 0 6px #ef4444);
+      filter: drop-shadow(0 0 7px #ef4444) drop-shadow(0 0 2px #ef4444);
+    }
+
+    /* Startup Splash Animation Styles */
+    @keyframes radar-spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .splash-radar-ring {
+      border: 1.5px dashed rgba(16, 185, 129, 0.5);
+      animation: radar-spin 9s linear infinite;
+    }
+    @keyframes car-descend {
+      0% { transform: scale(1.35) translateY(-14px); opacity: 0; }
+      55% { transform: scale(0.96) translateY(2px); opacity: 1; }
+      100% { transform: scale(1) translateY(0); opacity: 1; }
+    }
+    .splash-car-drop {
+      animation: car-descend 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    @keyframes sonar-wave {
+      0% { transform: scale(0.75); opacity: 0.9; }
+      100% { transform: scale(2.4); opacity: 0; }
+    }
+    .splash-sonar {
+      animation: sonar-wave 2.2s cubic-bezier(0, 0.2, 0.8, 1) infinite;
     }
 
     /* Glassmorphism scrollbar */
@@ -282,6 +317,133 @@
 </head>
 <body class="text-slate-100 min-h-screen flex flex-col selection:bg-brand-500 selection:text-white pb-20 md:pb-6 relative overflow-x-hidden">
 
+  <!-- ================= CINEMATIC APP STARTUP SPLASH ANIMATION ================= -->
+  <div id="appIntroSplash" class="fixed inset-0 z-[9999] bg-[#060913] flex flex-col items-center justify-center p-6 select-none overflow-hidden transition-all duration-700 ease-out">
+    <!-- Ambient Cyber Glows -->
+    <div class="absolute -top-32 -left-32 w-96 h-96 bg-emerald-500/15 rounded-full blur-[140px] pointer-events-none animate-pulse"></div>
+    <div class="absolute -bottom-32 -right-32 w-96 h-96 bg-blue-600/15 rounded-full blur-[140px] pointer-events-none animate-pulse" style="animation-delay: 1s;"></div>
+    
+    <!-- Top-Right Skip Button -->
+    <button onclick="dismissSplash()" class="absolute top-6 right-6 glass-pill px-4 py-1.5 rounded-full text-xs font-bold text-white/70 hover:text-white transition-all flex items-center gap-1.5 border border-white/10 hover:border-white/30 cursor-pointer">
+      <span>Skip</span>
+      <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+    </button>
+
+    <!-- Main Splash Center Container -->
+    <div class="relative z-10 flex flex-col items-center text-center max-w-md mx-auto">
+      
+      <!-- Aerial Parked Car Centerpiece with Radar & Pulsing Bays -->
+      <div class="relative w-36 h-36 flex items-center justify-center mb-6">
+        <!-- Sonar Waves -->
+        <div class="absolute inset-0 rounded-full border border-emerald-500/30 splash-sonar"></div>
+        <div class="absolute -inset-4 rounded-full border border-cyan-500/20 animate-pulse"></div>
+        
+        <!-- Rotating Radar Sweep Line -->
+        <div class="absolute inset-0 rounded-full splash-radar-ring"></div>
+        <div class="absolute inset-2 rounded-full border border-white/10"></div>
+        
+        <!-- HUD Crosshairs / Coordinate Ticks -->
+        <div class="absolute inset-0 flex items-center justify-between px-1 opacity-40 pointer-events-none">
+          <div class="w-2 h-0.5 bg-emerald-400"></div>
+          <div class="w-2 h-0.5 bg-emerald-400"></div>
+        </div>
+        <div class="absolute inset-0 flex flex-col items-center justify-between py-1 opacity-40 pointer-events-none">
+          <div class="w-0.5 h-2 bg-emerald-400"></div>
+          <div class="w-0.5 h-2 bg-emerald-400"></div>
+        </div>
+
+        <!-- Bird's-Eye Parked Car Hero SVG (Viewed from the sky) -->
+        <div class="relative z-10 w-28 h-28 rounded-3xl bg-slate-900/90 border border-emerald-500/50 shadow-[0_0_40px_rgba(16,185,129,0.35)] flex items-center justify-center splash-car-drop">
+          <svg class="w-20 h-20" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="splashHeadlightBeam" x1="0" y1="1" x2="0" y2="0">
+                <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.8"/>
+                <stop offset="100%" stop-color="#38bdf8" stop-opacity="0"/>
+              </linearGradient>
+              <linearGradient id="splashCarBody" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#ffffff"/>
+                <stop offset="100%" stop-color="#cbd5e1"/>
+              </linearGradient>
+              <linearGradient id="splashGlassRoof" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#0284c7"/>
+                <stop offset="100%" stop-color="#0f172a"/>
+              </linearGradient>
+              <filter id="splashGlow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="2" result="blur" />
+                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+              </filter>
+            </defs>
+
+            <!-- Parking Bay Stall Markings (Viewed from the sky) -->
+            <line x1="11" y1="5" x2="11" y2="59" stroke="#10b981" stroke-width="2.8" stroke-linecap="round" class="animate-pulse"/>
+            <line x1="53" y1="5" x2="53" y2="59" stroke="#10b981" stroke-width="2.8" stroke-linecap="round" class="animate-pulse"/>
+            <line x1="11" y1="7" x2="53" y2="7" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-dasharray="5 3" opacity="0.7"/>
+
+            <!-- Spot Sensor Puck on Asphalt (Emerald Pulse) -->
+            <circle cx="32" cy="7" r="3" fill="#10b981" filter="url(#splashGlow)"/>
+
+            <!-- Glowing Forward Headlight Beams illuminating the Bay Floor -->
+            <polygon points="25,18 14,3 32,3 29,18" fill="url(#splashHeadlightBeam)"/>
+            <polygon points="39,18 32,3 50,3 35,18" fill="url(#splashHeadlightBeam)"/>
+
+            <!-- Drop shadow of the vehicle -->
+            <rect x="21" y="16" width="22" height="38" rx="7" fill="#000000" opacity="0.7" filter="blur(3px)"/>
+
+            <!-- Aerodynamic Car Silhouette (Top-Down Aerial View) -->
+            <rect x="22" y="15" width="20" height="36" rx="6.5" fill="url(#splashCarBody)" stroke="#e2e8f0" stroke-width="1.4"/>
+
+            <!-- Front Windshield Glass -->
+            <path d="M25 24 L27 19.5 Q32 18.5 37 19.5 L39 24 Q32 23 25 24 Z" fill="url(#splashGlassRoof)" stroke="#0284c7" stroke-width="0.8"/>
+
+            <!-- Center Panoramic Sunroof Glass -->
+            <rect x="26" y="26" width="12" height="11" rx="2" fill="url(#splashGlassRoof)" stroke="#38bdf8" stroke-width="0.6"/>
+
+            <!-- Rear Windshield Glass -->
+            <path d="M25.5 39.5 L27 42.5 Q32 43.5 37 42.5 L38.5 39.5 Q32 40.5 25.5 39.5 Z" fill="url(#splashGlassRoof)" stroke="#0284c7" stroke-width="0.8"/>
+
+            <!-- Protruding Side Mirrors (Left & Right) -->
+            <rect x="19.2" y="22" width="2.8" height="4.8" rx="1.4" fill="#ffffff" stroke="#94a3b8" stroke-width="0.6"/>
+            <rect x="42" y="22" width="2.8" height="4.8" rx="1.4" fill="#ffffff" stroke="#94a3b8" stroke-width="0.6"/>
+
+            <!-- Front Cyan LED Headlights -->
+            <circle cx="24.5" cy="16.5" r="1.5" fill="#38bdf8" filter="url(#splashGlow)"/>
+            <circle cx="39.5" cy="16.5" r="1.5" fill="#38bdf8" filter="url(#splashGlow)"/>
+
+            <!-- Rear LED Taillights -->
+            <line x1="24" y1="50" x2="28" y2="50" stroke="#ef4444" stroke-width="1.8" stroke-linecap="round"/>
+            <line x1="36" y1="50" x2="40" y2="50" stroke="#ef4444" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Live Bay Status Pill -->
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-[11px] font-mono font-bold tracking-widest uppercase mb-3 shadow-[0_0_15px_rgba(16,185,129,0.2)]">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+        <span>AERIAL BAY LOCK • SYNCHRONIZED</span>
+      </div>
+
+      <!-- App Title & Subtitle -->
+      <h1 class="text-3xl sm:text-4xl font-black tracking-tight text-white mb-1.5">
+        Park<span class="text-white">Karo</span>
+      </h1>
+      <p class="text-xs sm:text-sm text-slate-400 font-medium max-w-xs mb-6">
+        Live Spatial Parking Intelligence & Street Telemetry
+      </p>
+
+      <!-- Progress Bar & Status Feed -->
+      <div class="w-64 sm:w-72">
+        <div class="flex items-center justify-between text-[11px] font-mono font-bold text-slate-400 mb-1.5">
+          <span id="splashStatusText" class="truncate">Calibrating Satellite Imagery...</span>
+          <span id="splashProgressPct" class="text-emerald-400 ml-2">0%</span>
+        </div>
+        <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden border border-white/10 p-[1px]">
+          <div id="splashProgressBar" class="h-full bg-gradient-to-r from-emerald-400 via-cyan-400 to-emerald-400 rounded-full w-0 transition-all duration-300 ease-out shadow-[0_0_10px_#10b981]"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
   <!-- Ambient Background Gradients (ParkUsher Aesthetic) -->
   <div class="fixed top-0 left-1/4 w-[500px] h-[500px] bg-indigo-600/10 rounded-full blur-[140px] pointer-events-none -z-10"></div>
   <div class="fixed bottom-0 right-1/4 w-[550px] h-[550px] bg-emerald-500/10 rounded-full blur-[140px] pointer-events-none -z-10"></div>
@@ -291,10 +453,68 @@
   <header class="sticky top-0 z-40 px-3 sm:px-6 py-3">
     <div class="max-w-7xl mx-auto glass-panel rounded-3xl px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
       
-      <!-- Brand & Tagline -->
+      <!-- Brand & Tagline with Aerial Parked Car Logo (Viewed from the sky) -->
       <div class="flex items-center space-x-3 cursor-pointer" onclick="switchView('map')">
-        <div class="w-10 h-10 rounded-2xl bg-white text-black flex items-center justify-center shadow-lg shadow-white/20 ring-1 ring-white/40 font-black">
-          <i data-lucide="car" class="w-5 h-5 stroke-[2.5]"></i>
+        <div class="relative w-11 h-11 rounded-2xl bg-[#090d16] border border-emerald-500/40 flex items-center justify-center shadow-lg shadow-emerald-500/20 ring-1 ring-white/20 overflow-hidden group">
+          <!-- Ambient Parking Spot Glow -->
+          <div class="absolute inset-0 bg-gradient-to-b from-emerald-500/20 to-transparent pointer-events-none"></div>
+          
+          <!-- Aerial Parked Car SVG (Viewed from the sky) -->
+          <svg class="w-8 h-8 relative z-10 transition-transform duration-300 group-hover:scale-110" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="hdrHeadlightBeam" x1="0" y1="1" x2="0" y2="0">
+                <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.6"/>
+                <stop offset="100%" stop-color="#38bdf8" stop-opacity="0"/>
+              </linearGradient>
+              <linearGradient id="hdrCarBody" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#ffffff"/>
+                <stop offset="100%" stop-color="#cbd5e1"/>
+              </linearGradient>
+              <linearGradient id="hdrGlassRoof" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#0284c7"/>
+                <stop offset="100%" stop-color="#0f172a"/>
+              </linearGradient>
+            </defs>
+
+            <!-- Parking Bay Stall Lines (Top-down view from sky) -->
+            <line x1="12" y1="6" x2="12" y2="58" stroke="#10b981" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="52" y1="6" x2="52" y2="58" stroke="#10b981" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="12" y1="8" x2="52" y2="8" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-dasharray="4 3" opacity="0.6"/>
+            
+            <!-- Spot Sensor Puck on Bay Asphalt -->
+            <circle cx="32" cy="8" r="2.5" fill="#10b981"/>
+            
+            <!-- Forward Headlight Beams on Bay Surface -->
+            <polygon points="25,18 16,5 31,5 29,18" fill="url(#hdrHeadlightBeam)"/>
+            <polygon points="39,18 33,5 48,5 35,18" fill="url(#hdrHeadlightBeam)"/>
+
+            <!-- Car Drop Shadow -->
+            <rect x="21" y="16" width="22" height="38" rx="7" fill="#000000" opacity="0.6" filter="blur(2px)"/>
+
+            <!-- Car Body Silhouette (Top-down aerial view) -->
+            <rect x="22" y="15" width="20" height="36" rx="6.5" fill="url(#hdrCarBody)" stroke="#e2e8f0" stroke-width="1.2"/>
+
+            <!-- Front Windshield -->
+            <path d="M25 24 L27 20 Q32 19 37 20 L39 24 Q32 23 25 24 Z" fill="url(#hdrGlassRoof)" stroke="#0284c7" stroke-width="0.8"/>
+
+            <!-- Panoramic Glass Sunroof -->
+            <rect x="26" y="26" width="12" height="11" rx="2" fill="url(#hdrGlassRoof)" stroke="#38bdf8" stroke-width="0.6"/>
+
+            <!-- Rear Windshield -->
+            <path d="M25.5 39.5 L27 42.5 Q32 43.5 37 42.5 L38.5 39.5 Q32 40.5 25.5 39.5 Z" fill="url(#hdrGlassRoof)" stroke="#0284c7" stroke-width="0.8"/>
+
+            <!-- Left & Right Side Mirrors -->
+            <rect x="19.5" y="22" width="2.5" height="4.5" rx="1.2" fill="#ffffff" stroke="#94a3b8" stroke-width="0.6"/>
+            <rect x="42" y="22" width="2.5" height="4.5" rx="1.2" fill="#ffffff" stroke="#94a3b8" stroke-width="0.6"/>
+
+            <!-- Cyan Front Headlights -->
+            <circle cx="24.5" cy="16.5" r="1.3" fill="#38bdf8"/>
+            <circle cx="39.5" cy="16.5" r="1.3" fill="#38bdf8"/>
+
+            <!-- Red Rear Taillights -->
+            <line x1="24" y1="50" x2="28" y2="50" stroke="#ef4444" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="36" y1="50" x2="40" y2="50" stroke="#ef4444" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
         </div>
         <div>
           <div class="flex items-center space-x-2">
@@ -429,7 +649,7 @@
           
           <!-- Leaflet Map Container -->
           <div class="relative w-full h-[500px] lg:h-[620px] rounded-3xl overflow-hidden border border-slate-700/80 shadow-2xl bg-[#080b12] ring-1 ring-white/10">
-            <div id="map" class="w-full h-full z-0 dark-nav-tiles"></div>
+            <div id="map" class="w-full h-full z-0 street-vibrant-tiles"></div>
 
             <!-- FLOATING GLASS OVERLAY: Top Floating Island (City + Rule Filter) -->
             <div class="absolute top-4 left-4 right-4 z-[400] flex flex-wrap items-center justify-between gap-2 pointer-events-none">
@@ -473,6 +693,22 @@
               </div>
             </div>
 
+            <!-- FLOATING GLASS OVERLAY: Map View / Layer Switcher (Satellite vs Street vs Midnight) -->
+            <div class="absolute top-16 right-4 z-[400] glass-panel p-1 rounded-2xl flex items-center gap-1 shadow-2xl pointer-events-auto border border-white/15">
+              <button id="mapLayerSatelliteBtn" onclick="switchMapLayer('satellite')" class="map-layer-pill px-2.5 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 text-white/70 hover:text-white" title="Photorealistic Aerial Satellite Imagery">
+                <i data-lucide="satellite" class="w-3.5 h-3.5 text-cyan-400"></i>
+                <span class="font-bold">Satellite</span>
+              </button>
+              <button id="mapLayerStreetBtn" onclick="switchMapLayer('street')" class="map-layer-pill px-2.5 py-1.5 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 bg-white text-black shadow-md shadow-white/20" title="Vibrant Full-Color Street Map">
+                <i data-lucide="map" class="w-3.5 h-3.5 text-emerald-600"></i>
+                <span class="font-bold">Street</span>
+              </button>
+              <button id="mapLayerMidnightBtn" onclick="switchMapLayer('midnight')" class="map-layer-pill px-2.5 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 text-white/70 hover:text-white" title="Midnight Dark Navigation Mode">
+                <i data-lucide="moon" class="w-3.5 h-3.5 text-indigo-400"></i>
+                <span class="font-bold">Midnight</span>
+              </button>
+            </div>
+
             <!-- FLOATING GLASS OVERLAY: ParkUsher-Style Legend Capsule -->
             <div class="absolute bottom-4 left-4 z-[400] glass-panel px-3.5 py-2.5 rounded-2xl flex items-center gap-3.5 text-[11px] font-bold shadow-xl">
               <div class="flex items-center gap-1.5">
@@ -497,8 +733,8 @@
               <button onclick="leafletMap.zoomOut()" class="w-9 h-9 rounded-2xl glass-panel hover:bg-white/20 text-white flex items-center justify-center transition-all shadow-xl active:scale-90" title="Zoom out">
                 <i data-lucide="minus" class="w-4 h-4"></i>
               </button>
-              <button onclick="toggleMapTheme()" class="w-9 h-9 rounded-2xl glass-panel hover:bg-white/20 text-indigo-300 flex items-center justify-center transition-all shadow-xl active:scale-90" title="Toggle Midnight / Daylight Mode">
-                <i data-lucide="moon" class="w-4 h-4" id="mapThemeIcon"></i>
+              <button onclick="cycleMapLayer()" class="w-9 h-9 rounded-2xl glass-panel hover:bg-white/20 text-cyan-300 flex items-center justify-center transition-all shadow-xl active:scale-90" title="Cycle Map Layer (Satellite / Street / Midnight)">
+                <i data-lucide="layers" class="w-4 h-4" id="mapThemeIcon"></i>
               </button>
             </div>
 
@@ -1194,29 +1430,69 @@
       renderUI();
     }
 
-    let isDarkMapTheme = true;
+    // Map Layers Setup (Satellite vs Vibrant Street vs Midnight)
+    let currentMapLayer = 'street';
+    let streetTileLayer = null;
+    let satelliteTileLayer = null;
 
-    function toggleMapTheme() {
-      isDarkMapTheme = !isDarkMapTheme;
+    function switchMapLayer(mode) {
+      currentMapLayer = mode;
       const mapElem = document.getElementById('map');
-      const icon = document.getElementById('mapThemeIcon');
-      if (isDarkMapTheme) {
-        mapElem.classList.add('dark-nav-tiles');
-        if (icon) icon.setAttribute('data-lucide', 'moon');
-        showToast('🌙 Midnight Navigation Mode Enabled', 'info');
-      } else {
+      
+      const buttons = {
+        satellite: document.getElementById('mapLayerSatelliteBtn'),
+        street: document.getElementById('mapLayerStreetBtn'),
+        midnight: document.getElementById('mapLayerMidnightBtn')
+      };
+
+      Object.entries(buttons).forEach(([key, btn]) => {
+        if (!btn) return;
+        if (key === mode) {
+          btn.className = 'map-layer-pill px-2.5 py-1.5 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 bg-white text-black shadow-md shadow-white/20';
+        } else {
+          btn.className = 'map-layer-pill px-2.5 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 text-white/70 hover:text-white';
+        }
+      });
+
+      if (!leafletMap) return;
+
+      if (mode === 'satellite') {
+        if (leafletMap.hasLayer(streetTileLayer)) leafletMap.removeLayer(streetTileLayer);
+        if (!leafletMap.hasLayer(satelliteTileLayer)) satelliteTileLayer.addTo(leafletMap);
         mapElem.classList.remove('dark-nav-tiles');
-        if (icon) icon.setAttribute('data-lucide', 'sun');
-        showToast('☀️ Daylight Cartography Enabled', 'info');
+        mapElem.classList.remove('street-vibrant-tiles');
+        mapElem.classList.add('satellite-tiles');
+        showToast('🛰️ Satellite Imagery Activated', 'info');
+      } else if (mode === 'street') {
+        if (leafletMap.hasLayer(satelliteTileLayer)) leafletMap.removeLayer(satelliteTileLayer);
+        if (!leafletMap.hasLayer(streetTileLayer)) streetTileLayer.addTo(leafletMap);
+        mapElem.classList.remove('dark-nav-tiles');
+        mapElem.classList.remove('satellite-tiles');
+        mapElem.classList.add('street-vibrant-tiles');
+        showToast('🗺️ Vibrant Street Map Activated', 'info');
+      } else if (mode === 'midnight') {
+        if (leafletMap.hasLayer(satelliteTileLayer)) leafletMap.removeLayer(satelliteTileLayer);
+        if (!leafletMap.hasLayer(streetTileLayer)) streetTileLayer.addTo(leafletMap);
+        mapElem.classList.remove('street-vibrant-tiles');
+        mapElem.classList.remove('satellite-tiles');
+        mapElem.classList.add('dark-nav-tiles');
+        showToast('🌙 Midnight Dark Map Activated', 'info');
       }
+
       lucide.createIcons();
+    }
+
+    function cycleMapLayer() {
+      const sequence = ['street', 'satellite', 'midnight'];
+      const nextIdx = (sequence.indexOf(currentMapLayer) + 1) % sequence.length;
+      switchMapLayer(sequence[nextIdx]);
     }
 
     function downloadPassReceipt() {
       showToast('📲 Parking Pass downloaded to Apple Wallet / Offline Pass!', 'success');
     }
 
-    // Initialize Map with 2026 Navigation Styling
+    // Initialize Map with 2026 Navigation Styling & Multi-Layer Engine
     function initMap() {
       if (leafletMap) return;
 
@@ -1226,11 +1502,20 @@
         zoomControl: false // Using our modern floating glass controls
       });
 
-      // OpenStreetMap clean tiles (transformed into sleek dark vector theme via .dark-nav-tiles)
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      // Street Layer (Full Color Vibrant OpenStreetMap)
+      streetTileLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         maxZoom: 19
-      }).addTo(leafletMap);
+      });
+
+      // Satellite Layer (Esri Photorealistic World Imagery)
+      satelliteTileLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+        attribution: 'Tiles &copy; Esri &mdash; Source: Esri, Maxar, Earthstar Geographics, and the GIS User Community',
+        maxZoom: 19
+      });
+
+      // Activate current layer
+      switchMapLayer(currentMapLayer);
 
       leafletMap.on('click', function(e) {
         const latInput = document.getElementById('newSpotLat');
@@ -2367,8 +2652,65 @@
       });
     }
 
+    // App Startup Loading Splash Animation
+    function runSplashAnimation() {
+      const progressBar = document.getElementById('splashProgressBar');
+      const progressPct = document.getElementById('splashProgressPct');
+      const statusText = document.getElementById('splashStatusText');
+      if (!progressBar || !progressPct || !statusText) return;
+
+      const milestones = [
+        { at: 15, text: 'Connecting to PostGIS Geospatial Engine...' },
+        { at: 45, text: 'Calibrating Satellite Imagery & Street Cartography...' },
+        { at: 80, text: 'Indexing 140+ Live Parking Sensors & Zones...' },
+        { at: 100, text: 'Spatial Grid Synchronized • Ready' }
+      ];
+
+      const startTime = performance.now();
+      const duration = 1600; // 1.6 seconds
+
+      function step(now) {
+        const elapsed = now - startTime;
+        const progress = Math.min(100, Math.round((elapsed / duration) * 100));
+        
+        progressBar.style.width = `${progress}%`;
+        progressPct.innerText = `${progress}%`;
+
+        for (let i = milestones.length - 1; i >= 0; i--) {
+          if (progress >= milestones[i].at) {
+            statusText.innerText = milestones[i].text;
+            break;
+          }
+        }
+
+        if (progress < 100) {
+          requestAnimationFrame(step);
+        } else {
+          setTimeout(() => {
+            dismissSplash();
+          }, 400);
+        }
+      }
+
+      requestAnimationFrame(step);
+    }
+
+    function dismissSplash() {
+      const splash = document.getElementById('appIntroSplash');
+      if (!splash || splash.classList.contains('splash-dismissed')) return;
+      splash.classList.add('splash-dismissed');
+      splash.style.opacity = '0';
+      splash.style.transform = 'scale(1.06)';
+      splash.style.pointerEvents = 'none';
+      setTimeout(() => {
+        splash.style.display = 'none';
+      }, 700);
+    }
+
     // Startup
     window.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      runSplashAnimation();
       initMap();
       fetchData();
       setInterval(fetchData, 8000);
