@@ -1,21 +1,40 @@
 # 🚗 ParkKaro - Smart Parking Intelligence Platform
 
 > **"Find. Check. Park."**  
-> India-focused AI parking intelligence platform with PostGIS spatial tracking, real-time availability, and live slot booking.
+> India-focused AI parking intelligence platform with PostGIS spatial tracking, dual ML pipeline (Rush Predictor + Sign Scanner), and live 2-Wheeler / 4-Wheeler slot booking.
 
 ---
 
-## 🏗️ Architecture
+## 🏗️ Project Architecture & Directory Layout
 
 - **Database**: **Supabase (PostgreSQL 15 + PostGIS)** with spatial Point geography (`location`).
-- **Backend & API**: **FastAPI** (`services/api`) connecting to Supabase via SQLAlchemy 2.0 & Psycopg2.
-- **Frontend & UI**:
-  - **Embedded Web UI** (`services/api/app/static/index.html`) served automatically on `http://localhost:8000/`.
-  - **Next.js 14 Web App** (`apps/web`) with Tailwind CSS & Leaflet (OpenStreetMap) on `http://localhost:3000/`.
+- **Backend & Embedded Web UI**: **FastAPI** (`backend/`) serving `/home` ([home.html](backend/static/home.html)), `/` ([index.html](backend/static/index.html)), and REST APIs (`/api/*` & `/api/v1/*`) with `parkkaro99@gmail.com` feedback contact.
+
+```
+ParkKaro/
+├── backend/                   # FastAPI Server + Embedded ParkKaro Web UI + Supabase/PostGIS
+│   ├── static/                # ParkKaro light-theme UI (home.html, index.html, manifest.json, sw.js)
+│   ├── models/                # Trained Rush Predictor models (parking_occupancy_model.joblib, .pkl)
+│   ├── routers/
+│   │   ├── spots.py           # /api/spots, /api/nearest, /api/stats (PostGIS spatial queries)
+│   │   ├── bookings.py        # /api/book, /api/bookings, /checkin, /leave-early, /end
+│   │   └── ai.py              # /api/predict-rush
+│   ├── main.py                # FastAPI app entry point + CORS + static UI mount + /api/v1 compat
+│   └── requirements.txt       # fastapi, uvicorn, psycopg2-binary, scikit-learn, etc.
+│
+├── frontend/                  # Next.js PWA
+│   ├── public/                # PWA icons, manifest.json, home.html, index.html, sw.js
+│   └── src/
+│
+├── ml/                        # Model Training & Notebooks
+├── data/                      # Geospatial & City Parking Data
+├── .gitignore
+└── README.md
+```
 
 ---
 
-## 📍 5 Pre-seeded PostGIS Spots in Supabase
+## 📍 Pre-seeded PostGIS Spots in Supabase
 
 | ID | Spot Name | City | PostGIS Coordinates | Type | Pricing | Rule Description |
 |:---|:---|:---|:---|:---|:---|:---|
@@ -27,56 +46,75 @@
 
 ---
 
-## 🚀 Quick Start (One-Click Launch)
+## 🚀 Quick Start
 
-### Instant All-in-One Launcher (Recommended)
+### Instant All-in-One Launcher
 Double click `start_parkkaro.bat` or run in PowerShell:
 ```powershell
 .\start_parkkaro.ps1
 ```
-This automatically:
-1. Connects to the Supabase PostGIS database.
-2. Starts the FastAPI server on port 8000.
-3. Automatically opens the interactive UI in your default browser at **[http://localhost:8000](http://localhost:8000)**!
+
+### 1. Backend & Embedded Web UI (Port 8000)
+
+```powershell
+cd backend
+pip install -r requirements.txt
+python -m uvicorn main:app --reload --host 0.0.0.0 --port 8000
+```
+
+- **Landing Page**: [http://localhost:8000/home](http://localhost:8000/home)
+- **Live Map & App UI**: [http://localhost:8000/](http://localhost:8000/)
+- **Health Check**: [http://localhost:8000/api/health](http://localhost:8000/api/health) (and `/api/v1/health`)
+- **Platform Stats**: [http://localhost:8000/api/stats](http://localhost:8000/api/stats) (and `/api/v1/stats`)
+- **Interactive Swagger Docs**: [http://localhost:8000/docs](http://localhost:8000/docs)
+
+### 2. Next.js Frontend Setup (Port 3000)
+
+```powershell
+cd frontend
+npm install
+npm run dev
+```
+
+- Open **[http://localhost:3000](http://localhost:3000)** in your browser or mobile device.
 
 ---
 
-### Running Individual Services
+## 🎨 Embedded UI Highlights
 
-#### 1. FastAPI Backend & Web UI (Port 8000)
-```powershell
-.\run_backend.ps1
-```
-* Interactive UI: [http://localhost:8000](http://localhost:8000)
-* API Health Check: [http://localhost:8000/api/v1/health](http://localhost:8000/api/v1/health)
-* Platform Statistics: [http://localhost:8000/api/v1/stats](http://localhost:8000/api/v1/stats)
-* Interactive Swagger Docs: [http://localhost:8000/docs](http://localhost:8000/docs)
-
-#### 2. Frontend Server (Port 3000)
-```powershell
-.\run_frontend.ps1
-```
-Open **[http://localhost:3000](http://localhost:3000)** in your browser!
+1. **ParkKaro Light Theme & Branding**: Crisp white (`#FFFFFF`), Rapido yellow (`#FFCA20`), royal navy (`#1C4178`), and bird's-eye parked car logo.
+2. **Hero AI Sign Scanner + Interactive Map**: Inline sign scanner on `/home`, Satellite / Street / Midnight map switcher, and live PostGIS parking spots on `/`.
+3. **Real-Time Booking & Countdown Timers**: 2W/4W capacity counters, booking drawer, pass modal, and 1-click session completion.
+4. **Feedback & Support**: Reach out anytime at `parkkaro99@gmail.com`.
 
 ---
 
-## 🎨 UI Features
+## 📡 API Endpoints Reference
 
-1. **Interactive Live OpenStreetMap**:
-   - Color-coded pins (🟢 Free, 🔵 Paid, 🔴 Tow-Away / No Parking with animated danger pulse).
-   - Click markers to inspect live available slots, pricing, and book directly from the map.
-2. **Real-Time Booking & Slot Occupancy**:
-   - Live Car & Bike slot counters with animated capacity progress bars.
-   - Dynamic pricing calculator (Free vs hourly rates).
-   - Indian vehicle registration support (e.g. `MP-09-AB-1234`, `DL-01-AX-9999`).
-3. **Live Parking Meters & Countdown Timers**:
-   - Active parking session drawer with real-time countdown.
-   - Digital Parking Pass modal with barcode simulation and ticket reference.
-   - One-click "End Park" button that instantly frees up slots back in Supabase.
-4. **Register New Parking Zones (PostGIS Integration)**:
-   - "Add Spot" modal with PostGIS point coordinate generation.
-   - Click anywhere on the map or input latitude & longitude to create new spots.
-5. **City & Type Filters**:
-   - Quick city filters (Indore, Chandigarh, Goa, All).
-   - Filter by Free, Paid, or Tow-Away zones.
-   - Search by spot name, address, or landmark.
+Both `/api/*` and `/api/v1/*` prefixes are supported:
+
+### Spots & Spatial Routes (`routers/spots.py`)
+- `GET /api/spots?city={city}`: Returns spots with real-time available car and bike slot counts.
+- `POST /api/spots`: Creates a new parking spot with PostGIS Point geometry.
+- `GET /api/spots/{spot_id}`: Spot details by ID.
+- `GET /api/nearest?latitude={lat}&longitude={lng}&vehicle_type={car|bike}&limit=3`: PostGIS nearest-neighbor query.
+- `GET /api/stats`: Platform-wide parking & booking statistics.
+
+### Bookings Routes (`routers/bookings.py`)
+- `POST /api/book` & `POST /api/bookings`: Creates a reservation with `SELECT ... FOR UPDATE` locking.
+- `GET /api/bookings`: Returns active user parking sessions with remaining time.
+- `POST /api/bookings/{id}/checkin`: 15-min GPS arrival confirmation.
+- `POST /api/bookings/{id}/leave-early`: Early slot release.
+- `POST /api/bookings/{id}/end`: Completes parking session and frees the slot in real time.
+
+### AI Inference Routes (`routers/ai.py`)
+- `GET /api/predict-rush?spot_id={id}&hour={0-23}&day_of_week={0-6}`: Returns occupancy probability.
+
+---
+
+## 👥 Team Branch & Contribution Guide
+
+1. **Main Branch Policy**:
+   - `main`: Production-ready code.
+2. **Branch Naming Conventions**:
+   - `feat/frontend-<feature-name>`, `feat/backend-<endpoint>`, `feat/ml-<model-name>`, `data/<city-name>`.

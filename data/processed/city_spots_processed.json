@@ -1,0 +1,67 @@
+[
+  {
+    "spot_id": 1,
+    "name": "Rajwada Main Parking",
+    "city": "Indore",
+    "latitude": 22.7185,
+    "longitude": 75.8553,
+    "total_car_slots": 45,
+    "total_bike_slots": 120,
+    "is_paid": true,
+    "price_per_hour": 20,
+    "rule_type": "PAID",
+    "rule_description": "Paid municipal parking: ₹20/hr cars, ₹10/hr bikes"
+  },
+  {
+    "spot_id": 2,
+    "name": "Vijay Nagar Square Lot",
+    "city": "Indore",
+    "latitude": 22.7533,
+    "longitude": 75.8937,
+    "total_car_slots": 30,
+    "total_bike_slots": 60,
+    "is_paid": false,
+    "price_per_hour": 0,
+    "rule_type": "ALLOWED",
+    "rule_description": "Free public parking allowed till 10 PM"
+  },
+  {
+    "spot_id": 3,
+    "name": "Sector 17 Plaza Parking",
+    "city": "Chandigarh",
+    "latitude": 30.7415,
+    "longitude": 76.7821,
+    "total_car_slots": 80,
+    "total_bike_slots": 200,
+    "is_paid": true,
+    "price_per_hour": 30,
+    "rule_type": "PAID",
+    "rule_description": "Smart parking zone: ₹30/hr"
+  },
+  {
+    "spot_id": 4,
+    "name": "Elante Side Road",
+    "city": "Chandigarh",
+    "latitude": 30.7055,
+    "longitude": 76.8013,
+    "total_car_slots": 0,
+    "total_bike_slots": 0,
+    "is_paid": false,
+    "price_per_hour": 0,
+    "rule_type": "NO_PARKING",
+    "rule_description": "Strict No Parking / Tow-Away Zone 9 AM - 9 PM"
+  },
+  {
+    "spot_id": 5,
+    "name": "Panaji Municipal Market",
+    "city": "Goa",
+    "latitude": 15.4989,
+    "longitude": 73.8278,
+    "total_car_slots": 50,
+    "total_bike_slots": 100,
+    "is_paid": true,
+    "price_per_hour": 20,
+    "rule_type": "PAID",
+    "rule_description": "Pay & Park zone: ₹20/hr"
+  }
+]
