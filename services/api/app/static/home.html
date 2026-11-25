@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ParkKaro — India's #1 Smart Parking App</title>
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #07090f;
+      --surface: rgba(255,255,255,0.055);
+      --border: rgba(255,255,255,0.10);
+      --border-hover: rgba(255,255,255,0.22);
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+      --accent: #10b981;
+      --accent-glow: rgba(16,185,129,0.25);
+      --blue: #3b82f6;
+      --indigo: #6366f1;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ─── AMBIENT BACKGROUND ORBS ─── */
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(130px);
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.55;
+    }
+    .orb-1 { width: 600px; height: 600px; background: radial-gradient(circle, #10b981 0%, transparent 70%); top: -180px; left: -180px; }
+    .orb-2 { width: 500px; height: 500px; background: radial-gradient(circle, #6366f1 0%, transparent 70%); bottom: -150px; right: -150px; }
+    .orb-3 { width: 350px; height: 350px; background: radial-gradient(circle, #3b82f6 0%, transparent 70%); top: 50%; right: 10%; }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 0 5%;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(7,9,15,0.75);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .nav-logo-badge {
+      width: 42px; height: 42px;
+      border-radius: 14px;
+      background: #090d16;
+      border: 1.5px solid rgba(16,185,129,0.5);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 0 20px rgba(16,185,129,0.2);
+      position: relative;
+      overflow: hidden;
+    }
+    .nav-logo-badge::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(16,185,129,0.15), transparent);
+    }
+    .nav-logo-text {
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #fff;
+    }
+    .nav-logo-text span { color: #10b981; }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+      position: relative;
+    }
+    .nav-links a:hover, .nav-links a.active { color: #fff; }
+    .nav-links a.active::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0; right: 0;
+      height: 2px;
+      background: #10b981;
+      border-radius: 2px;
+    }
+
+    .nav-cta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .btn-nav-app {
+      padding: 9px 22px;
+      background: #fff;
+      color: #000;
+      font-size: 13px;
+      font-weight: 800;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+      box-shadow: 0 4px 16px rgba(255,255,255,0.15);
+    }
+    .btn-nav-app:hover {
+      background: #10b981;
+      color: #fff;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 24px rgba(16,185,129,0.4);
+    }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 60px;
+      padding: 120px 5% 80px;
+      position: relative;
+      z-index: 1;
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+
+    .hero-left { display: flex; flex-direction: column; }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(16,185,129,0.1);
+      border: 1px solid rgba(16,185,129,0.3);
+      color: #10b981;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 999px;
+      width: fit-content;
+      margin-bottom: 24px;
+    }
+    .hero-eyebrow .dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: #10b981;
+      animation: pulse-dot 2s infinite;
+    }
+    @keyframes pulse-dot {
+      0%,100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.7); }
+    }
+
+    .hero-title {
+      font-size: clamp(38px, 5.5vw, 68px);
+      font-weight: 900;
+      line-height: 1.08;
+      letter-spacing: -1.5px;
+      color: #fff;
+      margin-bottom: 20px;
+    }
+    .hero-title .highlight {
+      background: linear-gradient(135deg, #10b981 0%, #3b82f6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: 17px;
+      font-weight: 500;
+      color: var(--muted);
+      line-height: 1.65;
+      max-width: 440px;
+      margin-bottom: 44px;
+    }
+
+    /* ─── SEARCH CARD ─── */
+    .search-card {
+      background: rgba(255,255,255,0.055);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 28px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.08);
+      max-width: 480px;
+    }
+
+    .search-field {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(255,255,255,0.065);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px 16px;
+      margin-bottom: 10px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-field:focus-within {
+      border-color: rgba(16,185,129,0.5);
+      box-shadow: 0 0 0 3px rgba(16,185,129,0.1);
+    }
+    .search-field:last-of-type { margin-bottom: 0; }
+    .search-field .icon { color: #10b981; flex-shrink: 0; }
+    .search-field.blue-icon .icon { color: #6366f1; }
+    .search-field input {
+      background: none;
+      border: none;
+      outline: none;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 500;
+      font-family: inherit;
+      width: 100%;
+    }
+    .search-field input::placeholder { color: var(--muted); }
+
+    .search-divider {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 2px 16px;
+      margin: 2px 0;
+    }
+    .search-divider-line { flex: 1; height: 1px; background: var(--border); }
+    .search-divider-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      background: var(--bg);
+    }
+
+    .btn-find {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      margin-top: 18px;
+      padding: 16px;
+      background: #10b981;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 800;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.25s;
+      box-shadow: 0 8px 28px rgba(16,185,129,0.4);
+      letter-spacing: 0.01em;
+    }
+    .btn-find:hover {
+      background: #0d9e70;
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(16,185,129,0.55);
+    }
+    .btn-find:active { transform: translateY(0); }
+
+    /* ─── HERO RIGHT: Aerial Parking Illustration ─── */
+    .hero-right {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .illustration-wrap {
+      position: relative;
+      width: 100%;
+      max-width: 560px;
+    }
+
+    /* Glow circle behind illustration */
+    .hero-glow {
+      position: absolute;
+      inset: -60px;
+      background: radial-gradient(circle at center, rgba(16,185,129,0.12) 0%, transparent 65%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .hero-illustration-bg {
+      width: 100%;
+      aspect-ratio: 1.1 / 1;
+      border-radius: 32px;
+      background: rgba(255,255,255,0.045);
+      border: 1px solid var(--border);
+      box-shadow: 0 30px 80px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.07);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(20px);
+    }
+
+    /* Aerial parking lot grid */
+    .parking-visual {
+      width: 85%;
+      height: 85%;
+      position: relative;
+    }
+
+    /* Floating stat badges on the illustration */
+    .stat-badge {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(10,14,23,0.90);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 10px 16px;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+      z-index: 10;
+      animation: float-badge 4s ease-in-out infinite;
+    }
+    .stat-badge:nth-child(2) { animation-delay: 1.3s; }
+    .stat-badge:nth-child(3) { animation-delay: 2.6s; }
+    @keyframes float-badge {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+    .stat-badge .badge-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .stat-badge-1 { top: -18px; left: -20px; }
+    .stat-badge-2 { bottom: -18px; left: 20px; }
+    .stat-badge-3 { top: 30%; right: -24px; }
+
+    /* ─── FEATURES SECTION ─── */
+    .section {
+      position: relative;
+      z-index: 1;
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 100px 5%;
+    }
+
+    .section-eyebrow {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 64px;
+    }
+    .section-eyebrow .label {
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #10b981;
+      margin-bottom: 14px;
+    }
+    .section-eyebrow h2 {
+      font-size: clamp(28px, 4vw, 48px);
+      font-weight: 900;
+      letter-spacing: -1px;
+      color: #fff;
+      margin-bottom: 16px;
+    }
+    .section-eyebrow p {
+      font-size: 16px;
+      color: var(--muted);
+      max-width: 500px;
+      line-height: 1.65;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .feature-card {
+      background: rgba(255,255,255,0.045);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 32px 28px;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .feature-card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    }
+
+    .feature-icon {
+      width: 52px; height: 52px;
+      border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 20px;
+      position: relative;
+    }
+    .feature-icon.emerald { background: rgba(16,185,129,0.12); border: 1px solid rgba(16,185,129,0.25); color: #10b981; }
+    .feature-icon.blue    { background: rgba(59,130,246,0.12);  border: 1px solid rgba(59,130,246,0.25);  color: #3b82f6; }
+    .feature-icon.indigo  { background: rgba(99,102,241,0.12);  border: 1px solid rgba(99,102,241,0.25);  color: #6366f1; }
+    .feature-icon.amber   { background: rgba(245,158,11,0.12);  border: 1px solid rgba(245,158,11,0.25);  color: #f59e0b; }
+    .feature-icon.rose    { background: rgba(244,63,94,0.12);   border: 1px solid rgba(244,63,94,0.25);   color: #f43f5e; }
+    .feature-icon.cyan    { background: rgba(6,182,212,0.12);   border: 1px solid rgba(6,182,212,0.25);   color: #06b6d4; }
+
+    .feature-card h3 {
+      font-size: 17px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 10px;
+      letter-spacing: -0.3px;
+    }
+    .feature-card p {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    /* ─── CITIES SECTION ─── */
+    .cities-section {
+      position: relative;
+      z-index: 1;
+      padding: 0 0 100px;
+      max-width: 1300px;
+      margin: 0 auto;
+      padding-left: 5%;
+      padding-right: 5%;
+    }
+
+    .cities-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .city-card {
+      background: rgba(255,255,255,0.045);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 28px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      transition: all 0.25s;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+    }
+    .city-card:hover {
+      border-color: rgba(16,185,129,0.4);
+      background: rgba(16,185,129,0.06);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+    }
+    .city-emoji { font-size: 36px; }
+    .city-info h3 { font-size: 16px; font-weight: 800; color: #fff; margin-bottom: 4px; }
+    .city-info p { font-size: 12px; color: var(--muted); font-weight: 600; }
+    .city-arrow { margin-left: auto; color: var(--muted); transition: color 0.2s, transform 0.2s; }
+    .city-card:hover .city-arrow { color: #10b981; transform: translateX(4px); }
+
+    /* ─── HOW IT WORKS ─── */
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      position: relative;
+    }
+    .steps-grid::before {
+      content: '';
+      position: absolute;
+      top: 36px; left: 12%; right: 12%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), var(--border), transparent);
+      z-index: 0;
+    }
+
+    .step-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+    .step-num {
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.055);
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+      font-weight: 900;
+      color: #10b981;
+      margin-bottom: 20px;
+      position: relative;
+      box-shadow: 0 0 24px rgba(16,185,129,0.15);
+    }
+    .step-num::after {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      border: 1px dashed rgba(16,185,129,0.25);
+    }
+    .step-card h4 { font-size: 15px; font-weight: 800; color: #fff; margin-bottom: 8px; }
+    .step-card p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+    /* ─── ABOUT SECTION ─── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .about-left h2 {
+      font-size: clamp(28px, 3.5vw, 44px);
+      font-weight: 900;
+      letter-spacing: -1px;
+      color: #fff;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+    .about-left p {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.75;
+      margin-bottom: 36px;
+    }
+    .about-stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+    .stat-box {
+      background: rgba(255,255,255,0.045);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 22px;
+    }
+    .stat-box .num {
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #10b981;
+      margin-bottom: 4px;
+    }
+    .stat-box .label { font-size: 12px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+
+    .about-right {
+      position: relative;
+    }
+    .about-visual {
+      width: 100%;
+      aspect-ratio: 1;
+      border-radius: 28px;
+      background: rgba(255,255,255,0.045);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--border);
+      padding: 48px 5%;
+      max-width: 1300px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    footer .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    footer .footer-brand .name { font-size: 18px; font-weight: 900; color: #fff; }
+    footer .footer-brand .name span { color: #10b981; }
+    footer p { font-size: 13px; color: var(--muted); }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a { font-size: 13px; color: var(--muted); text-decoration: none; font-weight: 600; transition: color 0.2s; }
+    .footer-links a:hover { color: #fff; }
+    footer hr { border: none; border-top: 1px solid var(--border); width: 100%; }
+
+    /* ─── SECTION SEPARATOR ─── */
+    .sep {
+      border: none;
+      border-top: 1px solid var(--border);
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+
+    /* ─── MOBILE ─── */
+    @media (max-width: 1024px) {
+      .hero { grid-template-columns: 1fr; gap: 60px; }
+      .hero-right { order: -1; }
+      .features-grid { grid-template-columns: repeat(2, 1fr); }
+      .cities-grid { grid-template-columns: repeat(2, 1fr); }
+      .steps-grid { grid-template-columns: repeat(2, 1fr); }
+      .steps-grid::before { display: none; }
+      .about-grid { grid-template-columns: 1fr; gap: 40px; }
+    }
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .features-grid { grid-template-columns: 1fr; }
+      .cities-grid { grid-template-columns: 1fr; }
+      .steps-grid { grid-template-columns: 1fr; }
+      .about-stats { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Ambient orbs -->
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+
+  <!-- ═══════════════ NAV ═══════════════ -->
+  <nav>
+    <a class="nav-logo" href="/home">
+      <div class="nav-logo-badge">
+        <svg width="22" height="22" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <line x1="12" y1="6" x2="12" y2="58" stroke="#10b981" stroke-width="3" stroke-linecap="round"/>
+          <line x1="52" y1="6" x2="52" y2="58" stroke="#10b981" stroke-width="3" stroke-linecap="round"/>
+          <line x1="12" y1="8" x2="52" y2="8" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-dasharray="4 3" opacity="0.6"/>
+          <circle cx="32" cy="8" r="3" fill="#10b981"/>
+          <rect x="22" y="15" width="20" height="36" rx="6.5" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.2"/>
+          <path d="M25 24 L27 20 Q32 19 37 20 L39 24 Q32 23 25 24 Z" fill="#0284c7"/>
+          <rect x="26" y="26" width="12" height="11" rx="2" fill="#0369a1"/>
+          <circle cx="24.5" cy="16.5" r="1.5" fill="#38bdf8"/>
+          <circle cx="39.5" cy="16.5" r="1.5" fill="#38bdf8"/>
+          <line x1="24" y1="50" x2="28" y2="50" stroke="#ef4444" stroke-width="2" stroke-linecap="round"/>
+          <line x1="36" y1="50" x2="40" y2="50" stroke="#ef4444" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <span class="nav-logo-text">Park<span>Karo</span></span>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="/home" class="active">Home</a></li>
+      <li><a href="#about">About Us</a></li>
+      <li><a href="#contact">Contact Us</a></li>
+    </ul>
+
+    <div class="nav-cta">
+      <a href="/" class="btn-nav-app">Open Live Map</a>
+    </div>
+  </nav>
+
+  <!-- ═══════════════ HERO ═══════════════ -->
+  <section id="home">
+    <div class="hero">
+
+      <!-- LEFT: Headline + Search -->
+      <div class="hero-left">
+        <div class="hero-eyebrow">
+          <span class="dot"></span>
+          India's Smartest Parking Network
+        </div>
+
+        <h1 class="hero-title">
+          India's #1<br/>
+          <span class="highlight">Smart Parking</span><br/>
+          Intelligence App
+        </h1>
+
+        <p class="hero-sub">
+          Find, book, and navigate to legal parking spots in seconds. Real-time slot availability across Indore, Chandigarh, Goa and beyond.
+        </p>
+
+        <div class="search-card">
+          <div class="search-field">
+            <i data-lucide="map-pin" class="icon" style="width:18px;height:18px;"></i>
+            <input type="text" id="searchCity" placeholder="Enter your city (e.g. Indore, Goa)" />
+          </div>
+
+          <div class="search-divider">
+            <div class="search-divider-line"></div>
+            <div class="search-divider-dot"></div>
+            <div class="search-divider-line"></div>
+          </div>
+
+          <div class="search-field blue-icon">
+            <i data-lucide="search" class="icon" style="width:18px;height:18px;"></i>
+            <input type="text" id="searchQuery" placeholder="Locality, landmark or spot name" />
+          </div>
+
+          <a href="/" id="findParkingBtn" class="btn-find">
+            <i data-lucide="navigation" style="width:18px;height:18px;"></i>
+            Find Parking Now
+          </a>
+        </div>
+      </div>
+
+      <!-- RIGHT: Aerial Parking Illustration -->
+      <div class="hero-right">
+        <div class="illustration-wrap">
+          <div class="hero-glow"></div>
+
+          <!-- Floating stat badges -->
+          <div class="stat-badge stat-badge-1">
+            <span class="badge-dot" style="background:#10b981;"></span>
+            <span style="color:#94a3b8;font-size:11px;">Live Spots</span>
+            <span style="color:#fff;font-size:14px;">141+</span>
+          </div>
+          <div class="stat-badge stat-badge-2">
+            <span class="badge-dot" style="background:#3b82f6;"></span>
+            <span style="color:#94a3b8;font-size:11px;">Cities</span>
+            <span style="color:#fff;font-size:14px;">3 Cities</span>
+          </div>
+          <div class="stat-badge stat-badge-3">
+            <span class="badge-dot" style="background:#f59e0b;"></span>
+            <span style="color:#94a3b8;font-size:11px;">Avg Save</span>
+            <span style="color:#fff;font-size:14px;">12 min</span>
+          </div>
+
+          <div class="hero-illustration-bg">
+            <svg class="parking-visual" viewBox="0 0 400 360" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="asphalt" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#0f172a"/>
+                  <stop offset="100%" stop-color="#070b14"/>
+                </linearGradient>
+                <linearGradient id="carBodyW" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#ffffff"/>
+                  <stop offset="100%" stop-color="#cbd5e1"/>
+                </linearGradient>
+                <linearGradient id="carBodyB" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#94a3b8"/>
+                  <stop offset="100%" stop-color="#475569"/>
+                </linearGradient>
+                <linearGradient id="carBodyR" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#f87171"/>
+                  <stop offset="100%" stop-color="#dc2626"/>
+                </linearGradient>
+                <linearGradient id="glass" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#0284c7"/>
+                  <stop offset="100%" stop-color="#0f172a"/>
+                </linearGradient>
+                <radialGradient id="sensorGlow" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#10b981" stop-opacity="0.9"/>
+                  <stop offset="100%" stop-color="#10b981" stop-opacity="0"/>
+                </radialGradient>
+                <filter id="glow">
+                  <feGaussianBlur stdDeviation="2.5" result="blur"/>
+                  <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+                </filter>
+                <filter id="shadow">
+                  <feGaussianBlur stdDeviation="4" result="blur"/>
+                  <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+                </filter>
+              </defs>
+
+              <!-- Asphalt base -->
+              <rect width="400" height="360" fill="url(#asphalt)" rx="12"/>
+
+              <!-- Road markings (parking lot lines) -->
+              <!-- Horizontal dividers -->
+              <line x1="0" y1="130" x2="400" y2="130" stroke="#1e293b" stroke-width="2"/>
+              <line x1="0" y1="230" x2="400" y2="230" stroke="#1e293b" stroke-width="2"/>
+
+              <!-- Vertical stall lines (top row) -->
+              <line x1="60" y1="10" x2="60" y2="130" stroke="#10b981" stroke-width="1.8" stroke-linecap="round" opacity="0.7"/>
+              <line x1="130" y1="10" x2="130" y2="130" stroke="#10b981" stroke-width="1.8" stroke-linecap="round" opacity="0.7"/>
+              <line x1="200" y1="10" x2="200" y2="130" stroke="#10b981" stroke-width="1.8" stroke-linecap="round" opacity="0.7"/>
+              <line x1="270" y1="10" x2="270" y2="130" stroke="#10b981" stroke-width="1.8" stroke-linecap="round" opacity="0.7"/>
+              <line x1="340" y1="10" x2="340" y2="130" stroke="#10b981" stroke-width="1.8" stroke-linecap="round" opacity="0.7"/>
+
+              <!-- Vertical stall lines (bottom row) -->
+              <line x1="60" y1="230" x2="60" y2="350" stroke="#10b981" stroke-width="1.8" stroke-linecap="round" opacity="0.7"/>
+              <line x1="130" y1="230" x2="130" y2="350" stroke="#10b981" stroke-width="1.8" stroke-linecap="round" opacity="0.7"/>
+              <line x1="200" y1="230" x2="200" y2="350" stroke="#10b981" stroke-width="1.8" stroke-linecap="round" opacity="0.7"/>
+              <line x1="270" y1="230" x2="270" y2="350" stroke="#10b981" stroke-width="1.8" stroke-linecap="round" opacity="0.7"/>
+              <line x1="340" y1="230" x2="340" y2="350" stroke="#10b981" stroke-width="1.8" stroke-linecap="round" opacity="0.7"/>
+
+              <!-- Road lane (center driving lane) -->
+              <line x1="0" y1="180" x2="400" y2="180" stroke="#334155" stroke-width="1" stroke-dasharray="20 12"/>
+
+              <!-- Sensor pucks for vacant spots -->
+              <circle cx="95" cy="68" r="5" fill="url(#sensorGlow)" filter="url(#glow)"/>
+              <circle cx="165" cy="68" r="5" fill="url(#sensorGlow)" filter="url(#glow)"/>
+              <circle cx="305" cy="68" r="5" fill="url(#sensorGlow)" filter="url(#glow)"/>
+              <circle cx="95" cy="290" r="5" fill="url(#sensorGlow)" filter="url(#glow)"/>
+              <circle cx="305" cy="290" r="5" fill="url(#sensorGlow)" filter="url(#glow)"/>
+
+              <!-- FREE badge for vacant spot -->
+              <rect x="70" y="45" width="50" height="18" rx="9" fill="rgba(16,185,129,0.15)" stroke="rgba(16,185,129,0.6)" stroke-width="1"/>
+              <text x="95" y="58" fill="#10b981" font-size="9" font-family="monospace" font-weight="700" text-anchor="middle">FREE</text>
+
+              <rect x="140" y="45" width="50" height="18" rx="9" fill="rgba(16,185,129,0.15)" stroke="rgba(16,185,129,0.6)" stroke-width="1"/>
+              <text x="165" y="58" fill="#10b981" font-size="9" font-family="monospace" font-weight="700" text-anchor="middle">FREE</text>
+
+              <rect x="280" y="45" width="50" height="18" rx="9" fill="rgba(16,185,129,0.15)" stroke="rgba(16,185,129,0.6)" stroke-width="1"/>
+              <text x="305" y="58" fill="#10b981" font-size="9" font-family="monospace" font-weight="700" text-anchor="middle">FREE</text>
+
+              <rect x="70" y="268" width="50" height="18" rx="9" fill="rgba(16,185,129,0.15)" stroke="rgba(16,185,129,0.6)" stroke-width="1"/>
+              <text x="95" y="281" fill="#10b981" font-size="9" font-family="monospace" font-weight="700" text-anchor="middle">FREE</text>
+
+              <rect x="280" y="268" width="50" height="18" rx="9" fill="rgba(16,185,129,0.15)" stroke="rgba(16,185,129,0.6)" stroke-width="1"/>
+              <text x="305" y="281" fill="#10b981" font-size="9" font-family="monospace" font-weight="700" text-anchor="middle">FREE</text>
+
+              <!-- PAID badge -->
+              <rect x="210" y="45" width="50" height="18" rx="9" fill="rgba(59,130,246,0.15)" stroke="rgba(59,130,246,0.6)" stroke-width="1"/>
+              <text x="235" y="58" fill="#3b82f6" font-size="9" font-family="monospace" font-weight="700" text-anchor="middle">₹20/h</text>
+
+              <rect x="210" y="268" width="50" height="18" rx="9" fill="rgba(59,130,246,0.15)" stroke="rgba(59,130,246,0.6)" stroke-width="1"/>
+              <text x="235" y="281" fill="#3b82f6" font-size="9" font-family="monospace" font-weight="700" text-anchor="middle">₹20/h</text>
+
+              <!-- ── Car 1 (top-row, stall 4) — white, parked ── -->
+              <rect x="224" y="22" width="22" height="38" rx="5" fill="black" opacity="0.4" filter="url(#shadow)"/>
+              <rect x="224" y="20" width="22" height="38" rx="5.5" fill="url(#carBodyW)" stroke="#e2e8f0" stroke-width="1.2"/>
+              <path d="M227 29 L229 25.5 Q235 24.5 241 25.5 L243 29 Q235 28 227 29 Z" fill="url(#glass)"/>
+              <rect x="229" y="31" width="12" height="10" rx="2" fill="url(#glass)" opacity="0.9"/>
+              <path d="M228 42 L229 44.5 Q235 45.3 241 44.5 L242 42 Q235 43 228 42 Z" fill="url(#glass)"/>
+              <rect x="222" y="27" width="2.5" height="4" rx="1.2" fill="#fff" stroke="#94a3b8" stroke-width="0.5"/>
+              <rect x="245.5" y="27" width="2.5" height="4" rx="1.2" fill="#fff" stroke="#94a3b8" stroke-width="0.5"/>
+              <circle cx="225.5" cy="21.5" r="1.3" fill="#38bdf8" filter="url(#glow)"/>
+              <circle cx="244.5" cy="21.5" r="1.3" fill="#38bdf8" filter="url(#glow)"/>
+              <line x1="225" y1="57" x2="228" y2="57" stroke="#ef4444" stroke-width="1.6" stroke-linecap="round"/>
+              <line x1="242" y1="57" x2="245" y2="57" stroke="#ef4444" stroke-width="1.6" stroke-linecap="round"/>
+
+              <!-- ── Car 2 (top-row, stall 5) — dark, parked ── -->
+              <rect x="294" y="22" width="22" height="38" rx="5" fill="black" opacity="0.4" filter="url(#shadow)"/>
+              <rect x="294" y="20" width="22" height="38" rx="5.5" fill="url(#carBodyB)" stroke="#64748b" stroke-width="1.2"/>
+              <path d="M297 29 L299 25.5 Q305 24.5 311 25.5 L313 29 Q305 28 297 29 Z" fill="url(#glass)"/>
+              <rect x="299" y="31" width="12" height="10" rx="2" fill="url(#glass)" opacity="0.9"/>
+              <path d="M297.5 42 L299 44.5 Q305 45.3 311 44.5 L312.5 42 Q305 43 297.5 42 Z" fill="url(#glass)"/>
+              <rect x="292" y="27" width="2.5" height="4" rx="1.2" fill="#94a3b8" stroke="#64748b" stroke-width="0.5"/>
+              <rect x="315.5" y="27" width="2.5" height="4" rx="1.2" fill="#94a3b8" stroke="#64748b" stroke-width="0.5"/>
+              <circle cx="295.5" cy="21.5" r="1.3" fill="#38bdf8" filter="url(#glow)"/>
+              <circle cx="314.5" cy="21.5" r="1.3" fill="#38bdf8" filter="url(#glow)"/>
+              <line x1="295" y1="57" x2="298" y2="57" stroke="#ef4444" stroke-width="1.6" stroke-linecap="round"/>
+              <line x1="312" y1="57" x2="315" y2="57" stroke="#ef4444" stroke-width="1.6" stroke-linecap="round"/>
+
+              <!-- ── Car 3 (bottom-row, stall 2) — red, parked (facing up) ── -->
+              <rect x="154" y="240" width="22" height="38" rx="5" fill="black" opacity="0.4" filter="url(#shadow)"/>
+              <rect x="154" y="238" width="22" height="38" rx="5.5" fill="url(#carBodyR)" stroke="#f87171" stroke-width="1.2"/>
+              <path d="M157 265 L159 268.5 Q165 269.5 171 268.5 L173 265 Q165 266 157 265 Z" fill="url(#glass)"/>
+              <rect x="159" y="251" width="12" height="10" rx="2" fill="url(#glass)" opacity="0.9"/>
+              <path d="M157.5 243 L159 240.5 Q165 239.7 171 240.5 L172.5 243 Q165 242 157.5 243 Z" fill="url(#glass)"/>
+              <rect x="152" y="253" width="2.5" height="4" rx="1.2" fill="#f87171" stroke="#dc2626" stroke-width="0.5"/>
+              <rect x="175.5" y="253" width="2.5" height="4" rx="1.2" fill="#f87171" stroke="#dc2626" stroke-width="0.5"/>
+              <circle cx="155.5" cy="274.5" r="1.3" fill="#f87171" filter="url(#glow)"/>
+              <circle cx="174.5" cy="274.5" r="1.3" fill="#f87171" filter="url(#glow)"/>
+              <line x1="155" y1="239" x2="158" y2="239" stroke="#38bdf8" stroke-width="1.6" stroke-linecap="round"/>
+              <line x1="172" y1="239" x2="175" y2="239" stroke="#38bdf8" stroke-width="1.6" stroke-linecap="round"/>
+
+              <!-- ── Car 4 (bottom-row, stall 4) — white, parked ── -->
+              <rect x="224" y="240" width="22" height="38" rx="5" fill="black" opacity="0.4" filter="url(#shadow)"/>
+              <rect x="224" y="238" width="22" height="38" rx="5.5" fill="url(#carBodyW)" stroke="#e2e8f0" stroke-width="1.2"/>
+              <path d="M227 265 L229 268.5 Q235 269.5 241 268.5 L243 265 Q235 266 227 265 Z" fill="url(#glass)"/>
+              <rect x="229" y="251" width="12" height="10" rx="2" fill="url(#glass)" opacity="0.9"/>
+              <path d="M227.5 243 L229 240.5 Q235 239.7 241 240.5 L242.5 243 Q235 242 227.5 243 Z" fill="url(#glass)"/>
+              <rect x="222" y="253" width="2.5" height="4" rx="1.2" fill="#fff" stroke="#94a3b8" stroke-width="0.5"/>
+              <rect x="245.5" y="253" width="2.5" height="4" rx="1.2" fill="#fff" stroke="#94a3b8" stroke-width="0.5"/>
+              <circle cx="225.5" cy="274.5" r="1.3" fill="#f87171" filter="url(#glow)"/>
+              <circle cx="244.5" cy="274.5" r="1.3" fill="#f87171" filter="url(#glow)"/>
+              <line x1="225" y1="239" x2="228" y2="239" stroke="#38bdf8" stroke-width="1.6" stroke-linecap="round"/>
+              <line x1="242" y1="239" x2="245" y2="239" stroke="#38bdf8" stroke-width="1.6" stroke-linecap="round"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════ HOW IT WORKS ═══════════════ -->
+  <hr class="sep"/>
+  <section class="section">
+    <div class="section-eyebrow">
+      <div class="label">How It Works</div>
+      <h2>Park smarter in 4 steps</h2>
+      <p>From search to slot — the whole journey takes under 60 seconds.</p>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <h4>Enter Your City</h4>
+        <p>Type your city or location to instantly load live parking zones near you.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <h4>Browse Live Map</h4>
+        <p>See real-time slot availability on an interactive satellite or street map.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <h4>Pick Your Spot</h4>
+        <p>Choose from legal, metered or free zones. View pricing and slot counts instantly.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <h4>Book & Navigate</h4>
+        <p>Confirm your booking, get a digital parking pass, and drive right in.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ FEATURES ═══════════════ -->
+  <hr class="sep"/>
+  <section class="section">
+    <div class="section-eyebrow">
+      <div class="label">Features</div>
+      <h2>Everything parking — in one app</h2>
+      <p>Built for the Indian city driver who needs fast, reliable parking intelligence every single day.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon emerald"><i data-lucide="satellite" style="width:24px;height:24px;"></i></div>
+        <h3>Satellite + Street Maps</h3>
+        <p>Switch between photorealistic Esri satellite imagery and vibrant full-color street cartography on the fly.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon blue"><i data-lucide="zap" style="width:24px;height:24px;"></i></div>
+        <h3>Real-Time Slot Counts</h3>
+        <p>Live car and bike slot availability powered by Supabase PostGIS, refreshed every 8 seconds.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon indigo"><i data-lucide="credit-card" style="width:24px;height:24px;"></i></div>
+        <h3>Instant Digital Pass</h3>
+        <p>Get an Apple Wallet-style boarding pass with barcode, holographic gradient, and live status ping.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon amber"><i data-lucide="shield-check" style="width:24px;height:24px;"></i></div>
+        <h3>Tow-Zone Alerts</h3>
+        <p>Color-coded neon polylines on the map instantly highlight tow-away zones, paid meters, and free legal streets.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon rose"><i data-lucide="camera" style="width:24px;height:24px;"></i></div>
+        <h3>Sign Scanner</h3>
+        <p>Point your camera at any parking sign to get an instant AI-powered rule summary and validity check.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon cyan"><i data-lucide="smartphone" style="width:24px;height:24px;"></i></div>
+        <h3>Offline PWA</h3>
+        <p>Install ParkKaro as a Progressive Web App and access cached spot data even when you're off the network.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ CITIES ═══════════════ -->
+  <hr class="sep"/>
+  <section class="section cities-section">
+    <div class="section-eyebrow">
+      <div class="label">Coverage</div>
+      <h2>Live across Indian cities</h2>
+      <p>Hyperlocal parking intelligence with real Supabase PostGIS coordinates for every zone.</p>
+    </div>
+    <div class="cities-grid">
+      <a href="/" class="city-card">
+        <span class="city-emoji">🏙️</span>
+        <div class="city-info">
+          <h3>Indore</h3>
+          <p>80+ live parking zones</p>
+        </div>
+        <i data-lucide="arrow-right" class="city-arrow" style="width:18px;height:18px;"></i>
+      </a>
+      <a href="/" class="city-card">
+        <span class="city-emoji">🌆</span>
+        <div class="city-info">
+          <h3>Chandigarh</h3>
+          <p>35+ live parking zones</p>
+        </div>
+        <i data-lucide="arrow-right" class="city-arrow" style="width:18px;height:18px;"></i>
+      </a>
+      <a href="/" class="city-card">
+        <span class="city-emoji">🏖️</span>
+        <div class="city-info">
+          <h3>Goa</h3>
+          <p>26+ live parking zones</p>
+        </div>
+        <i data-lucide="arrow-right" class="city-arrow" style="width:18px;height:18px;"></i>
+      </a>
+    </div>
+  </section>
+
+  <!-- ═══════════════ ABOUT ═══════════════ -->
+  <hr class="sep"/>
+  <section class="section" id="about">
+    <div class="about-grid">
+      <div class="about-left">
+        <div class="label" style="font-size:12px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:#10b981;margin-bottom:16px;">About Us</div>
+        <h2>We're solving India's urban parking crisis</h2>
+        <p>
+          ParkKaro was built by a team of engineers frustrated by circling blocks for 20 minutes only to find no parking. We combined live PostGIS geospatial data, real-time sensor telemetry, and a beautiful map interface to give every Indian city driver instant, accurate parking intelligence.
+        </p>
+        <p>
+          Our mission: Make every parking search take under 60 seconds — saving time, reducing emissions, and cutting traffic congestion across Indian cities.
+        </p>
+        <div class="about-stats">
+          <div class="stat-box">
+            <div class="num">141+</div>
+            <div class="label">Monitored Zones</div>
+          </div>
+          <div class="stat-box">
+            <div class="num">3</div>
+            <div class="label">Cities Live</div>
+          </div>
+          <div class="stat-box">
+            <div class="num">1,600+</div>
+            <div class="label">Total Slots Tracked</div>
+          </div>
+          <div class="stat-box">
+            <div class="num">8s</div>
+            <div class="label">Refresh Cadence</div>
+          </div>
+        </div>
+      </div>
+      <div class="about-right">
+        <div class="about-visual">
+          <svg width="80%" viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <radialGradient id="bgGrad" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#0d1a2d"/>
+                <stop offset="100%" stop-color="#070b14"/>
+              </radialGradient>
+            </defs>
+            <rect width="320" height="320" fill="url(#bgGrad)" rx="20"/>
+            <!-- Globe / India map abstraction -->
+            <circle cx="160" cy="160" r="110" stroke="rgba(16,185,129,0.2)" stroke-width="1.5" stroke-dasharray="6 4"/>
+            <circle cx="160" cy="160" r="85" stroke="rgba(59,130,246,0.15)" stroke-width="1" stroke-dasharray="4 6"/>
+            <circle cx="160" cy="160" r="55" stroke="rgba(99,102,241,0.15)" stroke-width="1"/>
+            <!-- Map pins -->
+            <circle cx="160" cy="135" r="6" fill="#10b981" filter="url(#glow)" opacity="0.9"/>
+            <circle cx="145" cy="175" r="5" fill="#3b82f6" filter="url(#glow)" opacity="0.9"/>
+            <circle cx="185" cy="168" r="5" fill="#f59e0b" filter="url(#glow)" opacity="0.9"/>
+            <!-- Connection lines -->
+            <line x1="160" y1="135" x2="145" y2="175" stroke="rgba(16,185,129,0.4)" stroke-width="1.5" stroke-dasharray="4 3"/>
+            <line x1="145" y1="175" x2="185" y2="168" stroke="rgba(59,130,246,0.4)" stroke-width="1.5" stroke-dasharray="4 3"/>
+            <!-- Center label -->
+            <text x="160" y="225" fill="rgba(148,163,184,0.7)" font-size="11" font-family="monospace" font-weight="700" text-anchor="middle">INDIA • LIVE SPATIAL GRID</text>
+            <!-- Pulsing center dot -->
+            <circle cx="160" cy="160" r="3" fill="#10b981"/>
+            <circle cx="160" cy="160" r="10" fill="rgba(16,185,129,0.1)" stroke="rgba(16,185,129,0.4)" stroke-width="1"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ FOOTER ═══════════════ -->
+  <hr class="sep"/>
+  <div style="max-width:1300px;margin:0 auto;padding:48px 5% 32px;">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:24px;" id="contact">
+      <div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+          <span style="font-size:20px;font-weight:900;color:#fff;">Park<span style="color:#10b981;">Karo</span></span>
+          <span style="font-size:11px;font-weight:800;background:rgba(16,185,129,0.12);border:1px solid rgba(16,185,129,0.3);color:#10b981;padding:3px 10px;border-radius:999px;text-transform:uppercase;letter-spacing:0.08em;">PRO</span>
+        </div>
+        <p style="font-size:13px;color:#64748b;max-width:300px;line-height:1.6;">India's #1 Smart Parking Intelligence App. Find, book, and navigate to legal parking in seconds.</p>
+      </div>
+      <div style="display:flex;gap:32px;flex-wrap:wrap;">
+        <div>
+          <div style="font-size:11px;font-weight:800;color:#94a3b8;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:12px;">Navigation</div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <a href="/home" style="font-size:13px;color:#64748b;text-decoration:none;font-weight:600;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#64748b'">Home</a>
+            <a href="#about" style="font-size:13px;color:#64748b;text-decoration:none;font-weight:600;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#64748b'">About Us</a>
+            <a href="#contact" style="font-size:13px;color:#64748b;text-decoration:none;font-weight:600;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#64748b'">Contact Us</a>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:11px;font-weight:800;color:#94a3b8;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:12px;">Product</div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <a href="/" style="font-size:13px;color:#64748b;text-decoration:none;font-weight:600;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#64748b'">Live Map</a>
+            <a href="/" style="font-size:13px;color:#64748b;text-decoration:none;font-weight:600;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#64748b'">Sign Scanner</a>
+            <a href="/" style="font-size:13px;color:#64748b;text-decoration:none;font-weight:600;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#64748b'">Book Parking</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr style="border:none;border-top:1px solid rgba(255,255,255,0.08);margin:32px 0 24px;"/>
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+      <p style="font-size:12px;color:#475569;">© 2026 ParkKaro. All rights reserved.</p>
+      <p style="font-size:12px;color:#475569;">Built with ❤️ for Indian city drivers</p>
+    </div>
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+      });
+    });
+
+    // Nav active on scroll
+    const sections = ['home','about','contact'].map(id => document.getElementById(id)).filter(Boolean);
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY + 100;
+      sections.forEach(s => {
+        const link = document.querySelector(`.nav-links a[href="#${s.id}"], .nav-links a[href="/home"]`);
+        if (!link) return;
+        if (y >= s.offsetTop && y < s.offsetTop + s.offsetHeight) {
+          document.querySelectorAll('.nav-links a').forEach(l => l.classList.remove('active'));
+          link.classList.add('active');
+        }
+      });
+    });
+
+    // "Find Parking Now" — carry city to map
+    document.getElementById('findParkingBtn').addEventListener('click', e => {
+      const city = document.getElementById('searchCity').value.trim();
+      if (city) {
+        e.preventDefault();
+        window.location.href = `/?city=${encodeURIComponent(city)}`;
+      }
+    });
+  </script>
+</body>
+</html>

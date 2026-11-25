@@ -366,6 +366,15 @@ if STATIC_DIR.exists():
     app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
 
 
+@app.get("/home", include_in_schema=False)
+def serve_home():
+    """Serves the ParkKaro marketing landing page."""
+    home_file = STATIC_DIR / "home.html"
+    if home_file.exists():
+        return FileResponse(str(home_file))
+    return FileResponse(str(STATIC_DIR / "index.html"))
+
+
 @app.get("/", include_in_schema=False)
 @app.get("/app", include_in_schema=False)
 def serve_ui():
