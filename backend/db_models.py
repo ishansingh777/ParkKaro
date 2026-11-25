@@ -28,3 +28,5 @@ class ActiveBooking(Base):
     start_time = Column(DateTime(timezone=True), server_default=func.now())
     end_time = Column(DateTime(timezone=True), nullable=False)
     status = Column(String, default="active")
+    is_checked_in = Column(Boolean, default=False)
+    check_in_time = Column(DateTime(timezone=True), nullable=True)

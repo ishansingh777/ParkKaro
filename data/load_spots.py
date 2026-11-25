@@ -129,8 +129,12 @@ def load_spots():
             vehicle_type VARCHAR(20) DEFAULT 'car',
             start_time TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
             end_time TIMESTAMP WITH TIME ZONE NOT NULL,
-            status VARCHAR(30) DEFAULT 'active'
+            status VARCHAR(30) DEFAULT 'active',
+            is_checked_in BOOLEAN DEFAULT FALSE,
+            check_in_time TIMESTAMP WITH TIME ZONE
         );
+        ALTER TABLE active_bookings ADD COLUMN IF NOT EXISTS is_checked_in BOOLEAN DEFAULT FALSE;
+        ALTER TABLE active_bookings ADD COLUMN IF NOT EXISTS check_in_time TIMESTAMP WITH TIME ZONE;
     """)
 
     insert_sql = """

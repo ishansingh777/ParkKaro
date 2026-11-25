@@ -4,6 +4,7 @@ from sqlalchemy import text
 from typing import List, Optional
 from database import get_db
 from schemas import ParkingSpotOut
+from routers.bookings import auto_release_no_shows
 
 router = APIRouter(prefix="/api", tags=["spots"])
 
@@ -15,6 +16,7 @@ def get_parking_spots(
     """
     Fetch parking spots with real PostGIS coordinates and live available slot counts.
     """
+    auto_release_no_shows(db)
     query_sql = """
         SELECT 
             p.id,
@@ -145,6 +147,7 @@ def get_nearest_spots(
     PostGIS Nearest Neighbor query: Finds nearest parking spots where available slots > 0.
     Uses ST_DistanceSphere for accurate real-world distance in meters.
     """
+    auto_release_no_shows(db)
     query_sql = f"""
         SELECT 
             p.id,

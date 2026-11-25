@@ -41,11 +41,24 @@ class BookingOut(BaseModel):
     start_time: datetime
     end_time: datetime
     status: str
+    is_checked_in: bool = False
     duration_hours: Optional[int] = None
     total_cost: Optional[int] = None
 
     class Config:
         from_attributes = True
+
+
+class CheckInRequest(BaseModel):
+    latitude: Optional[float] = None
+    longitude: Optional[float] = None
+
+
+class CheckInResponse(BaseModel):
+    booking_id: int
+    status: str
+    is_checked_in: bool
+    message: str
 
 
 class RushPredictionOut(BaseModel):

@@ -22,19 +22,29 @@ models = {}
 async def lifespan(app: FastAPI):
     # Startup: Load ML models in memory
     model_dir = os.path.join(os.path.dirname(__file__), "models")
+<<<<<<< HEAD
     parking_model_path = os.path.join(model_dir, "parking_model.pkl")
+=======
+    joblib_model_path = os.path.join(model_dir, "parking_occupancy_model.joblib")
+    pkl_model_path = os.path.join(model_dir, "parking_model.pkl")
+    sign_model_path = os.path.join(model_dir, "sign_detector.pt")
+>>>>>>> 96474bb74a28e0f6ed738cfd37ce4df94e8dfb5c
 
-    # 1. Load Model 1: Rush Predictor (Random Forest / XGBoost)
-    if os.path.exists(parking_model_path):
-        try:
-            import joblib
-            models["rush"] = joblib.load(parking_model_path)
-            print(" Loaded Model 1 (Rush Predictor): parking_model.pkl")
-        except Exception as e:
-            print(f"⚠️ Could not load parking_model.pkl: {e}")
-            models["rush"] = None
-    else:
-        print("ℹ️ parking_model.pkl not found; using heuristic rush predictor.")
+    # 1. Load Model 1: Rush Predictor (Pipeline or Random Forest)
+    rush_loaded = False
+    for path in [joblib_model_path, pkl_model_path]:
+        if os.path.exists(path):
+            try:
+                import joblib
+                models["rush"] = joblib.load(path)
+                print(f" Loaded Model 1 (Rush Predictor): {os.path.basename(path)}")
+                rush_loaded = True
+                break
+            except Exception as e:
+                print(f"⚠️ Could not load {os.path.basename(path)}: {e}")
+
+    if not rush_loaded:
+        print("ℹ️ Rush model not found; using calibrated heuristic predictor.")
         models["rush"] = None
 
     app.state.models = models
