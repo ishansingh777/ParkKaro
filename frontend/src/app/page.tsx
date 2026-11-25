@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
-import Link from "next/link";
 import { ParkingSpot, Booking } from "@/types";
 import { fetchSpots, fetchActiveBookings, fetchHealth, endBooking, fetchNearestSpots } from "@/lib/api";
 import Navbar from "@/components/Navbar";
@@ -15,7 +14,6 @@ import {
   RefreshCw,
   AlertCircle,
   CheckCircle2,
-  Camera,
   Navigation,
   Compass,
 } from "lucide-react";
@@ -143,13 +141,6 @@ export default function Home() {
 
           {/* Quick Actions */}
           <div className="flex items-center gap-2">
-            <Link
-              href="/scan"
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-xs font-bold shadow-md shadow-blue-500/20 hover:scale-[1.02] transition-all"
-            >
-              <Camera className="w-4 h-4" /> Scan Sign (AI)
-            </Link>
-
             <button
               onClick={loadData}
               className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-slate-200 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition-all shadow-sm"

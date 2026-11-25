@@ -1,12 +1,6 @@
 from contextlib import asynccontextmanager
 import os
 
-# Set YOLO config directory before any ultralytics imports
-os.environ.setdefault(
-    "YOLO_CONFIG_DIR",
-    os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "ml", "sign_scanner", ".yolo_config"))
-)
-
 from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
@@ -29,7 +23,6 @@ async def lifespan(app: FastAPI):
     # Startup: Load ML models in memory
     model_dir = os.path.join(os.path.dirname(__file__), "models")
     parking_model_path = os.path.join(model_dir, "parking_model.pkl")
-    sign_model_path = os.path.join(model_dir, "sign_detector.pt")
 
     # 1. Load Model 1: Rush Predictor (Random Forest / XGBoost)
     if os.path.exists(parking_model_path):
@@ -43,19 +36,6 @@ async def lifespan(app: FastAPI):
     else:
         print("ℹ️ parking_model.pkl not found; using heuristic rush predictor.")
         models["rush"] = None
-
-    # 2. Load Model 2: Sign Scanner (YOLOv8)
-    if os.path.exists(sign_model_path):
-        try:
-            from ultralytics import YOLO
-            models["sign"] = YOLO(sign_model_path)
-            print(" Loaded Model 2 (Sign Scanner): sign_detector.pt")
-        except Exception as e:
-            print(f"⚠️ Could not load sign_detector.pt: {e}")
-            models["sign"] = None
-    else:
-        print("ℹ️ sign_detector.pt not found; using visual sign parser.")
-        models["sign"] = None
 
     app.state.models = models
     yield

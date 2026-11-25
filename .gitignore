@@ -33,6 +33,7 @@ ml/**/data/*.csv
 ml/sign_scanner/ParkKaro.v1i.yolov8/
 ml/sign_scanner/ezyZip/
 ml/sign_scanner/datasets/
+ml/sign_scanner/dataset_consolidated/
 data/raw/*.kml
 data/raw/*.osm
 runs/

@@ -2,12 +2,6 @@ import os
 from pydantic_settings import BaseSettings
 from dotenv import load_dotenv
 
-# Ensure ultralytics uses local workspace config to avoid Windows AppData permissions issue
-os.environ.setdefault(
-    "YOLO_CONFIG_DIR",
-    os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "ml", "sign_scanner", ".yolo_config"))
-)
-
 load_dotenv()
 
 class Settings(BaseSettings):
