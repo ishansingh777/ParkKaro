@@ -1,9 +1,16 @@
 from contextlib import asynccontextmanager
+import os
+
+# Set YOLO config directory before any ultralytics imports
+os.environ.setdefault(
+    "YOLO_CONFIG_DIR",
+    os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "ml", "sign_scanner", ".yolo_config"))
+)
+
 from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from datetime import datetime, timezone
-import os
 
 from config import settings
 from database import get_db

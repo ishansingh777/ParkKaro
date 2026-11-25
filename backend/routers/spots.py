@@ -43,10 +43,12 @@ def get_parking_spots(
 
     spots_out = []
     for r in results:
+        tot_cars = r.total_car_slots or 0
+        tot_bikes = r.total_bike_slots or 0
         active_cars = int(r.active_car_bookings)
         active_bikes = int(r.active_bike_bookings)
-        avail_cars = max(0, r.total_car_slots - active_cars)
-        avail_bikes = max(0, r.total_bike_slots - active_bikes)
+        avail_cars = max(0, tot_cars - active_cars)
+        avail_bikes = max(0, tot_bikes - active_bikes)
 
         free_time_str = None
         if (avail_cars == 0 or avail_bikes == 0) and r.earliest_end_time:
@@ -60,13 +62,13 @@ def get_parking_spots(
                 address=r.address,
                 latitude=float(r.latitude),
                 longitude=float(r.longitude),
-                total_car_slots=r.total_car_slots,
-                total_bike_slots=r.total_bike_slots,
+                total_car_slots=tot_cars,
+                total_bike_slots=tot_bikes,
                 available_car_slots=avail_cars,
                 available_bike_slots=avail_bikes,
-                is_paid=r.is_paid,
-                price_per_hour=r.price_per_hour,
-                rule_type=r.rule_type,
+                is_paid=r.is_paid or False,
+                price_per_hour=r.price_per_hour or 0,
+                rule_type=r.rule_type or "ALLOWED",
                 rule_description=r.rule_description,
                 earliest_free_time=free_time_str
             )
@@ -103,8 +105,10 @@ def get_parking_spot(spot_id: int, db: Session = Depends(get_db)):
     if not row:
         raise HTTPException(status_code=404, detail="Parking spot not found")
 
-    avail_cars = max(0, row.total_car_slots - int(row.active_car_bookings))
-    avail_bikes = max(0, row.total_bike_slots - int(row.active_bike_bookings))
+    tot_cars = row.total_car_slots or 0
+    tot_bikes = row.total_bike_slots or 0
+    avail_cars = max(0, tot_cars - int(row.active_car_bookings))
+    avail_bikes = max(0, tot_bikes - int(row.active_bike_bookings))
 
     free_time_str = None
     if (avail_cars == 0 or avail_bikes == 0) and row.earliest_end_time:
@@ -117,13 +121,13 @@ def get_parking_spot(spot_id: int, db: Session = Depends(get_db)):
         address=row.address,
         latitude=float(row.latitude),
         longitude=float(row.longitude),
-        total_car_slots=row.total_car_slots,
-        total_bike_slots=row.total_bike_slots,
+        total_car_slots=tot_cars,
+        total_bike_slots=tot_bikes,
         available_car_slots=avail_cars,
         available_bike_slots=avail_bikes,
-        is_paid=row.is_paid,
-        price_per_hour=row.price_per_hour,
-        rule_type=row.rule_type,
+        is_paid=row.is_paid or False,
+        price_per_hour=row.price_per_hour or 0,
+        rule_type=row.rule_type or "ALLOWED",
         rule_description=row.rule_description,
         earliest_free_time=free_time_str
     )
@@ -176,8 +180,10 @@ def get_nearest_spots(
 
     spots_out = []
     for r in results:
-        avail_cars = max(0, r.total_car_slots - int(r.active_car_bookings))
-        avail_bikes = max(0, r.total_bike_slots - int(r.active_bike_bookings))
+        tot_cars = r.total_car_slots or 0
+        tot_bikes = r.total_bike_slots or 0
+        avail_cars = max(0, tot_cars - int(r.active_car_bookings))
+        avail_bikes = max(0, tot_bikes - int(r.active_bike_bookings))
 
         spots_out.append(
             ParkingSpotOut(
@@ -187,13 +193,13 @@ def get_nearest_spots(
                 address=r.address,
                 latitude=float(r.latitude),
                 longitude=float(r.longitude),
-                total_car_slots=r.total_car_slots,
-                total_bike_slots=r.total_bike_slots,
+                total_car_slots=tot_cars,
+                total_bike_slots=tot_bikes,
                 available_car_slots=avail_cars,
                 available_bike_slots=avail_bikes,
-                is_paid=r.is_paid,
-                price_per_hour=r.price_per_hour,
-                rule_type=r.rule_type,
+                is_paid=r.is_paid or False,
+                price_per_hour=r.price_per_hour or 0,
+                rule_type=r.rule_type or "ALLOWED",
                 rule_description=r.rule_description,
                 distance_km=round(float(r.distance_km), 2)
             )
