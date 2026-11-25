@@ -1,8 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "ParkKaro - Smart Parking Intelligence",
@@ -34,7 +31,7 @@ export default function RootLayout({
         <link rel="manifest" href="/manifest.json" />
         <link rel="icon" href="/icons/icon-192.png" />
       </head>
-      <body className={inter.className}>{children}</body>
+      <body className="font-sans antialiased bg-slate-50 text-slate-900">{children}</body>
     </html>
   );
 }

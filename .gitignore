@@ -27,10 +27,18 @@ env/
 # ML Large Model Checkpoints & Datasets (keep sample configs, ignore heavy weights)
 *.pth
 *.pt.bak
+ml/sign_scanner/yolov8n.pt
 ml/**/data/*.csv
 !ml/**/data/*.md
+ml/sign_scanner/ParkKaro.v1i.yolov8/
+ml/sign_scanner/ezyZip/
+ml/sign_scanner/datasets/
 data/raw/*.kml
 data/raw/*.osm
+runs/
+ml/**/runs/
+.yolo_config/
+*.cache
 
 # MacOS & Windows OS Junk
 .DS_Store

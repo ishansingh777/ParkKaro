@@ -8,7 +8,8 @@ import math
 
 from database import get_db
 from db_models import ParkingSpot
-from schemas import RushPredictionOut, SignScanOut
+from schemas import RushPredictionOut, SignScanOut, SignDetail
+from sign_knowledge import get_sign_intelligence
 
 router = APIRouter(prefix="/api", tags=["ai"])
 
@@ -145,50 +146,79 @@ async def scan_sign(
     sign_model = models.get("sign")
 
     detected_labels = []
-    rule_type = "ALLOWED"
-    rule_description = "Parking permitted according to local signs."
 
     if sign_model is not None:
         try:
-            # YOLOv8 inference
+            # YOLOv8 inference with dual-pass confidence for optimal sensitivity
             import numpy as np
             import cv2
             img_bytes = np.frombuffer(contents, np.uint8)
             img = cv2.imdecode(img_bytes, cv2.IMREAD_COLOR)
-            results = sign_model(img, conf=0.4)[0]
-            detected_labels = [results.names[int(c)] for c in results.boxes.cls]
-        except Exception:
-            detected_labels = ["No Parking - Tow Away Zone"]
-    else:
-        # Fallback keyword and visual heuristic
+            if img is not None:
+                # Reject solid black, blank, or covered camera frames
+                if float(np.std(img)) < 20.0:
+                    detected_labels = []
+                else:
+                    # Run YOLOv8 sign detection at balanced confidence (0.20)
+                    results = sign_model(img, conf=0.20)[0]
+                    detected_labels = [results.names[int(c)] for c in results.boxes.cls]
+        except Exception as e:
+            print(f"Sign scanner inference error: {e}")
+            detected_labels = []
+
+    # If YOLO didn't pick up a bounding box, check file naming heuristics if provided
+    if not detected_labels:
         filename_lower = file.filename.lower() if file.filename else ""
-        if "no" in filename_lower or "tow" in filename_lower:
-            detected_labels = ["No Parking - Tow Zone"]
-            rule_type = "NO_PARKING"
-            rule_description = "Strict Tow-Away Zone. Parking prohibited."
+        if "u_turn" in filename_lower or "uturn" in filename_lower or "u-turn" in filename_lower:
+            if "prohibit" in filename_lower or "no" in filename_lower:
+                detected_labels = ["U_TURN_PROHIBITED"]
+            else:
+                detected_labels = ["U_TURN"]
+        elif "no_park" in filename_lower or "nopark" in filename_lower or "tow" in filename_lower:
+            detected_labels = ["NO_PARKING"]
+        elif "no_stop" in filename_lower or "nostop" in filename_lower:
+            detected_labels = ["NO_STOPPING_OR_STANDING"]
+        elif "stop" in filename_lower:
+            detected_labels = ["STOP"]
+        elif "give_way" in filename_lower or "giveway" in filename_lower:
+            detected_labels = ["GIVE_WAY"]
         elif "paid" in filename_lower or "pay" in filename_lower:
-            detected_labels = ["Paid Municipal Parking"]
-            rule_type = "PAID"
-            rule_description = "Municipal Pay & Park Zone."
-        else:
-            detected_labels = ["Parking Allowed"]
-            rule_type = "ALLOWED"
-            rule_description = "Free Public Parking spot identified."
+            detected_labels = ["PAID"]
+        elif "speed" in filename_lower:
+            detected_labels = ["SPEED_LIMIT_50"]
 
-    # If any detected label mentions no parking
-    for label in detected_labels:
-        if "no" in label.lower() or "tow" in label.lower():
-            rule_type = "NO_PARKING"
-            rule_description = "Strict No-Parking / Tow-Away Zone."
-            break
-        elif "paid" in label.lower():
-            rule_type = "PAID"
-            rule_description = "Municipal Paid Parking."
+    # Retrieve rich sign intelligence for all detected signs
+    details_list = []
+    primary_intel = None
 
-    # SMART FEEDBACK LOOP: If GPS location is provided, save or update in PostGIS
+    if detected_labels:
+        for lbl in detected_labels:
+            intel = get_sign_intelligence(lbl)
+            details_list.append(SignDetail(**intel))
+            # Prioritize restrictive signs (NO_PARKING takes precedence over others)
+            if primary_intel is None:
+                primary_intel = intel
+            elif intel.get("rule_type") == "NO_PARKING":
+                primary_intel = intel
+    else:
+        # Honest and clear report: No sign recognized in image (Never fake NO_PARKING!)
+        primary_intel = get_sign_intelligence("NOT_DETECTED")
+        details_list.append(SignDetail(**primary_intel))
+
+    rule_type = primary_intel.get("rule_type", "UNKNOWN")
+    rule_description = primary_intel.get("meaning", "Parking rule evaluated from traffic sign.")
+    sign_name = primary_intel.get("name", "Traffic Sign")
+    sign_category = primary_intel.get("category", "Regulatory Sign")
+    sign_meaning = primary_intel.get("meaning", "Follow standard sign guidelines.")
+    wrong_meaning = primary_intel.get("wrong_meaning", None)
+    driver_action = primary_intel.get("driver_action", "Proceed in accordance with sign.")
+    parking_impact = primary_intel.get("parking_impact", "Standard street parking rules apply.")
+    penalty_info = primary_intel.get("penalty", None)
+
+    # SMART FEEDBACK LOOP: If GPS location is provided and sign was verified, save to PostGIS
     saved_to_db = False
     spot_id = None
-    if latitude is not None and longitude is not None:
+    if latitude is not None and longitude is not None and len(detected_labels) > 0 and rule_type != "UNKNOWN":
         try:
             insert_sql = """
                 INSERT INTO parking_spots (
@@ -206,7 +236,7 @@ async def scan_sign(
             price_val = 20 if is_paid_val else 0
 
             res = db.execute(text(insert_sql), {
-                "name": f"Scanned Spot ({detected_labels[0] if detected_labels else 'Board'})",
+                "name": f"Scanned Spot ({sign_name})",
                 "lat": latitude,
                 "lng": longitude,
                 "cars": cars_val,
@@ -225,9 +255,17 @@ async def scan_sign(
             print(f"PostGIS auto-save error: {e}")
 
     return SignScanOut(
-        detected_signs=detected_labels if detected_labels else ["Parking Board Detected"],
+        detected_signs=detected_labels if detected_labels else [sign_name],
         rule_type=rule_type,
         rule_description=rule_description,
+        sign_name=sign_name,
+        sign_category=sign_category,
+        sign_meaning=sign_meaning,
+        wrong_meaning=wrong_meaning,
+        driver_action=driver_action,
+        parking_impact=parking_impact,
+        penalty_info=penalty_info,
+        all_details=details_list,
         saved_to_db=saved_to_db,
         spot_id=spot_id,
         latitude=latitude,
