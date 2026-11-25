@@ -6,11 +6,12 @@ from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
+from sqlalchemy import text
 from sqlalchemy.orm import Session
 from datetime import datetime, timezone
 
 from config import settings
-from database import get_db
+from database import get_db, engine
 from db_models import ParkingSpot, ActiveBooking
 from schemas import HealthResponse
 
@@ -23,7 +24,18 @@ models = {}
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Startup: Load ML models in memory
+    # Startup: Ensure check-in columns exist on active_bookings in Supabase
+    try:
+        with engine.begin() as conn:
+            conn.execute(text(
+                "ALTER TABLE active_bookings "
+                "ADD COLUMN IF NOT EXISTS is_checked_in BOOLEAN DEFAULT FALSE, "
+                "ADD COLUMN IF NOT EXISTS check_in_time TIMESTAMPTZ;"
+            ))
+    except Exception as e:
+        print(f"Schema check warning: {e}")
+
+    # Load ML models in memory
     model_dir = os.path.join(os.path.dirname(__file__), "models")
     joblib_model_path = os.path.join(model_dir, "parking_occupancy_model.joblib")
     pkl_model_path = os.path.join(model_dir, "parking_model.pkl")

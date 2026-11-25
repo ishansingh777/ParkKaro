@@ -20,14 +20,17 @@ def auto_release_no_shows(db: Session):
     cutoff = now_utc - timedelta(minutes=15)
     expired = db.query(ActiveBooking).filter(
         ActiveBooking.status == "active",
-        ActiveBooking.is_checked_in == False,
+        ActiveBooking.is_checked_in.isnot(True),
         ActiveBooking.start_time <= cutoff
     ).all()
 
     if expired:
-        for b in expired:
-            b.status = "cancelled_no_show"
-        db.commit()
+        try:
+            for b in expired:
+                b.status = "cancelled"
+            db.commit()
+        except Exception:
+            db.rollback()
 
 
 @router.post("/book", response_model=BookingOut, status_code=status.HTTP_201_CREATED)
@@ -60,7 +63,7 @@ def create_booking(booking_in: BookingCreate, db: Session = Depends(get_db)):
         ActiveBooking.end_time > now_utc
     ).with_for_update().count()
 
-    total_slots = spot.total_car_slots if booking_in.vehicle_type == "car" else spot.total_bike_slots
+    total_slots = (spot.total_car_slots or 0) if booking_in.vehicle_type == "car" else (spot.total_bike_slots or 0)
     if active_count >= total_slots:
         raise HTTPException(
             status_code=400,
@@ -184,7 +187,7 @@ def get_active_bookings(db: Session = Depends(get_db)):
     results = []
     for r in rows:
         duration_hours = max(1, int((r.end_time - r.start_time).total_seconds() // 3600))
-        cost = r.price_per_hour * duration_hours if r.is_paid else 0
+        cost = (r.price_per_hour or 0) * duration_hours if r.is_paid else 0
         results.append(
             BookingOut(
                 id=r.id,
