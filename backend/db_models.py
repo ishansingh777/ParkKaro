@@ -30,3 +30,14 @@ class ActiveBooking(Base):
     status = Column(String, default="active")
     is_checked_in = Column(Boolean, default=False)
     check_in_time = Column(DateTime(timezone=True), nullable=True)
+
+
+class FeedbackSubmission(Base):
+    __tablename__ = "feedback_submissions"
+
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    subject = Column(String(200), nullable=False)
+    message = Column(String, nullable=False)
+    sender_email = Column(String(120), nullable=True)
+    source_page = Column(String(50), default="home")
+    created_at = Column(DateTime(timezone=True), server_default=func.now())

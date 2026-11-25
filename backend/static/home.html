@@ -1404,21 +1404,29 @@
           <p style="font-size:16px;color:#5a6270;line-height:1.7;margin-bottom:24px;max-width:460px;">
             Have suggestions, spot corrections, or feedback about ParkKaro? Reach out directly to our feedback desk—we read every message.
           </p>
-          <a href="mailto:parkkaro99@gmail.com?subject=ParkKaro%20Feedback" style="display:inline-flex;align-items:center;gap:12px;padding:14px 22px;border-radius:14px;background:#fff8dc;border:1.5px solid #ffca20;color:#111827;text-decoration:none;font-weight:800;font-size:15px;box-shadow:0 4px 14px rgba(255,202,32,0.22);">
-            <i data-lucide="mail" style="width:18px;height:18px;color:#1c4178;"></i>
-            <span>Feedback Email: parkkaro99@gmail.com</span>
-          </a>
+          <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;">
+            <a href="mailto:parkkaro99@gmail.com?subject=ParkKaro%20Feedback" style="display:inline-flex;align-items:center;gap:10px;padding:13px 18px;border-radius:14px;background:#fff8dc;border:1.5px solid #ffca20;color:#111827;text-decoration:none;font-weight:800;font-size:14px;box-shadow:0 4px 14px rgba(255,202,32,0.22);">
+              <i data-lucide="mail" style="width:17px;height:17px;color:#1c4178;"></i>
+              <span>parkkaro99@gmail.com</span>
+            </a>
+            <a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=parkkaro99%40gmail.com&amp;su=ParkKaro%20Feedback" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:8px;padding:13px 16px;border-radius:14px;background:#1c4178;color:#ffffff;text-decoration:none;font-weight:800;font-size:14px;">
+              <i data-lucide="external-link" style="width:15px;height:15px;"></i>
+              <span>Open in Gmail</span>
+            </a>
+          </div>
         </div>
 
         <div style="background:#f6f7f9;border:1px solid #e2e8f0;border-radius:18px;padding:26px;">
           <div style="font-size:12px;font-weight:900;color:#1c4178;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:12px;">Send Quick Feedback</div>
           <div style="display:flex;flex-direction:column;gap:10px;">
+            <input type="email" id="feedbackEmail" placeholder="Your email (optional, for a reply)" style="width:100%;padding:11px 14px;border-radius:10px;border:1.5px solid #dcdfe6;background:#ffffff;font-family:inherit;font-size:14px;color:#111827;outline:none;"/>
             <input type="text" id="feedbackSubject" placeholder="Subject (e.g. Add parking lot / Feedback)" style="width:100%;padding:12px 14px;border-radius:10px;border:1.5px solid #dcdfe6;background:#ffffff;font-family:inherit;font-size:14px;color:#111827;outline:none;"/>
             <textarea id="feedbackMessage" rows="3" placeholder="Share your feedback or street update..." style="width:100%;padding:12px 14px;border-radius:10px;border:1.5px solid #dcdfe6;background:#ffffff;font-family:inherit;font-size:14px;color:#111827;outline:none;resize:vertical;"></textarea>
-            <button type="button" onclick="sendFeedbackEmail()" class="btn-yellow-cta" style="height:48px;font-size:15px;margin-top:2px;">
+            <button type="button" id="feedbackSubmitBtn" onclick="submitHomeFeedback()" class="btn-yellow-cta" style="height:48px;font-size:15px;margin-top:2px;">
               <i data-lucide="send" style="width:16px;height:16px;"></i>
-              <span>Send Feedback to parkkaro99@gmail.com</span>
+              <span>Submit Feedback</span>
             </button>
+            <div id="feedbackStatusBox" style="display:none;padding:12px 14px;border-radius:12px;font-size:13px;line-height:1.5;"></div>
           </div>
         </div>
       </div>
@@ -1594,11 +1602,96 @@
       box.textContent = message;
     }
 
-    function sendFeedbackEmail() {
-      const subj = (document.getElementById('feedbackSubject').value || 'ParkKaro App Feedback').trim();
-      const body = (document.getElementById('feedbackMessage').value || '').trim();
-      const mailto = `mailto:parkkaro99@gmail.com?subject=${encodeURIComponent(subj)}&body=${encodeURIComponent(body)}`;
-      window.location.href = mailto;
+    function buildFallbackFeedbackLinks(subj, body, senderEmail) {
+      const target = 'parkkaro99@gmail.com';
+      const fullBody = senderEmail ? `From: ${senderEmail}\n\n${body}` : body;
+      return {
+        gmailUrl: `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(target)}&su=${encodeURIComponent(subj)}&body=${encodeURIComponent(fullBody)}`,
+        mailtoUrl: `mailto:${target}?subject=${encodeURIComponent(subj)}&body=${encodeURIComponent(fullBody)}`
+      };
+    }
+
+    function renderFeedbackStatus(kind, htmlMessage) {
+      const box = document.getElementById('feedbackStatusBox');
+      if (!box) return;
+      box.style.display = 'block';
+      if (kind === 'error') {
+        box.style.background = '#FEF2F2';
+        box.style.color = '#991B1B';
+        box.style.border = '1px solid #FECACA';
+      } else if (kind === 'warn') {
+        box.style.background = '#FFFBEB';
+        box.style.color = '#92400E';
+        box.style.border = '1px solid #FDE68A';
+      } else {
+        box.style.background = '#ECFDF5';
+        box.style.color = '#065F46';
+        box.style.border = '1px solid #A7F3D0';
+      }
+      box.innerHTML = htmlMessage;
+    }
+
+    async function submitHomeFeedback() {
+      const emailEl = document.getElementById('feedbackEmail');
+      const subjEl = document.getElementById('feedbackSubject');
+      const msgEl = document.getElementById('feedbackMessage');
+      const btnEl = document.getElementById('feedbackSubmitBtn');
+
+      const senderEmail = (emailEl ? emailEl.value : '').trim();
+      const subj = ((subjEl ? subjEl.value : '') || 'ParkKaro App Feedback').trim();
+      const body = (msgEl ? msgEl.value : '').trim();
+
+      if (!body) {
+        renderFeedbackStatus('error', 'Please enter a feedback message before submitting.');
+        if (msgEl) msgEl.focus();
+        return;
+      }
+
+      const fallback = buildFallbackFeedbackLinks(subj, body, senderEmail);
+      if (btnEl) {
+        btnEl.disabled = true;
+        btnEl.style.opacity = '0.7';
+      }
+
+      try {
+        const res = await fetch('/api/v1/feedback', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            subject: subj,
+            message: body,
+            sender_email: senderEmail || null,
+            source_page: 'home'
+          })
+        });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const saved = await res.json();
+        const gmailUrl = saved.gmail_compose_url || fallback.gmailUrl;
+        if (msgEl) msgEl.value = '';
+        if (subjEl) subjEl.value = '';
+        renderFeedbackStatus(
+          'ok',
+          `<div style="font-weight:800;margin-bottom:6px;">Feedback #${saved.id} saved to ParkKaro Desk (parkkaro99@gmail.com).</div>` +
+          `<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:6px;">` +
+          `<a href="${gmailUrl}" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:8px;background:#1C4178;color:#ffffff;text-decoration:none;font-weight:700;font-size:12px;">Also send via Gmail Web</a>` +
+          `<a href="${fallback.mailtoUrl}" style="display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:8px;background:#ffffff;border:1px solid #cbd5e1;color:#111827;text-decoration:none;font-weight:700;font-size:12px;">Open Mail App</a>` +
+          `</div>`
+        );
+      } catch (err) {
+        renderFeedbackStatus(
+          'warn',
+          `<div style="font-weight:800;margin-bottom:6px;">Could not reach server right now—send directly to parkkaro99@gmail.com:</div>` +
+          `<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:6px;">` +
+          `<a href="${fallback.gmailUrl}" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:8px;background:#1C4178;color:#ffffff;text-decoration:none;font-weight:700;font-size:12px;">Open Gmail Web</a>` +
+          `<a href="${fallback.mailtoUrl}" style="display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:8px;background:#ffffff;border:1px solid #cbd5e1;color:#111827;text-decoration:none;font-weight:700;font-size:12px;">Open Mail App</a>` +
+          `</div>`
+        );
+      } finally {
+        if (btnEl) {
+          btnEl.disabled = false;
+          btnEl.style.opacity = '1';
+        }
+      }
     }
 
     function selectHeroCity(city) {

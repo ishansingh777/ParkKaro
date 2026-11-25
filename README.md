@@ -110,6 +110,10 @@ Both `/api/*` and `/api/v1/*` prefixes are supported:
 ### AI Inference Routes (`routers/ai.py`)
 - `GET /api/predict-rush?spot_id={id}&hour={0-23}&day_of_week={0-6}`: Returns occupancy probability.
 
+### Feedback Routes (`routers/feedback.py`)
+- `POST /api/feedback`: Saves user feedback into Supabase PostgreSQL and returns a direct Gmail compose link for `parkkaro99@gmail.com`.
+- `GET /api/feedback`: Lists recent saved feedback submissions.
+
 ---
 
 ## 👥 Team Branch & Contribution Guide

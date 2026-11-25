@@ -12,19 +12,20 @@ from datetime import datetime, timezone
 
 from config import settings
 from database import get_db, engine
-from db_models import ParkingSpot, ActiveBooking
+from db_models import ParkingSpot, ActiveBooking, FeedbackSubmission
 from schemas import HealthResponse
 
 from routers.spots import router as spots_router
 from routers.bookings import router as bookings_router
 from routers.ai import router as ai_router
+from routers.feedback import router as feedback_router
 
 # In-memory dictionary for ML models loaded once on startup
 models = {}
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Startup: Ensure check-in columns exist on active_bookings in Supabase
+    # Startup: Ensure check-in columns & feedback table exist in Supabase
     try:
         with engine.begin() as conn:
             conn.execute(text(
@@ -32,6 +33,7 @@ async def lifespan(app: FastAPI):
                 "ADD COLUMN IF NOT EXISTS is_checked_in BOOLEAN DEFAULT FALSE, "
                 "ADD COLUMN IF NOT EXISTS check_in_time TIMESTAMPTZ;"
             ))
+        FeedbackSubmission.__table__.create(bind=engine, checkfirst=True)
     except Exception as e:
         print(f"Schema check warning: {e}")
 
@@ -83,10 +85,12 @@ app.add_middleware(
 app.include_router(spots_router, prefix="/api")
 app.include_router(bookings_router, prefix="/api")
 app.include_router(ai_router, prefix="/api")
+app.include_router(feedback_router, prefix="/api")
 
 app.include_router(spots_router, prefix="/api/v1")
 app.include_router(bookings_router, prefix="/api/v1")
 app.include_router(ai_router, prefix="/api/v1")
+app.include_router(feedback_router, prefix="/api/v1")
 
 
 @app.get("/api/health", response_model=HealthResponse, tags=["health"])

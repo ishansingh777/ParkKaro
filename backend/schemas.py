@@ -101,3 +101,25 @@ class HealthResponse(BaseModel):
     active_bookings: int
     models_loaded: dict
     timestamp: datetime
+
+
+class FeedbackCreate(BaseModel):
+    subject: str = Field("ParkKaro App Feedback", max_length=200)
+    message: str = Field(..., min_length=1, max_length=3000)
+    sender_email: Optional[str] = Field(None, max_length=120)
+    source_page: str = Field("home", max_length=50)
+
+
+class FeedbackOut(BaseModel):
+    id: int
+    subject: str
+    message: str
+    sender_email: Optional[str] = None
+    source_page: str = "home"
+    status: str = "saved"
+    target_email: str = "parkkaro99@gmail.com"
+    gmail_compose_url: str
+    created_at: datetime
+
+    class Config:
+        from_attributes = True

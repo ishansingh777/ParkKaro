@@ -814,12 +814,15 @@
         <span class="px-2.5 py-0.5 rounded-full bg-[#FFCA20] text-[#111827] font-black">parkkaro</span>
         <span>Smart Parking Network • Indore, Chandigarh &amp; Goa</span>
       </div>
-      <div class="flex items-center gap-3">
-        <a href="mailto:parkkaro99@gmail.com?subject=ParkKaro%20Feedback" class="inline-flex items-center gap-1.5 font-bold text-[#1C4178] hover:underline">
+      <div class="flex flex-wrap items-center gap-2 sm:gap-3">
+        <a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=parkkaro99%40gmail.com&amp;su=ParkKaro%20Feedback" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 font-bold text-[#1C4178] hover:underline">
           <i data-lucide="mail" class="w-3.5 h-3.5"></i>
           <span>Feedback: parkkaro99@gmail.com</span>
         </a>
-        <a href="/home#contact" class="px-3 py-1 rounded-full bg-[#FFCA20] hover:bg-[#F2BC10] text-[#111827] font-black transition-colors">
+        <button type="button" onclick="openFeedbackModal()" class="px-3 py-1 rounded-full bg-[#FFCA20] hover:bg-[#F2BC10] text-[#111827] font-black transition-colors">
+          Send Feedback
+        </button>
+        <a href="/home#contact" class="px-3 py-1 rounded-full bg-[#F4F5F7] hover:bg-slate-200 border border-slate-200 text-[#1C4178] font-bold transition-colors">
           Contact Us
         </a>
       </div>
@@ -1247,6 +1250,40 @@
         </div>
       </div>
 
+    </div>
+  </div>
+
+  <!-- ================= QUICK FEEDBACK MODAL ================= -->
+  <div id="feedbackModal" class="hidden fixed inset-0 z-[10010] flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-md animate-fade-in">
+    <div class="bg-white rounded-3xl max-w-md w-full shadow-2xl overflow-hidden border border-slate-200 text-[#111827]">
+      <div class="px-6 py-4 bg-[#1C4178] text-white flex items-center justify-between">
+        <div>
+          <span class="text-[10px] font-black text-[#FFCA20] uppercase tracking-wider">parkkaro99@gmail.com</span>
+          <h2 class="text-base font-black text-white mt-0.5">Send ParkKaro Feedback</h2>
+        </div>
+        <button type="button" onclick="closeFeedbackModal()" class="w-8 h-8 rounded-full bg-white/15 hover:bg-white/25 text-white flex items-center justify-center transition-colors">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <form id="appFeedbackForm" onsubmit="handleAppFeedbackSubmit(event)" class="p-6 space-y-3">
+        <div id="appFeedbackStatus" class="hidden p-3 rounded-2xl text-xs font-semibold"></div>
+        <div>
+          <label class="block text-xs font-bold text-[#374151] uppercase tracking-wider mb-1">Your Email (Optional)</label>
+          <input type="email" id="appFeedbackEmail" placeholder="you@example.com" class="w-full px-3 py-2.5 rounded-xl bg-[#F4F5F7] border border-slate-200 text-xs text-[#111827] focus:outline-none focus:border-[#111827] focus:ring-2 focus:ring-[#FFCA20]" />
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-[#374151] uppercase tracking-wider mb-1">Subject</label>
+          <input type="text" id="appFeedbackSubject" placeholder="Spot issue, feature request, or feedback" class="w-full px-3 py-2.5 rounded-xl bg-[#F4F5F7] border border-slate-200 text-xs text-[#111827] focus:outline-none focus:border-[#111827] focus:ring-2 focus:ring-[#FFCA20]" />
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-[#374151] uppercase tracking-wider mb-1">Feedback Message</label>
+          <textarea id="appFeedbackMessage" required rows="3" placeholder="Tell us what needs fixing or improving..." class="w-full px-3 py-2.5 rounded-xl bg-[#F4F5F7] border border-slate-200 text-xs text-[#111827] focus:outline-none focus:border-[#111827] focus:ring-2 focus:ring-[#FFCA20]"></textarea>
+        </div>
+        <button type="submit" id="appFeedbackSubmitBtn" class="w-full py-3 rounded-2xl bg-[#FFCA20] hover:bg-[#F2BC10] text-[#111827] font-black text-xs shadow-md transition-all">
+          Submit Feedback
+        </button>
+      </form>
     </div>
   </div>
 
@@ -2645,6 +2682,82 @@
       setTimeout(() => {
         splash.style.display = 'none';
       }, 700);
+    }
+
+    function openFeedbackModal() {
+      const modal = document.getElementById('feedbackModal');
+      const statusEl = document.getElementById('appFeedbackStatus');
+      if (statusEl) {
+        statusEl.classList.add('hidden');
+        statusEl.innerHTML = '';
+      }
+      if (modal) {
+        modal.classList.remove('hidden');
+        lucide.createIcons();
+      }
+    }
+
+    function closeFeedbackModal() {
+      const modal = document.getElementById('feedbackModal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    async function handleAppFeedbackSubmit(e) {
+      e.preventDefault();
+      const emailEl = document.getElementById('appFeedbackEmail');
+      const subjEl = document.getElementById('appFeedbackSubject');
+      const msgEl = document.getElementById('appFeedbackMessage');
+      const statusEl = document.getElementById('appFeedbackStatus');
+      const btnEl = document.getElementById('appFeedbackSubmitBtn');
+
+      const senderEmail = (emailEl ? emailEl.value : '').trim();
+      const subj = ((subjEl ? subjEl.value : '') || 'ParkKaro App Feedback').trim();
+      const body = (msgEl ? msgEl.value : '').trim();
+
+      if (!body) return;
+
+      const fullBody = senderEmail ? `From: ${senderEmail}\n\n${body}` : body;
+      const gmailFallback = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent('parkkaro99@gmail.com')}&su=${encodeURIComponent(subj)}&body=${encodeURIComponent(fullBody)}`;
+      const mailtoFallback = `mailto:parkkaro99@gmail.com?subject=${encodeURIComponent(subj)}&body=${encodeURIComponent(fullBody)}`;
+
+      if (btnEl) btnEl.disabled = true;
+      try {
+        const res = await fetch(`${API_BASE_URL}/feedback`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            subject: subj,
+            message: body,
+            sender_email: senderEmail || null,
+            source_page: 'map'
+          })
+        });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const saved = await res.json();
+        const gmailUrl = saved.gmail_compose_url || gmailFallback;
+        if (msgEl) msgEl.value = '';
+        if (subjEl) subjEl.value = '';
+        if (statusEl) {
+          statusEl.className = 'p-3 rounded-2xl text-xs font-semibold bg-emerald-50 border border-emerald-200 text-emerald-800';
+          statusEl.innerHTML = `<div class="font-extrabold mb-2">Feedback #${saved.id} saved for parkkaro99@gmail.com!</div>` +
+            `<div class="flex flex-wrap gap-2">` +
+            `<a href="${gmailUrl}" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-lg bg-[#1C4178] text-white font-bold">Also send via Gmail Web</a>` +
+            `<a href="${mailtoFallback}" class="px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-[#111827] font-bold">Open Mail App</a>` +
+            `</div>`;
+        }
+        showToast('Feedback saved! Thanks for helping improve ParkKaro.', 'success');
+      } catch (err) {
+        if (statusEl) {
+          statusEl.className = 'p-3 rounded-2xl text-xs font-semibold bg-amber-50 border border-amber-200 text-amber-900';
+          statusEl.innerHTML = `<div class="font-extrabold mb-2">Server unreachable—send directly to parkkaro99@gmail.com:</div>` +
+            `<div class="flex flex-wrap gap-2">` +
+            `<a href="${gmailFallback}" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-lg bg-[#1C4178] text-white font-bold">Open Gmail Web</a>` +
+            `<a href="${mailtoFallback}" class="px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-[#111827] font-bold">Open Mail App</a>` +
+            `</div>`;
+        }
+      } finally {
+        if (btnEl) btnEl.disabled = false;
+      }
     }
 
     function applyQueryParams() {

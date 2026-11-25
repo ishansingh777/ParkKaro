@@ -1,4 +1,4 @@
-const CACHE_NAME = 'parkkaro-v2026';
+const CACHE_NAME = 'parkkaro-v2026-2';
 const ASSETS_TO_CACHE = [
   '/',
   '/manifest.json',
@@ -24,8 +24,13 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
+  // Never intercept mutating requests (POST, PUT, DELETE)
+  if (event.request.method !== 'GET') {
+    return;
+  }
+
   // Always network-first for API calls
-  if (event.request.url.includes('/api/v1/')) {
+  if (event.request.url.includes('/api/')) {
     event.respondWith(
       fetch(event.request).catch(() => {
         if (event.request.url.includes('/spots') || event.request.url.includes('/bookings')) {
