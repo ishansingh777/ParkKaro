@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Park Karo — India's #1 Smart Parking App</title>
+  <title>ParkKaro — Smart Parking App</title>
   <link rel="manifest" href="/manifest.json" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
@@ -288,6 +288,117 @@
       background: var(--yellow-hover);
       transform: translateY(-2px);
       box-shadow: 0 12px 28px rgba(255, 202, 32, 0.45);
+    }
+
+    /* Hero Action Switcher & Inline Scanner */
+    .hero-mode-tabs {
+      display: inline-flex;
+      background: #eef1f6;
+      border: 1px solid #dfe3ea;
+      border-radius: 12px;
+      padding: 4px;
+      gap: 4px;
+      margin-bottom: 18px;
+      width: fit-content;
+    }
+    .hero-mode-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 9px 18px;
+      border-radius: 9px;
+      border: none;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      color: #4b5563;
+      background: transparent;
+      transition: all 0.2s ease;
+    }
+    .hero-mode-tab.active-find {
+      background: var(--yellow);
+      color: #111827;
+      box-shadow: 0 2px 8px rgba(255, 202, 32, 0.35);
+    }
+    .hero-mode-tab.active-scan {
+      background: var(--navy);
+      color: #ffffff;
+      box-shadow: 0 2px 8px rgba(28, 65, 120, 0.25);
+    }
+
+    .btn-navy-scanner {
+      width: 100%;
+      height: 50px;
+      background: #ffffff;
+      color: var(--navy);
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 800;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 10px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    .btn-navy-scanner:hover {
+      background: #eef3fb;
+      border-color: var(--navy);
+      transform: translateY(-1px);
+    }
+
+    .hero-scanner-card {
+      background: #ffffff;
+      border: 1.5px solid #dcdfe6;
+      border-radius: 14px;
+      padding: 18px;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .scanner-lens-box {
+      background: #0f172a;
+      border: 2px dashed rgba(255, 202, 32, 0.6);
+      border-radius: 12px;
+      padding: 18px 16px;
+      text-align: center;
+      color: #ffffff;
+      position: relative;
+      overflow: hidden;
+    }
+    .scanner-presets {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+    .scanner-preset-btn {
+      padding: 8px 10px;
+      border-radius: 10px;
+      border: 1px solid #e2e8f0;
+      background: #f8fafc;
+      font-family: inherit;
+      font-size: 11px;
+      font-weight: 800;
+      color: #1e2025;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .scanner-preset-btn:hover {
+      border-color: var(--yellow);
+      background: var(--yellow-soft);
+    }
+    .scanner-verdict {
+      display: none;
+      padding: 10px 12px;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1.45;
     }
 
     /* Hero Right D-Shape Illustration */
@@ -740,8 +851,8 @@
   <!-- ═══════════════ NAVBAR ═══════════════ -->
   <header>
     <div class="nav-inner">
-      <!-- Signature Yellow Pill Logo: park karo -->
-      <a href="/home" class="brand-pill" aria-label="park karo home">
+      <!-- Signature Yellow Pill Logo: parkkaro -->
+      <a href="/home" class="brand-pill" aria-label="parkkaro home">
         <svg width="20" height="20" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
           <!-- Aerial Parking Bay Lines -->
           <line x1="4" y1="4" x2="4" y2="28" stroke="#111827" stroke-width="2.4" stroke-linecap="round"/>
@@ -754,12 +865,13 @@
           <circle cx="11.5" cy="9" r="1" fill="#ffffff"/>
           <circle cx="20.5" cy="9" r="1" fill="#ffffff"/>
         </svg>
-        <span>park karo</span>
+        <span>parkkaro</span>
       </a>
 
       <!-- Clean Nav Links (No Blog, Careers, Press, Download) -->
       <ul class="nav-links">
         <li><a href="/home" class="active">Home</a></li>
+        <li><a href="#home" onclick="setHeroMode('scanner')">Sign Scanner</a></li>
         <li><a href="#about">About Us</a></li>
         <li><a href="#safety">Safety</a></li>
         <li><a href="#contact">Contact Us</a></li>
@@ -778,17 +890,30 @@
     <div class="container">
       <div class="hero-grid">
 
-        <!-- Left Search & Headline -->
+        <!-- Left Headline, Search & Inline Sign Scanner -->
         <div>
           <h1 class="hero-title">
-            India's #1<br/>
+            ParkKaro<br/>
             Smart Parking App
           </h1>
           <p class="hero-sub">
             Quick, Legal parking spots near your destination
           </p>
 
-          <div class="booking-box">
+          <!-- Mode Switcher at Starting of Home Page -->
+          <div class="hero-mode-tabs">
+            <button type="button" id="tabFindBtn" class="hero-mode-tab active-find" onclick="setHeroMode('find')">
+              <i data-lucide="map-pin" style="width:15px;height:15px;"></i>
+              <span>Find Parking</span>
+            </button>
+            <button type="button" id="tabScannerBtn" class="hero-mode-tab" onclick="setHeroMode('scanner')">
+              <i data-lucide="camera" style="width:15px;height:15px;"></i>
+              <span>Sign Scanner</span>
+            </button>
+          </div>
+
+          <!-- Panel 1: Find Parking Search -->
+          <div id="heroFindPanel" class="booking-box">
             <div class="input-wrap">
               <span class="input-icon">
                 <i data-lucide="map-pin" style="width:20px;height:20px;"></i>
@@ -813,6 +938,58 @@
             <button type="button" id="findParkingBtn" class="btn-yellow-cta" onclick="launchParkingSearch()">
               <span>Find Parking</span>
             </button>
+
+            <button type="button" class="btn-navy-scanner" onclick="setHeroMode('scanner')">
+              <i data-lucide="camera" style="width:18px;height:18px;color:#1C4178;"></i>
+              <span>Scan Street Sign Before You Park</span>
+            </button>
+          </div>
+
+          <!-- Panel 2: Built-In Hero Sign Scanner -->
+          <div id="heroScannerPanel" class="booking-box" style="display:none;">
+            <div class="hero-scanner-card">
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
+                <span style="font-size:12px;font-weight:900;color:#1C4178;letter-spacing:0.06em;text-transform:uppercase;">AI Street Sign Scanner</span>
+                <a href="/?view=scanner" style="font-size:12px;font-weight:800;color:#1C4178;text-decoration:none;display:inline-flex;align-items:center;gap:4px;">
+                  <span>Full Viewfinder</span>
+                  <i data-lucide="external-link" style="width:13px;height:13px;"></i>
+                </a>
+              </div>
+
+              <div class="scanner-lens-box">
+                <video id="homeScannerVideo" playsinline autoplay muted style="display:none;width:100%;max-height:170px;border-radius:8px;object-fit:cover;margin-bottom:8px;"></video>
+                <img id="homeScannerImg" alt="Sign preview" style="display:none;width:100%;max-height:170px;border-radius:8px;object-fit:cover;margin-bottom:8px;"/>
+                <div id="homeScannerPrompt">
+                  <div style="width:42px;height:42px;margin:0 auto 8px;border-radius:12px;background:#FFCA20;color:#111827;display:flex;align-items:center;justify-content:center;">
+                    <i data-lucide="camera" style="width:20px;height:20px;"></i>
+                  </div>
+                  <div style="font-size:13px;font-weight:800;margin-bottom:3px;">Check Any Parking Sign Instantly</div>
+                  <div style="font-size:11px;color:#cbd5e1;">Use live camera, upload a sign photo, or test sample rules below</div>
+                </div>
+                <div style="display:flex;justify-content:center;gap:8px;margin-top:12px;flex-wrap:wrap;">
+                  <button type="button" onclick="startHomeScannerCamera()" style="padding:8px 14px;border-radius:999px;background:#FFCA20;color:#111827;border:none;font-size:12px;font-weight:900;cursor:pointer;display:inline-flex;align-items:center;gap:6px;">
+                    <i data-lucide="video" style="width:14px;height:14px;"></i> Start Camera
+                  </button>
+                  <label style="padding:8px 14px;border-radius:999px;background:rgba(255,255,255,0.16);color:#ffffff;font-size:12px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:6px;">
+                    <i data-lucide="upload" style="width:14px;height:14px;color:#FFCA20;"></i> Upload Photo
+                    <input type="file" accept="image/*" style="display:none;" onchange="handleHomeSignUpload(event)" />
+                  </label>
+                </div>
+              </div>
+
+              <div class="scanner-presets">
+                <button type="button" class="scanner-preset-btn" onclick="runHomeSampleSign('tow')">⛔ Tow Zone</button>
+                <button type="button" class="scanner-preset-btn" onclick="runHomeSampleSign('paid')">🔵 Pay &amp; Park</button>
+                <button type="button" class="scanner-preset-btn" onclick="runHomeSampleSign('free')">🟢 Free Spot</button>
+              </div>
+
+              <div id="homeScannerVerdict" class="scanner-verdict"></div>
+
+              <a href="/?view=scanner" class="btn-yellow-cta" style="height:50px;font-size:15px;">
+                <i data-lucide="scan-line" style="width:18px;height:18px;"></i>
+                <span>Open Full AI Sign Scanner</span>
+              </a>
+            </div>
           </div>
         </div>
 
@@ -1031,7 +1208,7 @@
 
             <rect x="76" y="138" width="308" height="196" rx="22" fill="#FFFFFF" stroke="#FFCA20" stroke-width="3"/>
             <rect x="94" y="156" width="110" height="28" rx="14" fill="#FFCA20"/>
-            <text x="149" y="175" fill="#111827" font-size="12" font-weight="900" text-anchor="middle">park karo</text>
+            <text x="149" y="175" fill="#111827" font-size="12" font-weight="900" text-anchor="middle">parkkaro</text>
             <rect x="292" y="158" width="72" height="24" rx="12" fill="#DCFCE7"/>
             <text x="328" y="174" fill="#15803D" font-size="11" font-weight="800" text-anchor="middle">VERIFIED</text>
 
@@ -1188,14 +1365,14 @@
   <section class="showcase-section">
     <div class="container">
       <div class="showcase-head">
-        <h2 class="section-title">Explore Park Karo</h2>
+        <h2 class="section-title">Explore ParkKaro</h2>
         <div class="yellow-bar"></div>
       </div>
 
       <div class="showcase-cards">
         <a href="/" class="showcase-card">
           <div class="showcase-badge">
-            <span class="main-name">park karo</span>
+            <span class="main-name">parkkaro</span>
           </div>
           <div class="showcase-card-text">
             <h3>Cars, Bikes &amp; Live Map</h3>
@@ -1205,7 +1382,7 @@
 
         <a href="/?view=scanner" class="showcase-card">
           <div class="showcase-badge">
-            <span class="main-name">park karo</span>
+            <span class="main-name">parkkaro</span>
             <span class="sub-name">Scanner</span>
           </div>
           <div class="showcase-card-text">
@@ -1229,10 +1406,10 @@
               <rect x="9.5" y="7.5" width="13" height="19" rx="4" fill="#111827"/>
               <rect x="12" y="13.5" width="8" height="7" rx="1.5" fill="#FFCA20"/>
             </svg>
-            <span>park karo</span>
+            <span>parkkaro</span>
           </a>
           <p class="footer-desc">
-            India's Smart Parking Intelligence Platform. Built to eliminate circling blocks across Indian cities.
+            ParkKaro Smart Parking Intelligence Platform. Built to eliminate circling blocks across Indian cities.
           </p>
         </div>
 
@@ -1241,6 +1418,7 @@
             <h5>Navigation</h5>
             <ul>
               <li><a href="/home">Home</a></li>
+              <li><a href="#home" onclick="setHeroMode('scanner')">Sign Scanner</a></li>
               <li><a href="#about">About Us</a></li>
               <li><a href="#safety">Safety</a></li>
               <li><a href="#contact">Contact Us</a></li>
@@ -1251,7 +1429,7 @@
             <h5>Platform</h5>
             <ul>
               <li><a href="/">Open Live Map</a></li>
-              <li><a href="/?view=scanner">Sign Scanner</a></li>
+              <li><a href="/?view=scanner">AI Sign Scanner</a></li>
               <li><a href="/?city=Indore">Indore Zones</a></li>
               <li><a href="/?city=Chandigarh">Chandigarh Zones</a></li>
               <li><a href="/?city=Goa">Goa Zones</a></li>
@@ -1269,7 +1447,7 @@
       </div>
 
       <div class="footer-bottom">
-        <span>© 2026 Park Karo. All rights reserved.</span>
+        <span>© 2026 ParkKaro. All rights reserved.</span>
         <span>Live PostGIS Smart Parking Network</span>
       </div>
     </div>
@@ -1277,6 +1455,113 @@
 
   <script>
     lucide.createIcons();
+    let homeCamStream = null;
+
+    function setHeroMode(mode) {
+      const findPanel = document.getElementById('heroFindPanel');
+      const scanPanel = document.getElementById('heroScannerPanel');
+      const tabFind = document.getElementById('tabFindBtn');
+      const tabScan = document.getElementById('tabScannerBtn');
+
+      if (mode === 'scanner') {
+        if (findPanel) findPanel.style.display = 'none';
+        if (scanPanel) scanPanel.style.display = 'flex';
+        if (tabFind) tabFind.className = 'hero-mode-tab';
+        if (tabScan) tabScan.className = 'hero-mode-tab active-scan';
+      } else {
+        if (scanPanel) scanPanel.style.display = 'none';
+        if (findPanel) findPanel.style.display = 'flex';
+        if (tabFind) tabFind.className = 'hero-mode-tab active-find';
+        if (tabScan) tabScan.className = 'hero-mode-tab';
+        stopHomeScannerCamera();
+      }
+      lucide.createIcons();
+    }
+
+    async function startHomeScannerCamera() {
+      const video = document.getElementById('homeScannerVideo');
+      const promptBox = document.getElementById('homeScannerPrompt');
+      const img = document.getElementById('homeScannerImg');
+      if (img) img.style.display = 'none';
+
+      try {
+        homeCamStream = await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: { ideal: 'environment' } },
+          audio: false
+        });
+        if (video) {
+          video.srcObject = homeCamStream;
+          video.style.display = 'block';
+        }
+        if (promptBox) promptBox.style.display = 'none';
+        showHomeVerdict('scan', '📸 Camera Active — Align sign inside frame and tap "Open Full AI Sign Scanner" or a preset rule check.');
+      } catch (err) {
+        showHomeVerdict('paid', '📷 Camera preview blocked/unavailable in this tab. Upload a sign photo or try any preset button below.');
+      }
+    }
+
+    function stopHomeScannerCamera() {
+      if (homeCamStream) {
+        homeCamStream.getTracks().forEach(t => t.stop());
+        homeCamStream = null;
+      }
+      const video = document.getElementById('homeScannerVideo');
+      if (video) video.style.display = 'none';
+    }
+
+    function handleHomeSignUpload(e) {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        const img = document.getElementById('homeScannerImg');
+        const promptBox = document.getElementById('homeScannerPrompt');
+        if (img) {
+          img.src = evt.target.result;
+          img.style.display = 'block';
+        }
+        if (promptBox) promptBox.style.display = 'none';
+        stopHomeScannerCamera();
+        showHomeVerdict('free', '✅ Sign photo loaded — Open Full AI Sign Scanner for OCR verification.');
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function runHomeSampleSign(type) {
+      const img = document.getElementById('homeScannerImg');
+      const promptBox = document.getElementById('homeScannerPrompt');
+      stopHomeScannerCamera();
+      if (img) img.style.display = 'none';
+      if (promptBox) promptBox.style.display = 'block';
+
+      if (type === 'tow') {
+        showHomeVerdict('tow', '⛔ NO PARKING (8 AM – 8 PM): Strict Tow-Away Zone. Fines up to ₹500 apply.');
+      } else if (type === 'paid') {
+        showHomeVerdict('paid', '🔵 PAY & PARK: Municipal metered zone — ₹20/hr for cars, ₹10/hr for bikes.');
+      } else {
+        showHomeVerdict('free', '🟢 FREE PUBLIC PARKING: Legal to park now (Max stay 2 hours).');
+      }
+    }
+
+    function showHomeVerdict(kind, message) {
+      const box = document.getElementById('homeScannerVerdict');
+      if (!box) return;
+      box.style.display = 'block';
+      if (kind === 'tow') {
+        box.style.background = '#FEF2F2';
+        box.style.color = '#991B1B';
+        box.style.border = '1px solid #FECACA';
+      } else if (kind === 'free') {
+        box.style.background = '#ECFDF5';
+        box.style.color = '#065F46';
+        box.style.border = '1px solid #A7F3D0';
+      } else {
+        box.style.background = '#EFF6FF';
+        box.style.color = '#1E3A8A';
+        box.style.border = '1px solid #BFDBFE';
+      }
+      box.textContent = message;
+    }
 
     function selectHeroCity(city) {
       const input = document.getElementById('cityInput');
