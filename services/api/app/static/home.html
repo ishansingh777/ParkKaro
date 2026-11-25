@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ParkKaro — India's #1 Smart Parking App</title>
+  <title>Park Karo — India's #1 Smart Parking App</title>
   <link rel="manifest" href="/manifest.json" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
@@ -12,1154 +12,1293 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #07090f;
-      --surface: rgba(255,255,255,0.055);
-      --border: rgba(255,255,255,0.10);
-      --border-hover: rgba(255,255,255,0.22);
-      --text: #f1f5f9;
-      --muted: #94a3b8;
-      --accent: #10b981;
-      --accent-glow: rgba(16,185,129,0.25);
-      --blue: #3b82f6;
-      --indigo: #6366f1;
+      --white: #ffffff;
+      --surface-light: #f6f7f9;
+      --hero-bg: #fafbfd;
+      --navy: #1c4178;
+      --navy-dark: #153360;
+      --yellow: #ffca20;
+      --yellow-hover: #f2bc10;
+      --yellow-soft: #fff8dc;
+      --ink: #1e2025;
+      --muted: #5a6270;
+      --border: #e5e7eb;
+      --dark-footer: #0f1116;
     }
 
     html { scroll-behavior: smooth; }
 
     body {
-      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
-      background: var(--bg);
-      color: var(--text);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--white);
+      color: var(--ink);
       min-height: 100vh;
       overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* ─── AMBIENT BACKGROUND ORBS ─── */
-    .orb {
-      position: fixed;
-      border-radius: 50%;
-      filter: blur(130px);
-      pointer-events: none;
-      z-index: 0;
-      opacity: 0.55;
-    }
-    .orb-1 { width: 600px; height: 600px; background: radial-gradient(circle, #10b981 0%, transparent 70%); top: -180px; left: -180px; }
-    .orb-2 { width: 500px; height: 500px; background: radial-gradient(circle, #6366f1 0%, transparent 70%); bottom: -150px; right: -150px; }
-    .orb-3 { width: 350px; height: 350px; background: radial-gradient(circle, #3b82f6 0%, transparent 70%); top: 50%; right: 10%; }
-
-    /* ─── NAV ─── */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
+    /* ─── TOP NAVBAR (CLEAN WHITE) ─── */
+    header {
+      position: sticky;
+      top: 0;
+      left: 0;
+      right: 0;
       z-index: 100;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid #eceef2;
+    }
+
+    .nav-inner {
+      max-width: 1240px;
+      margin: 0 auto;
       padding: 0 5%;
-      height: 72px;
+      height: 76px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      background: rgba(7,9,15,0.75);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      border-bottom: 1px solid var(--border);
+      gap: 24px;
     }
 
-    .nav-logo {
-      display: flex;
+    /* Yellow Pill Logo — "park karo" */
+    .brand-pill {
+      display: inline-flex;
       align-items: center;
-      gap: 11px;
+      gap: 8px;
+      background: var(--yellow);
+      color: #111827;
+      padding: 8px 18px;
+      border-radius: 9999px;
       text-decoration: none;
-      cursor: pointer;
-    }
-    .nav-logo-badge {
-      width: 42px; height: 42px;
-      border-radius: 14px;
-      background: #090d16;
-      border: 1.5px solid rgba(16,185,129,0.5);
-      display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 0 20px rgba(16,185,129,0.2);
-      position: relative;
-      overflow: hidden;
-    }
-    .nav-logo-badge::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to bottom, rgba(16,185,129,0.15), transparent);
-    }
-    .nav-logo-text {
-      font-size: 22px;
+      font-size: 20px;
       font-weight: 900;
-      letter-spacing: -0.5px;
-      color: #fff;
+      letter-spacing: -0.04em;
+      box-shadow: 0 3px 12px rgba(255, 202, 32, 0.28);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      flex-shrink: 0;
     }
-    .nav-logo-text span { color: #10b981; }
+    .brand-pill:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(255, 202, 32, 0.42);
+    }
 
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 36px;
+      gap: 32px;
       list-style: none;
     }
     .nav-links a {
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 600;
-      color: var(--muted);
+      color: #374151;
       text-decoration: none;
-      transition: color 0.2s;
+      padding: 6px 2px;
       position: relative;
+      transition: color 0.2s;
     }
-    .nav-links a:hover, .nav-links a.active { color: #fff; }
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: #111827;
+    }
     .nav-links a.active::after {
       content: '';
       position: absolute;
-      bottom: -4px; left: 0; right: 0;
-      height: 2px;
-      background: #10b981;
+      left: 0;
+      right: 0;
+      bottom: -2px;
+      height: 2.5px;
+      background: #111827;
       border-radius: 2px;
     }
 
-    .nav-cta {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .btn-nav-app {
-      padding: 9px 22px;
-      background: #fff;
-      color: #000;
-      font-size: 13px;
-      font-weight: 800;
-      border: none;
-      border-radius: 12px;
-      cursor: pointer;
-      text-decoration: none;
-      transition: all 0.2s;
-      box-shadow: 0 4px 16px rgba(255,255,255,0.15);
-    }
-    .btn-nav-app:hover {
-      background: #10b981;
-      color: #fff;
-      transform: translateY(-1px);
-      box-shadow: 0 6px 24px rgba(16,185,129,0.4);
-    }
-
-    /* ─── HERO ─── */
-    .hero {
-      min-height: 100vh;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      align-items: center;
-      gap: 60px;
-      padding: 120px 5% 80px;
-      position: relative;
-      z-index: 1;
-      max-width: 1300px;
-      margin: 0 auto;
-    }
-
-    .hero-left { display: flex; flex-direction: column; }
-
-    .hero-eyebrow {
+    .btn-black-pill {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: rgba(16,185,129,0.1);
-      border: 1px solid rgba(16,185,129,0.3);
-      color: #10b981;
-      font-size: 12px;
+      background: #0d0f14;
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 700;
+      padding: 11px 22px;
+      border-radius: 24px 24px 6px 24px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 14px rgba(13, 15, 20, 0.16);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .btn-black-pill:hover {
+      background: #1f2430;
+      transform: translateY(-1px);
+      box-shadow: 0 8px 20px rgba(13, 15, 20, 0.24);
+    }
+
+    /* ─── SHARED SECTION UTILS ─── */
+    .container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 5%;
+    }
+
+    .section-title {
+      font-size: clamp(30px, 3.6vw, 42px);
       font-weight: 800;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      padding: 6px 14px;
+      color: var(--ink);
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+    }
+
+    .yellow-bar {
+      width: 68px;
+      height: 4px;
+      background: var(--yellow);
       border-radius: 999px;
-      width: fit-content;
-      margin-bottom: 24px;
+      margin-top: 12px;
+      margin-bottom: 36px;
     }
-    .hero-eyebrow .dot {
-      width: 7px; height: 7px;
-      border-radius: 50%;
-      background: #10b981;
-      animation: pulse-dot 2s infinite;
+
+    /* ─── HERO SECTION (OFF-WHITE / RAPIDO LAYOUT) ─── */
+    .hero-section {
+      background: var(--hero-bg);
+      padding: 64px 0 80px;
+      border-bottom: 1px solid #edf0f5;
     }
-    @keyframes pulse-dot {
-      0%,100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.5; transform: scale(0.7); }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.02fr 0.98fr;
+      align-items: center;
+      gap: 56px;
     }
 
     .hero-title {
-      font-size: clamp(38px, 5.5vw, 68px);
-      font-weight: 900;
-      line-height: 1.08;
-      letter-spacing: -1.5px;
-      color: #fff;
-      margin-bottom: 20px;
-    }
-    .hero-title .highlight {
-      background: linear-gradient(135deg, #10b981 0%, #3b82f6 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      font-size: clamp(38px, 4.5vw, 54px);
+      font-weight: 800;
+      color: #292d34;
+      line-height: 1.14;
+      letter-spacing: -0.03em;
+      margin-bottom: 14px;
     }
 
     .hero-sub {
-      font-size: 17px;
+      font-size: 18px;
       font-weight: 500;
       color: var(--muted);
-      line-height: 1.65;
-      max-width: 440px;
-      margin-bottom: 44px;
+      line-height: 1.55;
+      margin-bottom: 34px;
     }
 
-    /* ─── SEARCH CARD ─── */
-    .search-card {
-      background: rgba(255,255,255,0.055);
-      backdrop-filter: blur(28px);
-      -webkit-backdrop-filter: blur(28px);
-      border: 1px solid var(--border);
-      border-radius: 24px;
-      padding: 28px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.08);
-      max-width: 480px;
+    .booking-box {
+      max-width: 470px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
     }
 
-    .search-field {
+    .input-wrap {
+      position: relative;
       display: flex;
       align-items: center;
-      gap: 12px;
-      background: rgba(255,255,255,0.065);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 14px 16px;
-      margin-bottom: 10px;
+      background: #ffffff;
+      border: 1.5px solid #dcdfe6;
+      border-radius: 10px;
+      padding: 0 16px;
+      height: 58px;
       transition: border-color 0.2s, box-shadow 0.2s;
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.03);
     }
-    .search-field:focus-within {
-      border-color: rgba(16,185,129,0.5);
-      box-shadow: 0 0 0 3px rgba(16,185,129,0.1);
+    .input-wrap:focus-within {
+      border-color: #111827;
+      box-shadow: 0 0 0 3px rgba(255, 202, 32, 0.35);
     }
-    .search-field:last-of-type { margin-bottom: 0; }
-    .search-field .icon { color: #10b981; flex-shrink: 0; }
-    .search-field.blue-icon .icon { color: #6366f1; }
-    .search-field input {
-      background: none;
+    .input-icon {
+      color: #1e2025;
+      display: flex;
+      align-items: center;
+      margin-right: 14px;
+      flex-shrink: 0;
+    }
+    .input-wrap input {
+      width: 100%;
       border: none;
       outline: none;
-      color: #fff;
-      font-size: 14px;
-      font-weight: 500;
       font-family: inherit;
-      width: 100%;
-    }
-    .search-field input::placeholder { color: var(--muted); }
-
-    .search-divider {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 2px 16px;
-      margin: 2px 0;
-    }
-    .search-divider-line { flex: 1; height: 1px; background: var(--border); }
-    .search-divider-dot {
-      width: 10px; height: 10px;
-      border-radius: 50%;
-      border: 2px solid var(--border);
-      background: var(--bg);
-    }
-
-    .btn-find {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      width: 100%;
-      margin-top: 18px;
-      padding: 16px;
-      background: #10b981;
-      color: #fff;
       font-size: 15px;
-      font-weight: 800;
-      border: none;
-      border-radius: 14px;
-      cursor: pointer;
-      text-decoration: none;
-      transition: all 0.25s;
-      box-shadow: 0 8px 28px rgba(16,185,129,0.4);
-      letter-spacing: 0.01em;
+      font-weight: 500;
+      color: #111827;
+      background: transparent;
     }
-    .btn-find:hover {
-      background: #0d9e70;
-      transform: translateY(-2px);
-      box-shadow: 0 12px 40px rgba(16,185,129,0.55);
-    }
-    .btn-find:active { transform: translateY(0); }
-
-    /* ─── HERO RIGHT: Aerial Parking Illustration ─── */
-    .hero-right {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
+    .input-wrap input::placeholder {
+      color: #7c8492;
+      font-weight: 400;
     }
 
-    .illustration-wrap {
-      position: relative;
-      width: 100%;
-      max-width: 560px;
-    }
-
-    /* Glow circle behind illustration */
-    .hero-glow {
-      position: absolute;
-      inset: -60px;
-      background: radial-gradient(circle at center, rgba(16,185,129,0.12) 0%, transparent 65%);
-      border-radius: 50%;
-      pointer-events: none;
-    }
-
-    .hero-illustration-bg {
-      width: 100%;
-      aspect-ratio: 1.1 / 1;
-      border-radius: 32px;
-      background: rgba(255,255,255,0.045);
-      border: 1px solid var(--border);
-      box-shadow: 0 30px 80px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.07);
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      backdrop-filter: blur(20px);
-    }
-
-    /* Aerial parking lot grid */
-    .parking-visual {
-      width: 85%;
-      height: 85%;
-      position: relative;
-    }
-
-    /* Floating stat badges on the illustration */
-    .stat-badge {
-      position: absolute;
+    .quick-cities {
       display: flex;
       align-items: center;
       gap: 8px;
-      background: rgba(10,14,23,0.90);
-      backdrop-filter: blur(16px);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 10px 16px;
+      flex-wrap: wrap;
+      margin-top: -2px;
+    }
+    .quick-cities-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: #7c8492;
+    }
+    .city-chip {
       font-size: 12px;
       font-weight: 700;
-      white-space: nowrap;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.5);
-      z-index: 10;
-      animation: float-badge 4s ease-in-out infinite;
-    }
-    .stat-badge:nth-child(2) { animation-delay: 1.3s; }
-    .stat-badge:nth-child(3) { animation-delay: 2.6s; }
-    @keyframes float-badge {
-      0%,100% { transform: translateY(0); }
-      50% { transform: translateY(-6px); }
-    }
-    .stat-badge .badge-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-    .stat-badge-1 { top: -18px; left: -20px; }
-    .stat-badge-2 { bottom: -18px; left: 20px; }
-    .stat-badge-3 { top: 30%; right: -24px; }
-
-    /* ─── FEATURES SECTION ─── */
-    .section {
-      position: relative;
-      z-index: 1;
-      max-width: 1300px;
-      margin: 0 auto;
-      padding: 100px 5%;
-    }
-
-    .section-eyebrow {
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-bottom: 64px;
-    }
-    .section-eyebrow .label {
-      font-size: 12px;
-      font-weight: 800;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: #10b981;
-      margin-bottom: 14px;
-    }
-    .section-eyebrow h2 {
-      font-size: clamp(28px, 4vw, 48px);
-      font-weight: 900;
-      letter-spacing: -1px;
-      color: #fff;
-      margin-bottom: 16px;
-    }
-    .section-eyebrow p {
-      font-size: 16px;
-      color: var(--muted);
-      max-width: 500px;
-      line-height: 1.65;
-    }
-
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-    }
-
-    .feature-card {
-      background: rgba(255,255,255,0.045);
-      border: 1px solid var(--border);
-      border-radius: 24px;
-      padding: 32px 28px;
-      transition: all 0.3s;
-      position: relative;
-      overflow: hidden;
-    }
-    .feature-card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, transparent 60%);
-      pointer-events: none;
-    }
-    .feature-card:hover {
-      border-color: var(--border-hover);
-      transform: translateY(-4px);
-      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-    }
-
-    .feature-icon {
-      width: 52px; height: 52px;
-      border-radius: 16px;
-      display: flex; align-items: center; justify-content: center;
-      margin-bottom: 20px;
-      position: relative;
-    }
-    .feature-icon.emerald { background: rgba(16,185,129,0.12); border: 1px solid rgba(16,185,129,0.25); color: #10b981; }
-    .feature-icon.blue    { background: rgba(59,130,246,0.12);  border: 1px solid rgba(59,130,246,0.25);  color: #3b82f6; }
-    .feature-icon.indigo  { background: rgba(99,102,241,0.12);  border: 1px solid rgba(99,102,241,0.25);  color: #6366f1; }
-    .feature-icon.amber   { background: rgba(245,158,11,0.12);  border: 1px solid rgba(245,158,11,0.25);  color: #f59e0b; }
-    .feature-icon.rose    { background: rgba(244,63,94,0.12);   border: 1px solid rgba(244,63,94,0.25);   color: #f43f5e; }
-    .feature-icon.cyan    { background: rgba(6,182,212,0.12);   border: 1px solid rgba(6,182,212,0.25);   color: #06b6d4; }
-
-    .feature-card h3 {
-      font-size: 17px;
-      font-weight: 800;
-      color: #fff;
-      margin-bottom: 10px;
-      letter-spacing: -0.3px;
-    }
-    .feature-card p {
-      font-size: 14px;
-      color: var(--muted);
-      line-height: 1.65;
-    }
-
-    /* ─── CITIES SECTION ─── */
-    .cities-section {
-      position: relative;
-      z-index: 1;
-      padding: 0 0 100px;
-      max-width: 1300px;
-      margin: 0 auto;
-      padding-left: 5%;
-      padding-right: 5%;
-    }
-
-    .cities-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-    }
-
-    .city-card {
-      background: rgba(255,255,255,0.045);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 28px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      transition: all 0.25s;
+      padding: 4px 12px;
+      border-radius: 999px;
+      background: #ffffff;
+      border: 1px solid #e2e6ed;
+      color: #374151;
       cursor: pointer;
-      text-decoration: none;
-      color: inherit;
+      transition: all 0.15s;
     }
-    .city-card:hover {
-      border-color: rgba(16,185,129,0.4);
-      background: rgba(16,185,129,0.06);
-      transform: translateY(-2px);
-      box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+    .city-chip:hover {
+      background: var(--yellow-soft);
+      border-color: var(--yellow);
+      color: #111827;
     }
-    .city-emoji { font-size: 36px; }
-    .city-info h3 { font-size: 16px; font-weight: 800; color: #fff; margin-bottom: 4px; }
-    .city-info p { font-size: 12px; color: var(--muted); font-weight: 600; }
-    .city-arrow { margin-left: auto; color: var(--muted); transition: color 0.2s, transform 0.2s; }
-    .city-card:hover .city-arrow { color: #10b981; transform: translateX(4px); }
 
-    /* ─── HOW IT WORKS ─── */
-    .steps-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 20px;
+    .btn-yellow-cta {
+      width: 100%;
+      height: 58px;
+      margin-top: 6px;
+      background: var(--yellow);
+      color: #111827;
+      font-family: inherit;
+      font-size: 18px;
+      font-weight: 800;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration: none;
+      box-shadow: 0 8px 22px rgba(255, 202, 32, 0.36);
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-yellow-cta:hover {
+      background: var(--yellow-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(255, 202, 32, 0.45);
+    }
+
+    /* Hero Right D-Shape Illustration */
+    .hero-visual-box {
+      position: relative;
+      display: flex;
+      justify-content: center;
+    }
+    .hero-d-frame {
+      width: 100%;
+      max-width: 560px;
+      aspect-ratio: 1.25 / 1;
+      border-radius: 260px 28px 28px 260px;
+      overflow: hidden;
+      background: linear-gradient(180deg, #dff1ff 0%, #c8e5fd 52%, #e8edf3 52%, #d8dee7 100%);
+      box-shadow: 0 24px 56px rgba(15, 23, 42, 0.12);
+      border: 1px solid #e2e8f0;
       position: relative;
     }
-    .steps-grid::before {
-      content: '';
+
+    .hero-pill-float {
       position: absolute;
-      top: 36px; left: 12%; right: 12%;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--border), var(--border), transparent);
-      z-index: 0;
+      bottom: 20px;
+      right: 20px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 10px 28px rgba(15, 23, 42, 0.12);
+    }
+    .live-pulse {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #16a34a;
+      box-shadow: 0 0 0 4px rgba(22, 163, 74, 0.2);
     }
 
-    .step-card {
+    /* ─── SECTION 2: WHAT WE OFFER (PURE WHITE) ─── */
+    .offer-section {
+      background: var(--white);
+      padding: 84px 0;
+    }
+
+    .offer-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+
+    .offer-card {
       display: flex;
       flex-direction: column;
-      align-items: center;
-      text-align: center;
-      position: relative;
-      z-index: 1;
     }
-    .step-num {
-      width: 56px; height: 56px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.055);
-      border: 1px solid var(--border);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 18px;
-      font-weight: 900;
-      color: #10b981;
+    .offer-img {
+      width: 100%;
+      aspect-ratio: 1.32 / 1;
+      border-radius: 16px;
+      overflow: hidden;
+      background: #f3f6fa;
+      border: 1px solid #e9edf3;
       margin-bottom: 20px;
-      position: relative;
-      box-shadow: 0 0 24px rgba(16,185,129,0.15);
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
     }
-    .step-num::after {
-      content: '';
-      position: absolute;
-      inset: -4px;
-      border-radius: 50%;
-      border: 1px dashed rgba(16,185,129,0.25);
+    .offer-card:hover .offer-img {
+      transform: translateY(-4px);
+      box-shadow: 0 14px 32px rgba(15, 23, 42, 0.10);
     }
-    .step-card h4 { font-size: 15px; font-weight: 800; color: #fff; margin-bottom: 8px; }
-    .step-card p { font-size: 13px; color: var(--muted); line-height: 1.6; }
-
-    /* ─── ABOUT SECTION ─── */
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: center;
+    .offer-card h3 {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--ink);
+      margin-bottom: 10px;
+      letter-spacing: -0.02em;
     }
-    .about-left h2 {
-      font-size: clamp(28px, 3.5vw, 44px);
-      font-weight: 900;
-      letter-spacing: -1px;
-      color: #fff;
-      line-height: 1.1;
-      margin-bottom: 20px;
-    }
-    .about-left p {
+    .offer-card p {
       font-size: 15px;
       color: var(--muted);
-      line-height: 1.75;
-      margin-bottom: 36px;
+      line-height: 1.62;
     }
-    .about-stats {
+
+    /* ─── SECTION 3: ROYAL NAVY BLUE FEATURE BAND ─── */
+    .navy-section {
+      background: var(--navy);
+      color: #ffffff;
+      padding: 88px 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .navy-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 16px;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 64px;
     }
-    .stat-box {
-      background: rgba(255,255,255,0.045);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 22px;
+    .navy-visual {
+      width: 100%;
+      aspect-ratio: 1.15 / 1;
+      border-radius: 20px;
+      overflow: hidden;
+      background: linear-gradient(180deg, #2fb8df 0%, #63d0ea 58%, #475569 58%, #334155 100%);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
+      border: 1px solid rgba(255, 255, 255, 0.14);
     }
-    .stat-box .num {
-      font-size: 28px;
+    .navy-content h2 {
+      font-size: clamp(32px, 3.8vw, 46px);
+      font-weight: 800;
+      line-height: 1.14;
+      letter-spacing: -0.03em;
+      color: #ffffff;
+    }
+    .navy-content .yellow-bar {
+      margin-top: 16px;
+      margin-bottom: 24px;
+    }
+    .navy-content p {
+      font-size: 17px;
+      line-height: 1.68;
+      color: #dbeafe;
+      max-width: 460px;
+      margin-bottom: 34px;
+    }
+    .btn-yellow-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--yellow);
+      color: #111827;
+      font-size: 17px;
+      font-weight: 800;
+      padding: 15px 30px;
+      border-radius: 9999px;
+      text-decoration: none;
+      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.24);
+      transition: all 0.2s ease;
+    }
+    .btn-yellow-pill:hover {
+      background: var(--yellow-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.34);
+    }
+
+    /* ─── SECTION 4: SAFETY & ABOUT US (WHITE) ─── */
+    .safety-section {
+      background: var(--white);
+      padding: 88px 0;
+      border-bottom: 1px solid #eef0f4;
+    }
+    .split-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 64px;
+    }
+    .split-copy p {
+      font-size: 16px;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 20px;
+      max-width: 500px;
+    }
+    .rule-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+    .rule-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 9999px;
+      font-size: 13px;
+      font-weight: 700;
+      background: var(--surface-light);
+      border: 1px solid #e5e7eb;
+      color: #1f2937;
+    }
+    .rule-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+    .btn-outline-dark {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 26px;
+      border-radius: 9999px;
+      background: #111827;
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-outline-dark:hover {
+      background: #272e3f;
+      transform: translateY(-1px);
+    }
+
+    .safety-card-visual {
+      width: 100%;
+      border-radius: 20px;
+      background: var(--surface-light);
+      border: 1px solid #e5e7eb;
+      overflow: hidden;
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.07);
+    }
+
+    /* ─── ABOUT & CITIES ─── */
+    .about-section {
+      background: var(--white);
+      padding: 84px 0;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      margin-top: 32px;
+    }
+    .stat-card {
+      background: var(--hero-bg);
+      border: 1px solid #e6e9ef;
+      border-top: 4px solid var(--yellow);
+      border-radius: 14px;
+      padding: 24px 20px;
+    }
+    .stat-num {
+      font-size: 32px;
       font-weight: 900;
-      letter-spacing: -0.5px;
-      color: #10b981;
+      color: var(--navy);
+      letter-spacing: -0.02em;
       margin-bottom: 4px;
     }
-    .stat-box .label { font-size: 12px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
-
-    .about-right {
-      position: relative;
+    .stat-label {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--muted);
     }
-    .about-visual {
-      width: 100%;
-      aspect-ratio: 1;
-      border-radius: 28px;
-      background: rgba(255,255,255,0.045);
-      border: 1px solid var(--border);
-      overflow: hidden;
+
+    .cities-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 44px;
+    }
+    .city-tile {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 22px 24px;
+      background: #ffffff;
+      border: 1.5px solid #e5e7eb;
+      border-radius: 16px;
+      text-decoration: none;
+      color: var(--ink);
+      transition: all 0.2s ease;
+    }
+    .city-tile:hover {
+      border-color: var(--yellow);
+      background: var(--yellow-soft);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+    }
+    .city-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .city-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      background: var(--surface-light);
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+      font-size: 22px;
+    }
+    .city-left h4 { font-size: 17px; font-weight: 800; }
+    .city-left span { font-size: 13px; color: var(--muted); font-weight: 500; }
+
+    /* ─── SECTION 5: SOFT GREY TWIN-CARD SHOWCASE BAND ─── */
+    .showcase-section {
+      background: #f4f5f7;
+      padding: 80px 0;
+      border-top: 1px solid #e9ecf1;
+    }
+    .showcase-head {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 42px;
+    }
+    .showcase-head .yellow-bar {
+      margin-bottom: 0;
+    }
+    .showcase-cards {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 28px;
+      max-width: 980px;
+      margin: 0 auto;
+    }
+    .showcase-card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 36px 34px;
+      display: flex;
+      align-items: center;
+      gap: 26px;
+      text-decoration: none;
+      color: var(--ink);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+      border: 1px solid #eceef2;
+      transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+    }
+    .showcase-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--yellow);
+      box-shadow: 0 16px 38px rgba(15, 23, 42, 0.10);
+    }
+    .showcase-badge {
+      width: 148px;
+      height: 82px;
+      border-radius: 9999px;
+      background: var(--yellow);
+      color: #111827;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 6px 18px rgba(255, 202, 32, 0.35);
+    }
+    .showcase-badge .main-name {
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+    }
+    .showcase-badge .sub-name {
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      margin-top: 2px;
+    }
+    .showcase-card-text h3 {
+      font-size: 22px;
+      font-weight: 800;
+      color: #111827;
+      line-height: 1.25;
+      margin-bottom: 6px;
+    }
+    .showcase-card-text p {
+      font-size: 14px;
+      color: var(--muted);
+      font-weight: 500;
     }
 
-    /* ─── FOOTER ─── */
+    /* ─── FOOTER (CRISP DARK CHARCOAL + YELLOW) ─── */
     footer {
-      position: relative;
-      z-index: 1;
-      border-top: 1px solid var(--border);
-      padding: 48px 5%;
-      max-width: 1300px;
-      margin: 0 auto;
+      background: var(--dark-footer);
+      color: #e2e8f0;
+      padding: 64px 0 36px;
+    }
+    .footer-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 40px;
+      padding-bottom: 40px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .footer-desc {
+      margin-top: 16px;
+      font-size: 14px;
+      color: #94a3b8;
+      max-width: 320px;
+      line-height: 1.65;
+    }
+    .footer-cols {
+      display: flex;
+      gap: 64px;
+      flex-wrap: wrap;
+    }
+    .footer-col h5 {
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--yellow);
+      margin-bottom: 16px;
+    }
+    .footer-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .footer-col a {
+      color: #cbd5e1;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.15s;
+    }
+    .footer-col a:hover { color: var(--yellow); }
+
+    .footer-bottom {
+      padding-top: 24px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
-      gap: 20px;
-    }
-    footer .footer-brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    footer .footer-brand .name { font-size: 18px; font-weight: 900; color: #fff; }
-    footer .footer-brand .name span { color: #10b981; }
-    footer p { font-size: 13px; color: var(--muted); }
-    .footer-links { display: flex; gap: 24px; }
-    .footer-links a { font-size: 13px; color: var(--muted); text-decoration: none; font-weight: 600; transition: color 0.2s; }
-    .footer-links a:hover { color: #fff; }
-    footer hr { border: none; border-top: 1px solid var(--border); width: 100%; }
-
-    /* ─── SECTION SEPARATOR ─── */
-    .sep {
-      border: none;
-      border-top: 1px solid var(--border);
-      max-width: 1300px;
-      margin: 0 auto;
+      gap: 12px;
+      font-size: 13px;
+      color: #64748b;
     }
 
-    /* ─── MOBILE ─── */
-    @media (max-width: 1024px) {
-      .hero { grid-template-columns: 1fr; gap: 60px; }
-      .hero-right { order: -1; }
-      .features-grid { grid-template-columns: repeat(2, 1fr); }
-      .cities-grid { grid-template-columns: repeat(2, 1fr); }
-      .steps-grid { grid-template-columns: repeat(2, 1fr); }
-      .steps-grid::before { display: none; }
-      .about-grid { grid-template-columns: 1fr; gap: 40px; }
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 980px) {
+      .hero-grid,
+      .navy-grid,
+      .split-grid { grid-template-columns: 1fr; gap: 40px; }
+      .offer-grid { grid-template-columns: 1fr 1fr; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .cities-row { grid-template-columns: 1fr; }
+      .showcase-cards { grid-template-columns: 1fr; }
     }
-    @media (max-width: 640px) {
+    @media (max-width: 680px) {
       .nav-links { display: none; }
-      .features-grid { grid-template-columns: 1fr; }
-      .cities-grid { grid-template-columns: 1fr; }
-      .steps-grid { grid-template-columns: 1fr; }
-      .about-stats { grid-template-columns: repeat(2, 1fr); }
+      .offer-grid { grid-template-columns: 1fr; }
+      .hero-d-frame { border-radius: 28px; }
+      .showcase-card { flex-direction: column; text-align: center; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Ambient orbs -->
-  <div class="orb orb-1"></div>
-  <div class="orb orb-2"></div>
-  <div class="orb orb-3"></div>
-
-  <!-- ═══════════════ NAV ═══════════════ -->
-  <nav>
-    <a class="nav-logo" href="/home">
-      <div class="nav-logo-badge">
-        <svg width="22" height="22" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <line x1="12" y1="6" x2="12" y2="58" stroke="#10b981" stroke-width="3" stroke-linecap="round"/>
-          <line x1="52" y1="6" x2="52" y2="58" stroke="#10b981" stroke-width="3" stroke-linecap="round"/>
-          <line x1="12" y1="8" x2="52" y2="8" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-dasharray="4 3" opacity="0.6"/>
-          <circle cx="32" cy="8" r="3" fill="#10b981"/>
-          <rect x="22" y="15" width="20" height="36" rx="6.5" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.2"/>
-          <path d="M25 24 L27 20 Q32 19 37 20 L39 24 Q32 23 25 24 Z" fill="#0284c7"/>
-          <rect x="26" y="26" width="12" height="11" rx="2" fill="#0369a1"/>
-          <circle cx="24.5" cy="16.5" r="1.5" fill="#38bdf8"/>
-          <circle cx="39.5" cy="16.5" r="1.5" fill="#38bdf8"/>
-          <line x1="24" y1="50" x2="28" y2="50" stroke="#ef4444" stroke-width="2" stroke-linecap="round"/>
-          <line x1="36" y1="50" x2="40" y2="50" stroke="#ef4444" stroke-width="2" stroke-linecap="round"/>
+  <!-- ═══════════════ NAVBAR ═══════════════ -->
+  <header>
+    <div class="nav-inner">
+      <!-- Signature Yellow Pill Logo: park karo -->
+      <a href="/home" class="brand-pill" aria-label="park karo home">
+        <svg width="20" height="20" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Aerial Parking Bay Lines -->
+          <line x1="4" y1="4" x2="4" y2="28" stroke="#111827" stroke-width="2.4" stroke-linecap="round"/>
+          <line x1="28" y1="4" x2="28" y2="28" stroke="#111827" stroke-width="2.4" stroke-linecap="round"/>
+          <line x1="4" y1="5" x2="28" y2="5" stroke="#111827" stroke-width="1.6" stroke-dasharray="3 2" opacity="0.5"/>
+          <!-- Bird's-eye Parked Car -->
+          <rect x="9.5" y="7.5" width="13" height="19" rx="4" fill="#111827"/>
+          <path d="M11.5 13 L13 10.5 Q16 10 19 10.5 L20.5 13 Z" fill="#FFCA20"/>
+          <rect x="12" y="14.5" width="8" height="6.5" rx="1.5" fill="#FFCA20" opacity="0.85"/>
+          <circle cx="11.5" cy="9" r="1" fill="#ffffff"/>
+          <circle cx="20.5" cy="9" r="1" fill="#ffffff"/>
         </svg>
-      </div>
-      <span class="nav-logo-text">Park<span>Karo</span></span>
-    </a>
+        <span>park karo</span>
+      </a>
 
-    <ul class="nav-links">
-      <li><a href="/home" class="active">Home</a></li>
-      <li><a href="#about">About Us</a></li>
-      <li><a href="#contact">Contact Us</a></li>
-    </ul>
+      <!-- Clean Nav Links (No Blog, Careers, Press, Download) -->
+      <ul class="nav-links">
+        <li><a href="/home" class="active">Home</a></li>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#safety">Safety</a></li>
+        <li><a href="#contact">Contact Us</a></li>
+      </ul>
 
-    <div class="nav-cta">
-      <a href="/" class="btn-nav-app">Open Live Map</a>
+      <!-- Primary App Link -->
+      <a href="/" class="btn-black-pill">
+        <span>Open Live Map</span>
+        <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+      </a>
     </div>
-  </nav>
+  </header>
 
-  <!-- ═══════════════ HERO ═══════════════ -->
-  <section id="home">
-    <div class="hero">
+  <!-- ═══════════════ HERO SECTION ═══════════════ -->
+  <section class="hero-section" id="home">
+    <div class="container">
+      <div class="hero-grid">
 
-      <!-- LEFT: Headline + Search -->
-      <div class="hero-left">
-        <div class="hero-eyebrow">
-          <span class="dot"></span>
-          India's Smartest Parking Network
+        <!-- Left Search & Headline -->
+        <div>
+          <h1 class="hero-title">
+            India's #1<br/>
+            Smart Parking App
+          </h1>
+          <p class="hero-sub">
+            Quick, Legal parking spots near your destination
+          </p>
+
+          <div class="booking-box">
+            <div class="input-wrap">
+              <span class="input-icon">
+                <i data-lucide="map-pin" style="width:20px;height:20px;"></i>
+              </span>
+              <input type="text" id="cityInput" placeholder="Enter City (e.g. Indore, Chandigarh, Goa)" />
+            </div>
+
+            <div class="input-wrap">
+              <span class="input-icon">
+                <i data-lucide="disc" style="width:20px;height:20px;"></i>
+              </span>
+              <input type="text" id="landmarkInput" placeholder="Enter Landmark or Parking Zone" />
+            </div>
+
+            <div class="quick-cities">
+              <span class="quick-cities-label">Popular:</span>
+              <button type="button" class="city-chip" onclick="selectHeroCity('Indore')">Indore</button>
+              <button type="button" class="city-chip" onclick="selectHeroCity('Chandigarh')">Chandigarh</button>
+              <button type="button" class="city-chip" onclick="selectHeroCity('Goa')">Goa</button>
+            </div>
+
+            <button type="button" id="findParkingBtn" class="btn-yellow-cta" onclick="launchParkingSearch()">
+              <span>Find Parking</span>
+            </button>
+          </div>
         </div>
 
-        <h1 class="hero-title">
-          India's #1<br/>
-          <span class="highlight">Smart Parking</span><br/>
-          Intelligence App
-        </h1>
+        <!-- Right D-Frame Daylight Aerial Parking Scene -->
+        <div class="hero-visual-box">
+          <div class="hero-d-frame">
+            <svg viewBox="0 0 560 448" width="100%" height="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Daylight City Skyline silhouettes -->
+              <rect x="38" y="88" width="54" height="145" rx="6" fill="#93C5FD" opacity="0.65"/>
+              <rect x="104" y="54" width="66" height="179" rx="6" fill="#60A5FA" opacity="0.55"/>
+              <rect x="184" y="96" width="48" height="137" rx="6" fill="#93C5FD" opacity="0.7"/>
+              <rect x="246" y="38" width="76" height="195" rx="8" fill="#3B82F6" opacity="0.35"/>
+              <rect x="336" y="72" width="62" height="161" rx="6" fill="#60A5FA" opacity="0.5"/>
+              <rect x="412" y="48" width="84" height="185" rx="8" fill="#93C5FD" opacity="0.65"/>
+              <rect x="506" y="102" width="46" height="131" rx="6" fill="#60A5FA" opacity="0.45"/>
 
-        <p class="hero-sub">
-          Find, book, and navigate to legal parking spots in seconds. Real-time slot availability across Indore, Chandigarh, Goa and beyond.
-        </p>
+              <!-- Windows accents -->
+              <g fill="#FFFFFF" opacity="0.45">
+                <rect x="116" y="72" width="10" height="14" rx="2"/><rect x="136" y="72" width="10" height="14" rx="2"/>
+                <rect x="116" y="96" width="10" height="14" rx="2"/><rect x="136" y="96" width="10" height="14" rx="2"/>
+                <rect x="262" y="58" width="12" height="16" rx="2"/><rect x="284" y="58" width="12" height="16" rx="2"/>
+                <rect x="262" y="84" width="12" height="16" rx="2"/><rect x="284" y="84" width="12" height="16" rx="2"/>
+                <rect x="428" y="68" width="12" height="16" rx="2"/><rect x="452" y="68" width="12" height="16" rx="2"/>
+              </g>
 
-        <div class="search-card">
-          <div class="search-field">
-            <i data-lucide="map-pin" class="icon" style="width:18px;height:18px;"></i>
-            <input type="text" id="searchCity" placeholder="Enter your city (e.g. Indore, Goa)" />
+              <!-- Green park boulevard tree strip -->
+              <rect x="0" y="216" width="560" height="18" fill="#22C55E" opacity="0.85"/>
+              <circle cx="62" cy="212" r="22" fill="#16A34A"/>
+              <circle cx="165" cy="215" r="18" fill="#22C55E"/>
+              <circle cx="385" cy="212" r="24" fill="#16A34A"/>
+              <circle cx="495" cy="214" r="20" fill="#22C55E"/>
+
+              <!-- Sunlit Asphalt Parking Deck (Top-down aerial) -->
+              <rect x="0" y="232" width="560" height="216" fill="#334155"/>
+              <rect x="0" y="232" width="560" height="12" fill="#94A3B8"/>
+
+              <!-- White Stall Lines (Viewed from the sky) -->
+              <g stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" opacity="0.88">
+                <line x1="70" y1="248" x2="70" y2="395"/>
+                <line x1="168" y1="248" x2="168" y2="395"/>
+                <line x1="266" y1="248" x2="266" y2="395"/>
+                <line x1="364" y1="248" x2="364" y2="395"/>
+                <line x1="462" y1="248" x2="462" y2="395"/>
+              </g>
+
+              <!-- Lane markings -->
+              <line x1="0" y1="418" x2="560" y2="418" stroke="#FFCA20" stroke-width="3" stroke-dasharray="18 12"/>
+
+              <!-- Bay 1: Occupied White Car -->
+              <g transform="translate(88, 266)">
+                <rect x="3" y="4" width="60" height="106" rx="16" fill="#0F172A" opacity="0.25"/>
+                <rect width="60" height="106" rx="16" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="2"/>
+                <path d="M10 34 L14 20 Q30 16 46 20 L50 34 Q30 30 10 34 Z" fill="#1E293B"/>
+                <rect x="13" y="38" width="34" height="32" rx="6" fill="#334155"/>
+                <path d="M12 76 L16 86 Q30 90 44 86 L48 76 Q30 80 12 76 Z" fill="#1E293B"/>
+                <rect x="-5" y="28" width="6" height="12" rx="3" fill="#FFFFFF" stroke="#CBD5E1"/>
+                <rect x="59" y="28" width="6" height="12" rx="3" fill="#FFFFFF" stroke="#CBD5E1"/>
+                <circle cx="14" cy="7" r="3.5" fill="#FFCA20"/>
+                <circle cx="46" cy="7" r="3.5" fill="#FFCA20"/>
+              </g>
+
+              <!-- Bay 2: FREE Open Legal Spot Badge -->
+              <g transform="translate(182, 282)">
+                <rect width="70" height="34" rx="17" fill="#10B981" stroke="#FFFFFF" stroke-width="2.5"/>
+                <text x="35" y="22" fill="#FFFFFF" font-family="Plus Jakarta Sans, sans-serif" font-size="13" font-weight="900" text-anchor="middle">FREE</text>
+                <circle cx="35" cy="64" r="8" fill="#10B981" opacity="0.35"/>
+                <circle cx="35" cy="64" r="4" fill="#10B981"/>
+              </g>
+
+              <!-- Bay 3: Parked Brand Yellow Cab / Sedan -->
+              <g transform="translate(284, 266)">
+                <rect x="3" y="4" width="60" height="106" rx="16" fill="#0F172A" opacity="0.28"/>
+                <rect width="60" height="106" rx="16" fill="#FFCA20" stroke="#EAB308" stroke-width="2"/>
+                <path d="M10 34 L14 20 Q30 16 46 20 L50 34 Q30 30 10 34 Z" fill="#1E293B"/>
+                <rect x="13" y="38" width="34" height="32" rx="6" fill="#0F172A"/>
+                <path d="M12 76 L16 86 Q30 90 44 86 L48 76 Q30 80 12 76 Z" fill="#1E293B"/>
+                <rect x="-5" y="28" width="6" height="12" rx="3" fill="#FFCA20"/>
+                <rect x="59" y="28" width="6" height="12" rx="3" fill="#FFCA20"/>
+                <circle cx="14" cy="7" r="3.5" fill="#FFFFFF"/>
+                <circle cx="46" cy="7" r="3.5" fill="#FFFFFF"/>
+              </g>
+
+              <!-- Bay 4: Metered ₹20/h Open Spot Badge -->
+              <g transform="translate(378, 282)">
+                <rect width="70" height="34" rx="17" fill="#1C4178" stroke="#FFFFFF" stroke-width="2.5"/>
+                <text x="35" y="22" fill="#FFFFFF" font-family="Plus Jakarta Sans, sans-serif" font-size="12" font-weight="900" text-anchor="middle">₹20/h</text>
+                <circle cx="35" cy="64" r="8" fill="#3B82F6" opacity="0.35"/>
+                <circle cx="35" cy="64" r="4" fill="#3B82F6"/>
+              </g>
+
+              <!-- Bay 5: Royal Navy Blue Car -->
+              <g transform="translate(480, 266)">
+                <rect x="3" y="4" width="60" height="106" rx="16" fill="#0F172A" opacity="0.28"/>
+                <rect width="60" height="106" rx="16" fill="#1C4178" stroke="#3B82F6" stroke-width="1.5"/>
+                <path d="M10 34 L14 20 Q30 16 46 20 L50 34 Q30 30 10 34 Z" fill="#E0F2FE"/>
+                <rect x="13" y="38" width="34" height="32" rx="6" fill="#0F172A"/>
+                <path d="M12 76 L16 86 Q30 90 44 86 L48 76 Q30 80 12 76 Z" fill="#BAE6FD"/>
+              </g>
+            </svg>
+
+            <div class="hero-pill-float">
+              <span class="live-pulse"></span>
+              <span style="font-size:13px;font-weight:800;color:#111827;">141+ Live Verified Zones</span>
+            </div>
           </div>
-
-          <div class="search-divider">
-            <div class="search-divider-line"></div>
-            <div class="search-divider-dot"></div>
-            <div class="search-divider-line"></div>
-          </div>
-
-          <div class="search-field blue-icon">
-            <i data-lucide="search" class="icon" style="width:18px;height:18px;"></i>
-            <input type="text" id="searchQuery" placeholder="Locality, landmark or spot name" />
-          </div>
-
-          <a href="/" id="findParkingBtn" class="btn-find">
-            <i data-lucide="navigation" style="width:18px;height:18px;"></i>
-            Find Parking Now
-          </a>
         </div>
+
       </div>
+    </div>
+  </section>
 
-      <!-- RIGHT: Aerial Parking Illustration -->
-      <div class="hero-right">
-        <div class="illustration-wrap">
-          <div class="hero-glow"></div>
+  <!-- ═══════════════ WHAT WE OFFER (PURE WHITE) ═══════════════ -->
+  <section class="offer-section">
+    <div class="container">
+      <h2 class="section-title">What we offer</h2>
+      <div class="yellow-bar"></div>
 
-          <!-- Floating stat badges -->
-          <div class="stat-badge stat-badge-1">
-            <span class="badge-dot" style="background:#10b981;"></span>
-            <span style="color:#94a3b8;font-size:11px;">Live Spots</span>
-            <span style="color:#fff;font-size:14px;">141+</span>
-          </div>
-          <div class="stat-badge stat-badge-2">
-            <span class="badge-dot" style="background:#3b82f6;"></span>
-            <span style="color:#94a3b8;font-size:11px;">Cities</span>
-            <span style="color:#fff;font-size:14px;">3 Cities</span>
-          </div>
-          <div class="stat-badge stat-badge-3">
-            <span class="badge-dot" style="background:#f59e0b;"></span>
-            <span style="color:#94a3b8;font-size:11px;">Avg Save</span>
-            <span style="color:#fff;font-size:14px;">12 min</span>
-          </div>
-
-          <div class="hero-illustration-bg">
-            <svg class="parking-visual" viewBox="0 0 400 360" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <linearGradient id="asphalt" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#0f172a"/>
-                  <stop offset="100%" stop-color="#070b14"/>
-                </linearGradient>
-                <linearGradient id="carBodyW" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0%" stop-color="#ffffff"/>
-                  <stop offset="100%" stop-color="#cbd5e1"/>
-                </linearGradient>
-                <linearGradient id="carBodyB" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0%" stop-color="#94a3b8"/>
-                  <stop offset="100%" stop-color="#475569"/>
-                </linearGradient>
-                <linearGradient id="carBodyR" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0%" stop-color="#f87171"/>
-                  <stop offset="100%" stop-color="#dc2626"/>
-                </linearGradient>
-                <linearGradient id="glass" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#0284c7"/>
-                  <stop offset="100%" stop-color="#0f172a"/>
-                </linearGradient>
-                <radialGradient id="sensorGlow" cx="50%" cy="50%" r="50%">
-                  <stop offset="0%" stop-color="#10b981" stop-opacity="0.9"/>
-                  <stop offset="100%" stop-color="#10b981" stop-opacity="0"/>
-                </radialGradient>
-                <filter id="glow">
-                  <feGaussianBlur stdDeviation="2.5" result="blur"/>
-                  <feComposite in="SourceGraphic" in2="blur" operator="over"/>
-                </filter>
-                <filter id="shadow">
-                  <feGaussianBlur stdDeviation="4" result="blur"/>
-                  <feComposite in="SourceGraphic" in2="blur" operator="over"/>
-                </filter>
-              </defs>
-
-              <!-- Asphalt base -->
-              <rect width="400" height="360" fill="url(#asphalt)" rx="12"/>
-
-              <!-- Road markings (parking lot lines) -->
-              <!-- Horizontal dividers -->
-              <line x1="0" y1="130" x2="400" y2="130" stroke="#1e293b" stroke-width="2"/>
-              <line x1="0" y1="230" x2="400" y2="230" stroke="#1e293b" stroke-width="2"/>
-
-              <!-- Vertical stall lines (top row) -->
-              <line x1="60" y1="10" x2="60" y2="130" stroke="#10b981" stroke-width="1.8" stroke-linecap="round" opacity="0.7"/>
-              <line x1="130" y1="10" x2="130" y2="130" stroke="#10b981" stroke-width="1.8" stroke-linecap="round" opacity="0.7"/>
-              <line x1="200" y1="10" x2="200" y2="130" stroke="#10b981" stroke-width="1.8" stroke-linecap="round" opacity="0.7"/>
-              <line x1="270" y1="10" x2="270" y2="130" stroke="#10b981" stroke-width="1.8" stroke-linecap="round" opacity="0.7"/>
-              <line x1="340" y1="10" x2="340" y2="130" stroke="#10b981" stroke-width="1.8" stroke-linecap="round" opacity="0.7"/>
-
-              <!-- Vertical stall lines (bottom row) -->
-              <line x1="60" y1="230" x2="60" y2="350" stroke="#10b981" stroke-width="1.8" stroke-linecap="round" opacity="0.7"/>
-              <line x1="130" y1="230" x2="130" y2="350" stroke="#10b981" stroke-width="1.8" stroke-linecap="round" opacity="0.7"/>
-              <line x1="200" y1="230" x2="200" y2="350" stroke="#10b981" stroke-width="1.8" stroke-linecap="round" opacity="0.7"/>
-              <line x1="270" y1="230" x2="270" y2="350" stroke="#10b981" stroke-width="1.8" stroke-linecap="round" opacity="0.7"/>
-              <line x1="340" y1="230" x2="340" y2="350" stroke="#10b981" stroke-width="1.8" stroke-linecap="round" opacity="0.7"/>
-
-              <!-- Road lane (center driving lane) -->
-              <line x1="0" y1="180" x2="400" y2="180" stroke="#334155" stroke-width="1" stroke-dasharray="20 12"/>
-
-              <!-- Sensor pucks for vacant spots -->
-              <circle cx="95" cy="68" r="5" fill="url(#sensorGlow)" filter="url(#glow)"/>
-              <circle cx="165" cy="68" r="5" fill="url(#sensorGlow)" filter="url(#glow)"/>
-              <circle cx="305" cy="68" r="5" fill="url(#sensorGlow)" filter="url(#glow)"/>
-              <circle cx="95" cy="290" r="5" fill="url(#sensorGlow)" filter="url(#glow)"/>
-              <circle cx="305" cy="290" r="5" fill="url(#sensorGlow)" filter="url(#glow)"/>
-
-              <!-- FREE badge for vacant spot -->
-              <rect x="70" y="45" width="50" height="18" rx="9" fill="rgba(16,185,129,0.15)" stroke="rgba(16,185,129,0.6)" stroke-width="1"/>
-              <text x="95" y="58" fill="#10b981" font-size="9" font-family="monospace" font-weight="700" text-anchor="middle">FREE</text>
-
-              <rect x="140" y="45" width="50" height="18" rx="9" fill="rgba(16,185,129,0.15)" stroke="rgba(16,185,129,0.6)" stroke-width="1"/>
-              <text x="165" y="58" fill="#10b981" font-size="9" font-family="monospace" font-weight="700" text-anchor="middle">FREE</text>
-
-              <rect x="280" y="45" width="50" height="18" rx="9" fill="rgba(16,185,129,0.15)" stroke="rgba(16,185,129,0.6)" stroke-width="1"/>
-              <text x="305" y="58" fill="#10b981" font-size="9" font-family="monospace" font-weight="700" text-anchor="middle">FREE</text>
-
-              <rect x="70" y="268" width="50" height="18" rx="9" fill="rgba(16,185,129,0.15)" stroke="rgba(16,185,129,0.6)" stroke-width="1"/>
-              <text x="95" y="281" fill="#10b981" font-size="9" font-family="monospace" font-weight="700" text-anchor="middle">FREE</text>
-
-              <rect x="280" y="268" width="50" height="18" rx="9" fill="rgba(16,185,129,0.15)" stroke="rgba(16,185,129,0.6)" stroke-width="1"/>
-              <text x="305" y="281" fill="#10b981" font-size="9" font-family="monospace" font-weight="700" text-anchor="middle">FREE</text>
-
-              <!-- PAID badge -->
-              <rect x="210" y="45" width="50" height="18" rx="9" fill="rgba(59,130,246,0.15)" stroke="rgba(59,130,246,0.6)" stroke-width="1"/>
-              <text x="235" y="58" fill="#3b82f6" font-size="9" font-family="monospace" font-weight="700" text-anchor="middle">₹20/h</text>
-
-              <rect x="210" y="268" width="50" height="18" rx="9" fill="rgba(59,130,246,0.15)" stroke="rgba(59,130,246,0.6)" stroke-width="1"/>
-              <text x="235" y="281" fill="#3b82f6" font-size="9" font-family="monospace" font-weight="700" text-anchor="middle">₹20/h</text>
-
-              <!-- ── Car 1 (top-row, stall 4) — white, parked ── -->
-              <rect x="224" y="22" width="22" height="38" rx="5" fill="black" opacity="0.4" filter="url(#shadow)"/>
-              <rect x="224" y="20" width="22" height="38" rx="5.5" fill="url(#carBodyW)" stroke="#e2e8f0" stroke-width="1.2"/>
-              <path d="M227 29 L229 25.5 Q235 24.5 241 25.5 L243 29 Q235 28 227 29 Z" fill="url(#glass)"/>
-              <rect x="229" y="31" width="12" height="10" rx="2" fill="url(#glass)" opacity="0.9"/>
-              <path d="M228 42 L229 44.5 Q235 45.3 241 44.5 L242 42 Q235 43 228 42 Z" fill="url(#glass)"/>
-              <rect x="222" y="27" width="2.5" height="4" rx="1.2" fill="#fff" stroke="#94a3b8" stroke-width="0.5"/>
-              <rect x="245.5" y="27" width="2.5" height="4" rx="1.2" fill="#fff" stroke="#94a3b8" stroke-width="0.5"/>
-              <circle cx="225.5" cy="21.5" r="1.3" fill="#38bdf8" filter="url(#glow)"/>
-              <circle cx="244.5" cy="21.5" r="1.3" fill="#38bdf8" filter="url(#glow)"/>
-              <line x1="225" y1="57" x2="228" y2="57" stroke="#ef4444" stroke-width="1.6" stroke-linecap="round"/>
-              <line x1="242" y1="57" x2="245" y2="57" stroke="#ef4444" stroke-width="1.6" stroke-linecap="round"/>
-
-              <!-- ── Car 2 (top-row, stall 5) — dark, parked ── -->
-              <rect x="294" y="22" width="22" height="38" rx="5" fill="black" opacity="0.4" filter="url(#shadow)"/>
-              <rect x="294" y="20" width="22" height="38" rx="5.5" fill="url(#carBodyB)" stroke="#64748b" stroke-width="1.2"/>
-              <path d="M297 29 L299 25.5 Q305 24.5 311 25.5 L313 29 Q305 28 297 29 Z" fill="url(#glass)"/>
-              <rect x="299" y="31" width="12" height="10" rx="2" fill="url(#glass)" opacity="0.9"/>
-              <path d="M297.5 42 L299 44.5 Q305 45.3 311 44.5 L312.5 42 Q305 43 297.5 42 Z" fill="url(#glass)"/>
-              <rect x="292" y="27" width="2.5" height="4" rx="1.2" fill="#94a3b8" stroke="#64748b" stroke-width="0.5"/>
-              <rect x="315.5" y="27" width="2.5" height="4" rx="1.2" fill="#94a3b8" stroke="#64748b" stroke-width="0.5"/>
-              <circle cx="295.5" cy="21.5" r="1.3" fill="#38bdf8" filter="url(#glow)"/>
-              <circle cx="314.5" cy="21.5" r="1.3" fill="#38bdf8" filter="url(#glow)"/>
-              <line x1="295" y1="57" x2="298" y2="57" stroke="#ef4444" stroke-width="1.6" stroke-linecap="round"/>
-              <line x1="312" y1="57" x2="315" y2="57" stroke="#ef4444" stroke-width="1.6" stroke-linecap="round"/>
-
-              <!-- ── Car 3 (bottom-row, stall 2) — red, parked (facing up) ── -->
-              <rect x="154" y="240" width="22" height="38" rx="5" fill="black" opacity="0.4" filter="url(#shadow)"/>
-              <rect x="154" y="238" width="22" height="38" rx="5.5" fill="url(#carBodyR)" stroke="#f87171" stroke-width="1.2"/>
-              <path d="M157 265 L159 268.5 Q165 269.5 171 268.5 L173 265 Q165 266 157 265 Z" fill="url(#glass)"/>
-              <rect x="159" y="251" width="12" height="10" rx="2" fill="url(#glass)" opacity="0.9"/>
-              <path d="M157.5 243 L159 240.5 Q165 239.7 171 240.5 L172.5 243 Q165 242 157.5 243 Z" fill="url(#glass)"/>
-              <rect x="152" y="253" width="2.5" height="4" rx="1.2" fill="#f87171" stroke="#dc2626" stroke-width="0.5"/>
-              <rect x="175.5" y="253" width="2.5" height="4" rx="1.2" fill="#f87171" stroke="#dc2626" stroke-width="0.5"/>
-              <circle cx="155.5" cy="274.5" r="1.3" fill="#f87171" filter="url(#glow)"/>
-              <circle cx="174.5" cy="274.5" r="1.3" fill="#f87171" filter="url(#glow)"/>
-              <line x1="155" y1="239" x2="158" y2="239" stroke="#38bdf8" stroke-width="1.6" stroke-linecap="round"/>
-              <line x1="172" y1="239" x2="175" y2="239" stroke="#38bdf8" stroke-width="1.6" stroke-linecap="round"/>
-
-              <!-- ── Car 4 (bottom-row, stall 4) — white, parked ── -->
-              <rect x="224" y="240" width="22" height="38" rx="5" fill="black" opacity="0.4" filter="url(#shadow)"/>
-              <rect x="224" y="238" width="22" height="38" rx="5.5" fill="url(#carBodyW)" stroke="#e2e8f0" stroke-width="1.2"/>
-              <path d="M227 265 L229 268.5 Q235 269.5 241 268.5 L243 265 Q235 266 227 265 Z" fill="url(#glass)"/>
-              <rect x="229" y="251" width="12" height="10" rx="2" fill="url(#glass)" opacity="0.9"/>
-              <path d="M227.5 243 L229 240.5 Q235 239.7 241 240.5 L242.5 243 Q235 242 227.5 243 Z" fill="url(#glass)"/>
-              <rect x="222" y="253" width="2.5" height="4" rx="1.2" fill="#fff" stroke="#94a3b8" stroke-width="0.5"/>
-              <rect x="245.5" y="253" width="2.5" height="4" rx="1.2" fill="#fff" stroke="#94a3b8" stroke-width="0.5"/>
-              <circle cx="225.5" cy="274.5" r="1.3" fill="#f87171" filter="url(#glow)"/>
-              <circle cx="244.5" cy="274.5" r="1.3" fill="#f87171" filter="url(#glow)"/>
-              <line x1="225" y1="239" x2="228" y2="239" stroke="#38bdf8" stroke-width="1.6" stroke-linecap="round"/>
-              <line x1="242" y1="239" x2="245" y2="239" stroke="#38bdf8" stroke-width="1.6" stroke-linecap="round"/>
+      <div class="offer-grid">
+        <!-- Card 1 -->
+        <div class="offer-card">
+          <div class="offer-img">
+            <svg viewBox="0 0 360 270" width="100%" height="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="360" height="270" fill="#E2E8F0"/>
+              <path d="M0 90 L360 140" stroke="#FFFFFF" stroke-width="26"/>
+              <path d="M140 0 L190 270" stroke="#FFFFFF" stroke-width="22"/>
+              <rect x="20" y="20" width="90" height="50" rx="8" fill="#BBF7D0"/>
+              <rect x="220" y="160" width="110" height="80" rx="10" fill="#BFDBFE"/>
+              <path d="M60 220 L165 180 L152 105 L248 75" stroke="#1C4178" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+              <rect x="122" y="32" width="116" height="206" rx="18" fill="#111827" stroke="#334155" stroke-width="3"/>
+              <rect x="130" y="42" width="100" height="186" rx="12" fill="#F8FAFC"/>
+              <rect x="130" y="42" width="100" height="90" rx="10" fill="#DBEAFE"/>
+              <path d="M146 112 L180 78 L210 92" stroke="#10B981" stroke-width="5" stroke-linecap="round"/>
+              <circle cx="180" cy="78" r="10" fill="#10B981"/>
+              <text x="180" y="82" fill="#fff" font-size="10" font-weight="900" text-anchor="middle">P</text>
+              <rect x="138" y="142" width="84" height="32" rx="8" fill="#FFFFFF" stroke="#E2E8F0"/>
+              <text x="180" y="162" fill="#111827" font-size="10" font-weight="800" text-anchor="middle">2 Slots Free</text>
+              <rect x="138" y="182" width="84" height="34" rx="8" fill="#FFCA20"/>
+              <text x="180" y="203" fill="#111827" font-size="11" font-weight="900" text-anchor="middle">Navigate Now</text>
             </svg>
           </div>
+          <h3>Quick Spot Discovery</h3>
+          <p>Find legal slots within seconds that help you save time on every trip. A Park Karo spot is always nearby when you need to park.</p>
         </div>
-      </div>
 
-    </div>
-  </section>
+        <!-- Card 2 -->
+        <div class="offer-card">
+          <div class="offer-img">
+            <svg viewBox="0 0 360 270" width="100%" height="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="360" height="270" fill="#DBEAFE"/>
+              <circle cx="290" cy="60" r="80" fill="#93C5FD" opacity="0.45"/>
+              <circle cx="70" cy="230" r="90" fill="#BFDBFE" opacity="0.7"/>
+              <rect x="108" y="24" width="144" height="222" rx="22" fill="#0F172A" stroke="#1E293B" stroke-width="3"/>
+              <rect x="116" y="34" width="128" height="202" rx="14" fill="#FFFFFF"/>
+              <text x="180" y="64" fill="#64748B" font-size="10" font-weight="700" text-anchor="middle">HOURLY PARKING RATE</text>
+              <rect x="134" y="76" width="92" height="54" rx="12" fill="#FFF8DC" stroke="#FFCA20" stroke-width="1.5"/>
+              <text x="180" y="110" fill="#111827" font-size="24" font-weight="900" text-anchor="middle">₹20</text>
+              <rect x="134" y="142" width="92" height="10" rx="5" fill="#E2E8F0"/>
+              <rect x="134" y="142" width="60" height="10" rx="5" fill="#10B981"/>
+              <text x="180" y="172" fill="#16A34A" font-size="10" font-weight="800" text-anchor="middle">✓ Zero Hidden Fee</text>
+              <rect x="132" y="186" width="96" height="34" rx="10" fill="#FFCA20"/>
+              <text x="180" y="207" fill="#111827" font-size="11" font-weight="900" text-anchor="middle">Book Slot</text>
+            </svg>
+          </div>
+          <h3>Best Hourly Rates</h3>
+          <p>Affordable pricing designed for everyday drives. Reserve metered or free public parking cleanly without surprise clamps or fines.</p>
+        </div>
 
-  <!-- ═══════════════ HOW IT WORKS ═══════════════ -->
-  <hr class="sep"/>
-  <section class="section">
-    <div class="section-eyebrow">
-      <div class="label">How It Works</div>
-      <h2>Park smarter in 4 steps</h2>
-      <p>From search to slot — the whole journey takes under 60 seconds.</p>
-    </div>
-    <div class="steps-grid">
-      <div class="step-card">
-        <div class="step-num">1</div>
-        <h4>Enter Your City</h4>
-        <p>Type your city or location to instantly load live parking zones near you.</p>
-      </div>
-      <div class="step-card">
-        <div class="step-num">2</div>
-        <h4>Browse Live Map</h4>
-        <p>See real-time slot availability on an interactive satellite or street map.</p>
-      </div>
-      <div class="step-card">
-        <div class="step-num">3</div>
-        <h4>Pick Your Spot</h4>
-        <p>Choose from legal, metered or free zones. View pricing and slot counts instantly.</p>
-      </div>
-      <div class="step-card">
-        <div class="step-num">4</div>
-        <h4>Book & Navigate</h4>
-        <p>Confirm your booking, get a digital parking pass, and drive right in.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════ FEATURES ═══════════════ -->
-  <hr class="sep"/>
-  <section class="section">
-    <div class="section-eyebrow">
-      <div class="label">Features</div>
-      <h2>Everything parking — in one app</h2>
-      <p>Built for the Indian city driver who needs fast, reliable parking intelligence every single day.</p>
-    </div>
-    <div class="features-grid">
-      <div class="feature-card">
-        <div class="feature-icon emerald"><i data-lucide="satellite" style="width:24px;height:24px;"></i></div>
-        <h3>Satellite + Street Maps</h3>
-        <p>Switch between photorealistic Esri satellite imagery and vibrant full-color street cartography on the fly.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon blue"><i data-lucide="zap" style="width:24px;height:24px;"></i></div>
-        <h3>Real-Time Slot Counts</h3>
-        <p>Live car and bike slot availability powered by Supabase PostGIS, refreshed every 8 seconds.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon indigo"><i data-lucide="credit-card" style="width:24px;height:24px;"></i></div>
-        <h3>Instant Digital Pass</h3>
-        <p>Get an Apple Wallet-style boarding pass with barcode, holographic gradient, and live status ping.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon amber"><i data-lucide="shield-check" style="width:24px;height:24px;"></i></div>
-        <h3>Tow-Zone Alerts</h3>
-        <p>Color-coded neon polylines on the map instantly highlight tow-away zones, paid meters, and free legal streets.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon rose"><i data-lucide="camera" style="width:24px;height:24px;"></i></div>
-        <h3>Sign Scanner</h3>
-        <p>Point your camera at any parking sign to get an instant AI-powered rule summary and validity check.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon cyan"><i data-lucide="smartphone" style="width:24px;height:24px;"></i></div>
-        <h3>Offline PWA</h3>
-        <p>Install ParkKaro as a Progressive Web App and access cached spot data even when you're off the network.</p>
+        <!-- Card 3 -->
+        <div class="offer-card">
+          <div class="offer-img">
+            <svg viewBox="0 0 360 270" width="100%" height="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="360" height="270" fill="#ECFDF5"/>
+              <rect x="20" y="20" width="145" height="105" rx="12" fill="#D1FAE5"/>
+              <rect x="195" y="20" width="145" height="105" rx="12" fill="#DBEAFE"/>
+              <rect x="20" y="145" width="320" height="105" rx="12" fill="#FEF3C7"/>
+              <line x1="180" y1="0" x2="180" y2="270" stroke="#FFFFFF" stroke-width="14"/>
+              <line x1="0" y1="135" x2="360" y2="135" stroke="#FFFFFF" stroke-width="14"/>
+              <g transform="translate(55, 52)">
+                <rect width="84" height="32" rx="16" fill="#1C4178"/>
+                <text x="42" y="20" fill="#FFFFFF" font-size="11" font-weight="800" text-anchor="middle">Indore</text>
+              </g>
+              <g transform="translate(215, 52)">
+                <rect width="104" height="32" rx="16" fill="#111827"/>
+                <text x="52" y="20" fill="#FFCA20" font-size="11" font-weight="800" text-anchor="middle">Chandigarh</text>
+              </g>
+              <g transform="translate(135, 182)">
+                <rect width="90" height="32" rx="16" fill="#FFCA20"/>
+                <text x="45" y="20" fill="#111827" font-size="11" font-weight="900" text-anchor="middle">Goa Zones</text>
+              </g>
+            </svg>
+          </div>
+          <h3>Never Too Far</h3>
+          <p>Live across Indore, Chandigarh, and Goa with satellite and full-color street maps. Wherever you drive, find a spot close by.</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- ═══════════════ CITIES ═══════════════ -->
-  <hr class="sep"/>
-  <section class="section cities-section">
-    <div class="section-eyebrow">
-      <div class="label">Coverage</div>
-      <h2>Live across Indian cities</h2>
-      <p>Hyperlocal parking intelligence with real Supabase PostGIS coordinates for every zone.</p>
-    </div>
-    <div class="cities-grid">
-      <a href="/" class="city-card">
-        <span class="city-emoji">🏙️</span>
-        <div class="city-info">
-          <h3>Indore</h3>
-          <p>80+ live parking zones</p>
+  <!-- ═══════════════ DEEP ROYAL NAVY BLUE BAND ═══════════════ -->
+  <section class="navy-section">
+    <div class="container">
+      <div class="navy-grid">
+
+        <!-- Left Daylight Visual -->
+        <div class="navy-visual">
+          <svg viewBox="0 0 460 400" width="100%" height="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="90" cy="70" r="28" fill="#FFFFFF" opacity="0.65"/>
+            <circle cx="118" cy="74" r="22" fill="#FFFFFF" opacity="0.65"/>
+            <circle cx="340" cy="64" r="32" fill="#FFFFFF" opacity="0.6"/>
+            <circle cx="372" cy="70" r="24" fill="#FFFFFF" opacity="0.6"/>
+
+            <rect x="30" y="120" width="70" height="115" rx="6" fill="#1E40AF" opacity="0.45"/>
+            <rect x="115" y="95" width="85" height="140" rx="6" fill="#1E3A8A" opacity="0.55"/>
+            <rect x="285" y="105" width="75" height="130" rx="6" fill="#1D4ED8" opacity="0.45"/>
+            <rect x="372" y="130" width="60" height="105" rx="6" fill="#1E40AF" opacity="0.4"/>
+
+            <rect x="76" y="138" width="308" height="196" rx="22" fill="#FFFFFF" stroke="#FFCA20" stroke-width="3"/>
+            <rect x="94" y="156" width="110" height="28" rx="14" fill="#FFCA20"/>
+            <text x="149" y="175" fill="#111827" font-size="12" font-weight="900" text-anchor="middle">park karo</text>
+            <rect x="292" y="158" width="72" height="24" rx="12" fill="#DCFCE7"/>
+            <text x="328" y="174" fill="#15803D" font-size="11" font-weight="800" text-anchor="middle">VERIFIED</text>
+
+            <text x="96" y="216" fill="#111827" font-size="20" font-weight="900">Rajwada Smart Zone</text>
+            <text x="96" y="238" fill="#64748B" font-size="13" font-weight="600">Sat + Street Telemetry • PostGIS Live</text>
+
+            <rect x="96" y="260" width="268" height="54" rx="12" fill="#F1F5F9"/>
+            <text x="116" y="292" fill="#1C4178" font-size="16" font-weight="900">12 Car Slots</text>
+            <rect x="256" y="271" width="92" height="32" rx="16" fill="#1C4178"/>
+            <text x="302" y="292" fill="#FFFFFF" font-size="12" font-weight="800" text-anchor="middle">BOOK PASS</text>
+          </svg>
         </div>
-        <i data-lucide="arrow-right" class="city-arrow" style="width:18px;height:18px;"></i>
-      </a>
-      <a href="/" class="city-card">
-        <span class="city-emoji">🌆</span>
-        <div class="city-info">
-          <h3>Chandigarh</h3>
-          <p>35+ live parking zones</p>
+
+        <!-- Right Navy Copy -->
+        <div class="navy-content">
+          <h2>
+            Park Smarter with<br/>
+            Park Karo
+          </h2>
+          <div class="yellow-bar"></div>
+          <p>
+            Switch effortlessly between photorealistic Satellite imagery and full-color Street maps, track open bays in real time, and unlock instant digital passes with zero hassle.
+          </p>
+          <a href="/" class="btn-yellow-pill">
+            <span>Explore Live Map</span>
+            <i data-lucide="arrow-right" style="width:18px;height:18px;"></i>
+          </a>
         </div>
-        <i data-lucide="arrow-right" class="city-arrow" style="width:18px;height:18px;"></i>
-      </a>
-      <a href="/" class="city-card">
-        <span class="city-emoji">🏖️</span>
-        <div class="city-info">
-          <h3>Goa</h3>
-          <p>26+ live parking zones</p>
-        </div>
-        <i data-lucide="arrow-right" class="city-arrow" style="width:18px;height:18px;"></i>
-      </a>
+
+      </div>
     </div>
   </section>
 
-  <!-- ═══════════════ ABOUT ═══════════════ -->
-  <hr class="sep"/>
-  <section class="section" id="about">
-    <div class="about-grid">
-      <div class="about-left">
-        <div class="label" style="font-size:12px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:#10b981;margin-bottom:16px;">About Us</div>
-        <h2>We're solving India's urban parking crisis</h2>
-        <p>
-          ParkKaro was built by a team of engineers frustrated by circling blocks for 20 minutes only to find no parking. We combined live PostGIS geospatial data, real-time sensor telemetry, and a beautiful map interface to give every Indian city driver instant, accurate parking intelligence.
-        </p>
-        <p>
-          Our mission: Make every parking search take under 60 seconds — saving time, reducing emissions, and cutting traffic congestion across Indian cities.
-        </p>
-        <div class="about-stats">
-          <div class="stat-box">
-            <div class="num">141+</div>
-            <div class="label">Monitored Zones</div>
+  <!-- ═══════════════ SAFETY & STREET RULES (WHITE) ═══════════════ -->
+  <section class="safety-section" id="safety">
+    <div class="container">
+      <div class="split-grid">
+        <div class="split-copy">
+          <h2 class="section-title">Safety for all drivers</h2>
+          <div class="yellow-bar"></div>
+          <p>
+            At Park Karo, protecting your vehicle from towing fines and illegal parking clamps comes first. Every zone on our map is verified with clear street rule telemetry and an AI-powered Sign Scanner.
+          </p>
+
+          <div class="rule-chips">
+            <div class="rule-chip">
+              <span class="rule-dot" style="background:#10b981;"></span>
+              Legal Free Street
+            </div>
+            <div class="rule-chip">
+              <span class="rule-dot" style="background:#3b82f6;"></span>
+              Metered Paid Zone
+            </div>
+            <div class="rule-chip">
+              <span class="rule-dot" style="background:#ef4444;"></span>
+              Tow-Away Alert
+            </div>
           </div>
-          <div class="stat-box">
-            <div class="num">3</div>
-            <div class="label">Cities Live</div>
-          </div>
-          <div class="stat-box">
-            <div class="num">1,600+</div>
-            <div class="label">Total Slots Tracked</div>
-          </div>
-          <div class="stat-box">
-            <div class="num">8s</div>
-            <div class="label">Refresh Cadence</div>
-          </div>
+
+          <a href="/?view=scanner" class="btn-outline-dark">
+            <i data-lucide="camera" style="width:17px;height:17px;color:#ffca20;"></i>
+            <span>Open AI Sign Scanner</span>
+            <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+          </a>
         </div>
-      </div>
-      <div class="about-right">
-        <div class="about-visual">
-          <svg width="80%" viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <radialGradient id="bgGrad" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stop-color="#0d1a2d"/>
-                <stop offset="100%" stop-color="#070b14"/>
-              </radialGradient>
-            </defs>
-            <rect width="320" height="320" fill="url(#bgGrad)" rx="20"/>
-            <!-- Globe / India map abstraction -->
-            <circle cx="160" cy="160" r="110" stroke="rgba(16,185,129,0.2)" stroke-width="1.5" stroke-dasharray="6 4"/>
-            <circle cx="160" cy="160" r="85" stroke="rgba(59,130,246,0.15)" stroke-width="1" stroke-dasharray="4 6"/>
-            <circle cx="160" cy="160" r="55" stroke="rgba(99,102,241,0.15)" stroke-width="1"/>
-            <!-- Map pins -->
-            <circle cx="160" cy="135" r="6" fill="#10b981" filter="url(#glow)" opacity="0.9"/>
-            <circle cx="145" cy="175" r="5" fill="#3b82f6" filter="url(#glow)" opacity="0.9"/>
-            <circle cx="185" cy="168" r="5" fill="#f59e0b" filter="url(#glow)" opacity="0.9"/>
-            <!-- Connection lines -->
-            <line x1="160" y1="135" x2="145" y2="175" stroke="rgba(16,185,129,0.4)" stroke-width="1.5" stroke-dasharray="4 3"/>
-            <line x1="145" y1="175" x2="185" y2="168" stroke="rgba(59,130,246,0.4)" stroke-width="1.5" stroke-dasharray="4 3"/>
-            <!-- Center label -->
-            <text x="160" y="225" fill="rgba(148,163,184,0.7)" font-size="11" font-family="monospace" font-weight="700" text-anchor="middle">INDIA • LIVE SPATIAL GRID</text>
-            <!-- Pulsing center dot -->
-            <circle cx="160" cy="160" r="3" fill="#10b981"/>
-            <circle cx="160" cy="160" r="10" fill="rgba(16,185,129,0.1)" stroke="rgba(16,185,129,0.4)" stroke-width="1"/>
+
+        <div class="safety-card-visual">
+          <svg viewBox="0 0 500 340" width="100%" height="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="500" height="340" fill="#F8FAFC"/>
+            <rect x="40" y="36" width="420" height="268" rx="20" fill="#E2E8F0"/>
+            <rect x="65" y="70" width="370" height="44" rx="12" fill="#ECFDF5" stroke="#10B981" stroke-width="2.5"/>
+            <circle cx="92" cy="92" r="10" fill="#10B981"/>
+            <text x="116" y="97" fill="#065F46" font-size="14" font-weight="800">Legal Free Zone • Safe to Park</text>
+
+            <rect x="65" y="148" width="370" height="44" rx="12" fill="#EFF6FF" stroke="#3B82F6" stroke-width="2.5"/>
+            <circle cx="92" cy="170" r="10" fill="#3B82F6"/>
+            <text x="116" y="175" fill="#1E3A8A" font-size="14" font-weight="800">Metered Street • ₹20/hr Digital Pass</text>
+
+            <rect x="65" y="226" width="370" height="44" rx="12" fill="#FEF2F2" stroke="#EF4444" stroke-width="2.5"/>
+            <circle cx="92" cy="248" r="10" fill="#EF4444"/>
+            <text x="116" y="253" fill="#991B1B" font-size="14" font-weight="800">No-Parking / Tow Zone • Instant Alert</text>
           </svg>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ═══════════════ FOOTER ═══════════════ -->
-  <hr class="sep"/>
-  <div style="max-width:1300px;margin:0 auto;padding:48px 5% 32px;">
-    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:24px;" id="contact">
-      <div>
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
-          <span style="font-size:20px;font-weight:900;color:#fff;">Park<span style="color:#10b981;">Karo</span></span>
-          <span style="font-size:11px;font-weight:800;background:rgba(16,185,129,0.12);border:1px solid rgba(16,185,129,0.3);color:#10b981;padding:3px 10px;border-radius:999px;text-transform:uppercase;letter-spacing:0.08em;">PRO</span>
+  <!-- ═══════════════ ABOUT US & COVERAGE ═══════════════ -->
+  <section class="about-section" id="about">
+    <div class="container">
+      <h2 class="section-title">About Us</h2>
+      <div class="yellow-bar"></div>
+      <p style="font-size:17px;color:#4b5563;max-width:760px;line-height:1.7;">
+        Park Karo was built to solve India's daily urban parking struggle. Powered by real Supabase PostGIS geospatial coordinates, live availability counters, and high-resolution satellite + vibrant street mapping, we make finding legal parking fast, transparent, and effortless.
+      </p>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-num">141+</div>
+          <div class="stat-label">Monitored Parking Zones</div>
         </div>
-        <p style="font-size:13px;color:#64748b;max-width:300px;line-height:1.6;">India's #1 Smart Parking Intelligence App. Find, book, and navigate to legal parking in seconds.</p>
-      </div>
-      <div style="display:flex;gap:32px;flex-wrap:wrap;">
-        <div>
-          <div style="font-size:11px;font-weight:800;color:#94a3b8;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:12px;">Navigation</div>
-          <div style="display:flex;flex-direction:column;gap:8px;">
-            <a href="/home" style="font-size:13px;color:#64748b;text-decoration:none;font-weight:600;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#64748b'">Home</a>
-            <a href="#about" style="font-size:13px;color:#64748b;text-decoration:none;font-weight:600;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#64748b'">About Us</a>
-            <a href="#contact" style="font-size:13px;color:#64748b;text-decoration:none;font-weight:600;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#64748b'">Contact Us</a>
-          </div>
+        <div class="stat-card">
+          <div class="stat-num">3 Cities</div>
+          <div class="stat-label">Indore, Chandigarh &amp; Goa</div>
         </div>
-        <div>
-          <div style="font-size:11px;font-weight:800;color:#94a3b8;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:12px;">Product</div>
-          <div style="display:flex;flex-direction:column;gap:8px;">
-            <a href="/" style="font-size:13px;color:#64748b;text-decoration:none;font-weight:600;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#64748b'">Live Map</a>
-            <a href="/" style="font-size:13px;color:#64748b;text-decoration:none;font-weight:600;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#64748b'">Sign Scanner</a>
-            <a href="/" style="font-size:13px;color:#64748b;text-decoration:none;font-weight:600;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#64748b'">Book Parking</a>
-          </div>
+        <div class="stat-card">
+          <div class="stat-num">1,600+</div>
+          <div class="stat-label">Live Car &amp; Bike Slots</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">8 sec</div>
+          <div class="stat-label">Real-Time PostGIS Refresh</div>
         </div>
       </div>
+
+      <div class="cities-row">
+        <a href="/?city=Indore" class="city-tile">
+          <div class="city-left">
+            <div class="city-icon">🏙️</div>
+            <div>
+              <h4>Indore</h4>
+              <span>80+ active zones</span>
+            </div>
+          </div>
+          <i data-lucide="chevron-right" style="width:20px;height:20px;color:#1e2025;"></i>
+        </a>
+
+        <a href="/?city=Chandigarh" class="city-tile">
+          <div class="city-left">
+            <div class="city-icon">🌆</div>
+            <div>
+              <h4>Chandigarh</h4>
+              <span>35+ active zones</span>
+            </div>
+          </div>
+          <i data-lucide="chevron-right" style="width:20px;height:20px;color:#1e2025;"></i>
+        </a>
+
+        <a href="/?city=Goa" class="city-tile">
+          <div class="city-left">
+            <div class="city-icon">🏖️</div>
+            <div>
+              <h4>Goa</h4>
+              <span>26+ active zones</span>
+            </div>
+          </div>
+          <i data-lucide="chevron-right" style="width:20px;height:20px;color:#1e2025;"></i>
+        </a>
+      </div>
     </div>
-    <hr style="border:none;border-top:1px solid rgba(255,255,255,0.08);margin:32px 0 24px;"/>
-    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
-      <p style="font-size:12px;color:#475569;">© 2026 ParkKaro. All rights reserved.</p>
-      <p style="font-size:12px;color:#475569;">Built with ❤️ for Indian city drivers</p>
+  </section>
+
+  <!-- ═══════════════ LIGHT GREY TWIN-CARD SHOWCASE (NO DOWNLOAD) ═══════════════ -->
+  <section class="showcase-section">
+    <div class="container">
+      <div class="showcase-head">
+        <h2 class="section-title">Explore Park Karo</h2>
+        <div class="yellow-bar"></div>
+      </div>
+
+      <div class="showcase-cards">
+        <a href="/" class="showcase-card">
+          <div class="showcase-badge">
+            <span class="main-name">park karo</span>
+          </div>
+          <div class="showcase-card-text">
+            <h3>Cars, Bikes &amp; Live Map</h3>
+            <p>Browse satellite &amp; street maps and book legal parking slots instantly.</p>
+          </div>
+        </a>
+
+        <a href="/?view=scanner" class="showcase-card">
+          <div class="showcase-badge">
+            <span class="main-name">park karo</span>
+            <span class="sub-name">Scanner</span>
+          </div>
+          <div class="showcase-card-text">
+            <h3>AI Sign Scanner &amp; Pass</h3>
+            <p>Check roadside parking signs and view active digital parking passes.</p>
+          </div>
+        </a>
+      </div>
     </div>
-  </div>
+  </section>
+
+  <!-- ═══════════════ FOOTER / CONTACT US ═══════════════ -->
+  <footer id="contact">
+    <div class="container">
+      <div class="footer-top">
+        <div>
+          <a href="/home" class="brand-pill">
+            <svg width="18" height="18" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <line x1="4" y1="4" x2="4" y2="28" stroke="#111827" stroke-width="2.4" stroke-linecap="round"/>
+              <line x1="28" y1="4" x2="28" y2="28" stroke="#111827" stroke-width="2.4" stroke-linecap="round"/>
+              <rect x="9.5" y="7.5" width="13" height="19" rx="4" fill="#111827"/>
+              <rect x="12" y="13.5" width="8" height="7" rx="1.5" fill="#FFCA20"/>
+            </svg>
+            <span>park karo</span>
+          </a>
+          <p class="footer-desc">
+            India's Smart Parking Intelligence Platform. Built to eliminate circling blocks across Indian cities.
+          </p>
+        </div>
+
+        <div class="footer-cols">
+          <div class="footer-col">
+            <h5>Navigation</h5>
+            <ul>
+              <li><a href="/home">Home</a></li>
+              <li><a href="#about">About Us</a></li>
+              <li><a href="#safety">Safety</a></li>
+              <li><a href="#contact">Contact Us</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-col">
+            <h5>Platform</h5>
+            <ul>
+              <li><a href="/">Open Live Map</a></li>
+              <li><a href="/?view=scanner">Sign Scanner</a></li>
+              <li><a href="/?city=Indore">Indore Zones</a></li>
+              <li><a href="/?city=Chandigarh">Chandigarh Zones</a></li>
+              <li><a href="/?city=Goa">Goa Zones</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-col">
+            <h5>Contact Us</h5>
+            <ul>
+              <li><a href="mailto:support@parkkaro.in">support@parkkaro.in</a></li>
+              <li><span style="color:#94a3b8;font-size:14px;">Indore • Chandigarh • Goa</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2026 Park Karo. All rights reserved.</span>
+        <span>Live PostGIS Smart Parking Network</span>
+      </div>
+    </div>
+  </footer>
 
   <script>
     lucide.createIcons();
 
-    // Smooth scroll for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(a => {
-      a.addEventListener('click', e => {
-        const target = document.querySelector(a.getAttribute('href'));
-        if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
-      });
-    });
+    function selectHeroCity(city) {
+      const input = document.getElementById('cityInput');
+      if (input) input.value = city;
+    }
 
-    // Nav active on scroll
-    const sections = ['home','about','contact'].map(id => document.getElementById(id)).filter(Boolean);
-    window.addEventListener('scroll', () => {
-      const y = window.scrollY + 100;
-      sections.forEach(s => {
-        const link = document.querySelector(`.nav-links a[href="#${s.id}"], .nav-links a[href="/home"]`);
-        if (!link) return;
-        if (y >= s.offsetTop && y < s.offsetTop + s.offsetHeight) {
-          document.querySelectorAll('.nav-links a').forEach(l => l.classList.remove('active'));
-          link.classList.add('active');
-        }
-      });
-    });
+    function launchParkingSearch() {
+      const city = document.getElementById('cityInput').value.trim();
+      const landmark = document.getElementById('landmarkInput').value.trim();
+      const params = new URLSearchParams();
+      if (city) params.set('city', city);
+      if (landmark) params.set('q', landmark);
+      const qs = params.toString();
+      window.location.href = qs ? `/?${qs}` : '/';
+    }
 
-    // "Find Parking Now" — carry city to map
-    document.getElementById('findParkingBtn').addEventListener('click', e => {
-      const city = document.getElementById('searchCity').value.trim();
-      if (city) {
-        e.preventDefault();
-        window.location.href = `/?city=${encodeURIComponent(city)}`;
+    ['cityInput', 'landmarkInput'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.addEventListener('keydown', e => {
+          if (e.key === 'Enter') launchParkingSearch();
+        });
       }
     });
   </script>

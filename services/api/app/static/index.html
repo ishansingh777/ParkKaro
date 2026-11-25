@@ -523,8 +523,12 @@
         </div>
       </div>
 
-      <!-- Navigation Tabs: Map View vs Sign Scanner -->
+      <!-- Navigation Tabs: Home, Live Map, Sign Scanner -->
       <nav class="flex items-center glass-pill p-1 rounded-2xl">
+        <a href="/home" class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all text-white/75 hover:text-white">
+          <i data-lucide="home" class="w-3.5 h-3.5"></i>
+          <span class="hidden sm:inline">Home</span>
+        </a>
         <button id="navMapBtn" onclick="switchView('map')" class="flex items-center gap-1.5 px-4 py-1.5 rounded-xl text-xs font-black transition-all bg-white text-black shadow-md shadow-white/20">
           <i data-lucide="map" class="w-3.5 h-3.5"></i>
           <span>Live Map</span>
@@ -2701,12 +2705,47 @@
       }, 700);
     }
 
+    function applyQueryParams() {
+      const params = new URLSearchParams(window.location.search);
+      const cityParam = (params.get('city') || '').trim();
+      const qParam = (params.get('q') || '').trim();
+      const viewParam = (params.get('view') || '').trim().toLowerCase();
+
+      if (viewParam === 'scanner') {
+        switchView('scanner');
+      }
+
+      if (cityParam) {
+        const knownCities = { indore: 'Indore', chandigarh: 'Chandigarh', goa: 'Goa', all: 'All' };
+        const matched = knownCities[cityParam.toLowerCase()];
+        if (matched) {
+          setCityFilter(matched);
+        } else {
+          currentSearchQuery = cityParam;
+          const searchEl = document.getElementById('searchInput');
+          if (searchEl) searchEl.value = cityParam;
+        }
+      }
+
+      if (qParam) {
+        currentSearchQuery = qParam;
+        const searchEl = document.getElementById('searchInput');
+        if (searchEl) searchEl.value = qParam;
+      }
+
+      renderUI();
+      if (cityParam || qParam) resetMapView();
+    }
+
     // Startup
     window.addEventListener('DOMContentLoaded', () => {
       lucide.createIcons();
       runSplashAnimation();
       initMap();
-      fetchData();
+      applyQueryParams();
+      fetchData().then(() => {
+        if (window.location.search) resetMapView();
+      });
       setInterval(fetchData, 8000);
     });
   </script>
