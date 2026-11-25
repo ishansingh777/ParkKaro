@@ -234,3 +234,10 @@ Milestone 6: Deployment & CI/CD Setup
 ---
 
 *Report generated and ready for user review. No implementation changes will begin until approved.*
+
+---
+
+### Multi-City Geospatial Expansion: Indore & Panaji (Completed)
+- **Datasets Processed:** Validated and normalized 77 OpenStreetMap parking features (28 Indore + 49 Panaji) into data/processed/indore_panaji_cleaned.csv and data/processed/indore_panaji_cleaned.geojson.
+- **Database Import:** Executed idempotent single-statement import (data/processed/import_indore_panaji.sql) with ON CONFLICT (external_spot_id) DO NOTHING into Supabase public.parking_spots.
+- **Verified Counts (228 Total Rows):** Chandigarh (138), Panaji (49), Indore (30), Crowdsourced (10), Goa (1) — all with valid SRID 4326 PostGIS geography points and zero duplicate external_spot_id values.

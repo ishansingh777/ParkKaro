@@ -1,0 +1,1853 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          75.8092622,
+          22.7288792
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_44280183",
+        "name": "Indore Parking (osm_way_44280183)",
+        "city": "Indore",
+        "address": "Indore, India",
+        "longitude": "75.8092622",
+        "latitude": "22.7288792",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "ALLOWED",
+        "rule_description": "Imported from OpenStreetMap (way/44280183)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          75.8971961,
+          22.7525527
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_191501626",
+        "name": "Indore Parking (osm_way_191501626)",
+        "city": "Indore",
+        "address": "Indore, India",
+        "longitude": "75.8971961",
+        "latitude": "22.7525527",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "ALLOWED",
+        "rule_description": "Imported from OpenStreetMap (way/191501626)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          75.8733136,
+          22.7249642
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_202920191",
+        "name": "Indore Parking (osm_way_202920191)",
+        "city": "Indore",
+        "address": "Indore, India",
+        "longitude": "75.8733136",
+        "latitude": "22.7249642",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "surface",
+        "rule_description": "Imported from OpenStreetMap (way/202920191) | Access: yes"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          75.9051442,
+          22.7521912
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_322425732",
+        "name": "Indore Parking (osm_way_322425732)",
+        "city": "Indore",
+        "address": "Indore, India",
+        "longitude": "75.9051442",
+        "latitude": "22.7521912",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "ALLOWED",
+        "rule_description": "Imported from OpenStreetMap (way/322425732)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          75.9001306,
+          22.7541725
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_322645064",
+        "name": "Indore Parking (osm_way_322645064)",
+        "city": "Indore",
+        "address": "Indore, India",
+        "longitude": "75.9001306",
+        "latitude": "22.7541725",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "ALLOWED",
+        "rule_description": "Imported from OpenStreetMap (way/322645064)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          75.9000398,
+          22.7534361
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_322645065",
+        "name": "Indore Parking (osm_way_322645065)",
+        "city": "Indore",
+        "address": "Indore, India",
+        "longitude": "75.9000398",
+        "latitude": "22.7534361",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "ALLOWED",
+        "rule_description": "Imported from OpenStreetMap (way/322645065)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          75.8019655,
+          22.7276233
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_375229520",
+        "name": "Indore Parking (osm_way_375229520)",
+        "city": "Indore",
+        "address": "Indore, India",
+        "longitude": "75.8019655",
+        "latitude": "22.7276233",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "ALLOWED",
+        "rule_description": "Imported from OpenStreetMap (way/375229520)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          75.7913656,
+          22.6652476
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_700726141",
+        "name": "Indore Parking (osm_way_700726141)",
+        "city": "Indore",
+        "address": "Indore, India",
+        "longitude": "75.7913656",
+        "latitude": "22.6652476",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "surface",
+        "rule_description": "Imported from OpenStreetMap (way/700726141)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          75.7914517,
+          22.6656623
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_700726142",
+        "name": "Indore Parking (osm_way_700726142)",
+        "city": "Indore",
+        "address": "Indore, India",
+        "longitude": "75.7914517",
+        "latitude": "22.6656623",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "surface",
+        "rule_description": "Imported from OpenStreetMap (way/700726142)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          75.7984053,
+          22.6682235
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_700726169",
+        "name": "Indore Parking (osm_way_700726169)",
+        "city": "Indore",
+        "address": "Indore, India",
+        "longitude": "75.7984053",
+        "latitude": "22.6682235",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "ALLOWED",
+        "rule_description": "Imported from OpenStreetMap (way/700726169)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          75.8689233,
+          22.7260615
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_770241618",
+        "name": "Indore Parking (osm_way_770241618)",
+        "city": "Indore",
+        "address": "Indore, India",
+        "longitude": "75.8689233",
+        "latitude": "22.7260615",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "ALLOWED",
+        "rule_description": "Imported from OpenStreetMap (way/770241618)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          75.7964424,
+          22.5139268
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_1218177800",
+        "name": "Indore Parking (osm_way_1218177800)",
+        "city": "Indore",
+        "address": "Indore, India",
+        "longitude": "75.7964424",
+        "latitude": "22.5139268",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "surface",
+        "rule_description": "Imported from OpenStreetMap (way/1218177800)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          75.9228477,
+          22.5281611
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_1370087440",
+        "name": "Indore Parking (osm_way_1370087440)",
+        "city": "Indore",
+        "address": "Indore, India",
+        "longitude": "75.9228477",
+        "latitude": "22.5281611",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "ALLOWED",
+        "rule_description": "Imported from OpenStreetMap (way/1370087440) | Operator: LRC Parking"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          75.9247266,
+          22.5281165
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_1370088139",
+        "name": "Indore Parking (osm_way_1370088139)",
+        "city": "Indore",
+        "address": "Indore, India",
+        "longitude": "75.9247266",
+        "latitude": "22.5281165",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "ALLOWED",
+        "rule_description": "Imported from OpenStreetMap (way/1370088139) | Operator: POD Parking"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          75.9235636,
+          22.5265735
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_1370088406",
+        "name": "Indore Parking (osm_way_1370088406)",
+        "city": "Indore",
+        "address": "Indore, India",
+        "longitude": "75.9235636",
+        "latitude": "22.5265735",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "ALLOWED",
+        "rule_description": "Imported from OpenStreetMap (way/1370088406) | Operator: Nalanda Parking"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          75.9201432,
+          22.5299372
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_1370088719",
+        "name": "Indore Parking (osm_way_1370088719)",
+        "city": "Indore",
+        "address": "Indore, India",
+        "longitude": "75.9201432",
+        "latitude": "22.5299372",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "ALLOWED",
+        "rule_description": "Imported from OpenStreetMap (way/1370088719) | Operator: Sports Complex Parking"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          75.9264212,
+          22.5258294
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_1370089226",
+        "name": "Indore Parking (osm_way_1370089226)",
+        "city": "Indore",
+        "address": "Indore, India",
+        "longitude": "75.9264212",
+        "latitude": "22.5258294",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "ALLOWED",
+        "rule_description": "Imported from OpenStreetMap (way/1370089226) | Operator: Health Centre Parking"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          75.9277819,
+          22.755865
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_1411656815",
+        "name": "Indore Parking (osm_way_1411656815)",
+        "city": "Indore",
+        "address": "Indore, India",
+        "longitude": "75.9277819",
+        "latitude": "22.7558650",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "ALLOWED",
+        "rule_description": "Imported from OpenStreetMap (way/1411656815)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          75.8988978,
+          22.7282594
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_1414327676",
+        "name": "Indore Parking (osm_way_1414327676)",
+        "city": "Indore",
+        "address": "Indore, India",
+        "longitude": "75.8988978",
+        "latitude": "22.7282594",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "ALLOWED",
+        "rule_description": "Imported from OpenStreetMap (way/1414327676)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          75.9283447,
+          22.7616493
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_1414327682",
+        "name": "Indore Parking (osm_way_1414327682)",
+        "city": "Indore",
+        "address": "Indore, India",
+        "longitude": "75.9283447",
+        "latitude": "22.7616493",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "false",
+        "price_per_hour": "",
+        "rule_type": "sheds",
+        "rule_description": "Imported from OpenStreetMap (way/1414327682) | OSM Fee: no"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          75.8372653,
+          22.7871641
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_1464595125",
+        "name": "Indore Parking (osm_way_1464595125)",
+        "city": "Indore",
+        "address": "Indore, India",
+        "longitude": "75.8372653",
+        "latitude": "22.7871641",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "surface",
+        "rule_description": "Imported from OpenStreetMap (way/1464595125) | Access: customers"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          75.8469316,
+          22.7013684
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_1526718088",
+        "name": "Indore Parking (osm_way_1526718088)",
+        "city": "Indore",
+        "address": "Indore, India",
+        "longitude": "75.8469316",
+        "latitude": "22.7013684",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "surface",
+        "rule_description": "Imported from OpenStreetMap (way/1526718088) | Access: yes"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          75.8746664,
+          22.714942
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_1527217855",
+        "name": "Indore Parking (osm_way_1527217855)",
+        "city": "Indore",
+        "address": "Indore, India",
+        "longitude": "75.8746664",
+        "latitude": "22.7149420",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "surface",
+        "rule_description": "Imported from OpenStreetMap (way/1527217855) | Access: private"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          75.868745,
+          22.7225692
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_1534546623",
+        "name": "Indore Parking (osm_way_1534546623)",
+        "city": "Indore",
+        "address": "Indore, India",
+        "longitude": "75.8687450",
+        "latitude": "22.7225692",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "ALLOWED",
+        "rule_description": "Imported from OpenStreetMap (way/1534546623)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          75.8532912,
+          22.8420454
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_1567032609",
+        "name": "Indore Parking (osm_way_1567032609)",
+        "city": "Indore",
+        "address": "Indore, India",
+        "longitude": "75.8532912",
+        "latitude": "22.8420454",
+        "total_car_slots": "17",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "street_side",
+        "rule_description": "Imported from OpenStreetMap (way/1567032609) | OSM Capacity: 17 | Orientation: diagonal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          75.8525927,
+          22.8415133
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_1567032610",
+        "name": "Indore Parking (osm_way_1567032610)",
+        "city": "Indore",
+        "address": "Indore, India",
+        "longitude": "75.8525927",
+        "latitude": "22.8415133",
+        "total_car_slots": "23",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "street_side",
+        "rule_description": "Imported from OpenStreetMap (way/1567032610) | OSM Capacity: 23 | Orientation: perpendicular"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          75.8732867,
+          22.7247866
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_node_2128648826",
+        "name": "Indore Parking (osm_node_2128648826)",
+        "city": "Indore",
+        "address": "Indore, India",
+        "longitude": "75.8732867",
+        "latitude": "22.7247866",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "surface",
+        "rule_description": "Imported from OpenStreetMap (node/2128648826)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          75.8535904,
+          22.8432555
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_node_14270121551",
+        "name": "Indore Parking (osm_node_14270121551)",
+        "city": "Indore",
+        "address": "Indore, India",
+        "longitude": "75.8535904",
+        "latitude": "22.8432555",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "ALLOWED",
+        "rule_description": "Imported from OpenStreetMap (node/14270121551)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8031051,
+          15.4522561
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_429452128",
+        "name": "Panaji Parking (osm_way_429452128)",
+        "city": "Panaji",
+        "address": "Panaji, India",
+        "longitude": "73.8031051",
+        "latitude": "15.4522561",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "ALLOWED",
+        "rule_description": "Imported from OpenStreetMap (way/429452128)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.832405,
+          15.4873506
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_481395155",
+        "name": "PMC Parking",
+        "city": "Panaji",
+        "address": "Panaji, India",
+        "longitude": "73.8324050",
+        "latitude": "15.4873506",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "ALLOWED",
+        "rule_description": "Imported from OpenStreetMap (way/481395155)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.82703,
+          15.4979609
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_621256892",
+        "name": "Panaji Parking (osm_way_621256892)",
+        "city": "Panaji",
+        "address": "Panaji, India",
+        "longitude": "73.8270300",
+        "latitude": "15.4979609",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "ALLOWED",
+        "rule_description": "Imported from OpenStreetMap (way/621256892)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8382603,
+          15.4960337
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_658699081",
+        "name": "Panaji Parking (osm_way_658699081)",
+        "city": "Panaji",
+        "address": "Panaji, India",
+        "longitude": "73.8382603",
+        "latitude": "15.4960337",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "ALLOWED",
+        "rule_description": "Imported from OpenStreetMap (way/658699081)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8171923,
+          15.4939615
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_785029249",
+        "name": "Panaji Parking (osm_way_785029249)",
+        "city": "Panaji",
+        "address": "Panaji, India",
+        "longitude": "73.8171923",
+        "latitude": "15.4939615",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "ALLOWED",
+        "rule_description": "Imported from OpenStreetMap (way/785029249) | Operator Type: government"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8082409,
+          15.4758493
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_911221039",
+        "name": "Panaji Parking (osm_way_911221039)",
+        "city": "Panaji",
+        "address": "Panaji, India",
+        "longitude": "73.8082409",
+        "latitude": "15.4758493",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "ALLOWED",
+        "rule_description": "Imported from OpenStreetMap (way/911221039)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8088649,
+          15.4830723
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_911228780",
+        "name": "Panaji Parking (osm_way_911228780)",
+        "city": "Panaji",
+        "address": "Panaji, India",
+        "longitude": "73.8088649",
+        "latitude": "15.4830723",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "ALLOWED",
+        "rule_description": "Imported from OpenStreetMap (way/911228780)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8018917,
+          15.4571528
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_1019194654",
+        "name": "Panaji Parking (osm_way_1019194654)",
+        "city": "Panaji",
+        "address": "Panaji, India",
+        "longitude": "73.8018917",
+        "latitude": "15.4571528",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "ALLOWED",
+        "rule_description": "Imported from OpenStreetMap (way/1019194654) | Access: private"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8327203,
+          15.4995386
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_1155877318",
+        "name": "Panaji Parking (osm_way_1155877318)",
+        "city": "Panaji",
+        "address": "Panaji, India",
+        "longitude": "73.8327203",
+        "latitude": "15.4995386",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "ALLOWED",
+        "rule_description": "Imported from OpenStreetMap (way/1155877318)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8256405,
+          15.4949922
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_1155891465",
+        "name": "Panaji Parking (osm_way_1155891465)",
+        "city": "Panaji",
+        "address": "Panaji, India",
+        "longitude": "73.8256405",
+        "latitude": "15.4949922",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "ALLOWED",
+        "rule_description": "Imported from OpenStreetMap (way/1155891465)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8337982,
+          15.4963315
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_1156116148",
+        "name": "Panaji Parking (osm_way_1156116148)",
+        "city": "Panaji",
+        "address": "Panaji, India",
+        "longitude": "73.8337982",
+        "latitude": "15.4963315",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "ALLOWED",
+        "rule_description": "Imported from OpenStreetMap (way/1156116148)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8203902,
+          15.4984775
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_1156650644",
+        "name": "Inox Parking",
+        "city": "Panaji",
+        "address": "Panaji, India",
+        "longitude": "73.8203902",
+        "latitude": "15.4984775",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "ALLOWED",
+        "rule_description": "Imported from OpenStreetMap (way/1156650644)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8120747,
+          15.4892922
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_1156762020",
+        "name": "Panaji Parking (osm_way_1156762020)",
+        "city": "Panaji",
+        "address": "Panaji, India",
+        "longitude": "73.8120747",
+        "latitude": "15.4892922",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "ALLOWED",
+        "rule_description": "Imported from OpenStreetMap (way/1156762020)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8147529,
+          15.4911993
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_1156762023",
+        "name": "Panaji Parking (osm_way_1156762023)",
+        "city": "Panaji",
+        "address": "Panaji, India",
+        "longitude": "73.8147529",
+        "latitude": "15.4911993",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "ALLOWED",
+        "rule_description": "Imported from OpenStreetMap (way/1156762023)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.829834,
+          15.4972256
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_1156779535",
+        "name": "Panaji Parking (osm_way_1156779535)",
+        "city": "Panaji",
+        "address": "Panaji, India",
+        "longitude": "73.8298340",
+        "latitude": "15.4972256",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "ALLOWED",
+        "rule_description": "Imported from OpenStreetMap (way/1156779535)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8348813,
+          15.4955201
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_1315256439",
+        "name": "Panaji Parking (osm_way_1315256439)",
+        "city": "Panaji",
+        "address": "Panaji, India",
+        "longitude": "73.8348813",
+        "latitude": "15.4955201",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "ALLOWED",
+        "rule_description": "Imported from OpenStreetMap (way/1315256439)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.821111,
+          15.4857955
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_1323667008",
+        "name": "Panaji Parking (osm_way_1323667008)",
+        "city": "Panaji",
+        "address": "Panaji, India",
+        "longitude": "73.8211110",
+        "latitude": "15.4857955",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "ALLOWED",
+        "rule_description": "Imported from OpenStreetMap (way/1323667008)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8363209,
+          15.4989104
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_1323689603",
+        "name": "Panaji Parking (osm_way_1323689603)",
+        "city": "Panaji",
+        "address": "Panaji, India",
+        "longitude": "73.8363209",
+        "latitude": "15.4989104",
+        "total_car_slots": "462",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "multi-storey",
+        "rule_description": "Imported from OpenStreetMap (way/1323689603) | OSM Capacity: 462 | Building: parking | Building Levels: 3"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8341973,
+          15.4974313
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_1340217084",
+        "name": "Panaji Parking (osm_way_1340217084)",
+        "city": "Panaji",
+        "address": "Panaji, India",
+        "longitude": "73.8341973",
+        "latitude": "15.4974313",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "ALLOWED",
+        "rule_description": "Imported from OpenStreetMap (way/1340217084)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8346358,
+          15.4944911
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_1340232021",
+        "name": "Panaji Parking (osm_way_1340232021)",
+        "city": "Panaji",
+        "address": "Panaji, India",
+        "longitude": "73.8346358",
+        "latitude": "15.4944911",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "ALLOWED",
+        "rule_description": "Imported from OpenStreetMap (way/1340232021)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8351827,
+          15.4973269
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_1340240343",
+        "name": "Panaji Parking (osm_way_1340240343)",
+        "city": "Panaji",
+        "address": "Panaji, India",
+        "longitude": "73.8351827",
+        "latitude": "15.4973269",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "ALLOWED",
+        "rule_description": "Imported from OpenStreetMap (way/1340240343)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8375419,
+          15.4974195
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_1340245545",
+        "name": "Panaji Parking (osm_way_1340245545)",
+        "city": "Panaji",
+        "address": "Panaji, India",
+        "longitude": "73.8375419",
+        "latitude": "15.4974195",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "ALLOWED",
+        "rule_description": "Imported from OpenStreetMap (way/1340245545)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8369579,
+          15.4959222
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_1340245555",
+        "name": "Panaji Parking (osm_way_1340245555)",
+        "city": "Panaji",
+        "address": "Panaji, India",
+        "longitude": "73.8369579",
+        "latitude": "15.4959222",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "ALLOWED",
+        "rule_description": "Imported from OpenStreetMap (way/1340245555)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8334247,
+          15.4973335
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_1340334260",
+        "name": "Panaji Parking (osm_way_1340334260)",
+        "city": "Panaji",
+        "address": "Panaji, India",
+        "longitude": "73.8334247",
+        "latitude": "15.4973335",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "ALLOWED",
+        "rule_description": "Imported from OpenStreetMap (way/1340334260)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8337229,
+          15.4962553
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_1340334264",
+        "name": "Panaji Parking (osm_way_1340334264)",
+        "city": "Panaji",
+        "address": "Panaji, India",
+        "longitude": "73.8337229",
+        "latitude": "15.4962553",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "ALLOWED",
+        "rule_description": "Imported from OpenStreetMap (way/1340334264)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.833667,
+          15.4961556
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_1340334267",
+        "name": "Panaji Parking (osm_way_1340334267)",
+        "city": "Panaji",
+        "address": "Panaji, India",
+        "longitude": "73.8336670",
+        "latitude": "15.4961556",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "ALLOWED",
+        "rule_description": "Imported from OpenStreetMap (way/1340334267)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8339283,
+          15.4963639
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_1340334268",
+        "name": "Panaji Parking (osm_way_1340334268)",
+        "city": "Panaji",
+        "address": "Panaji, India",
+        "longitude": "73.8339283",
+        "latitude": "15.4963639",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "ALLOWED",
+        "rule_description": "Imported from OpenStreetMap (way/1340334268)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.833922,
+          15.4972524
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_1340334271",
+        "name": "Panaji Parking (osm_way_1340334271)",
+        "city": "Panaji",
+        "address": "Panaji, India",
+        "longitude": "73.8339220",
+        "latitude": "15.4972524",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "ALLOWED",
+        "rule_description": "Imported from OpenStreetMap (way/1340334271)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8284337,
+          15.5005923
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_1411213488",
+        "name": "Panaji Parking (osm_way_1411213488)",
+        "city": "Panaji",
+        "address": "Panaji, India",
+        "longitude": "73.8284337",
+        "latitude": "15.5005923",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "ALLOWED",
+        "rule_description": "Imported from OpenStreetMap (way/1411213488)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.829345,
+          15.5004781
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_1411213490",
+        "name": "Panaji Parking (osm_way_1411213490)",
+        "city": "Panaji",
+        "address": "Panaji, India",
+        "longitude": "73.8293450",
+        "latitude": "15.5004781",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "ALLOWED",
+        "rule_description": "Imported from OpenStreetMap (way/1411213490)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8301116,
+          15.5004905
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_1411213491",
+        "name": "Panaji Parking (osm_way_1411213491)",
+        "city": "Panaji",
+        "address": "Panaji, India",
+        "longitude": "73.8301116",
+        "latitude": "15.5004905",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "ALLOWED",
+        "rule_description": "Imported from OpenStreetMap (way/1411213491)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.825595,
+          15.5014768
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_1411231399",
+        "name": "Panaji Parking (osm_way_1411231399)",
+        "city": "Panaji",
+        "address": "Panaji, India",
+        "longitude": "73.8255950",
+        "latitude": "15.5014768",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "ALLOWED",
+        "rule_description": "Imported from OpenStreetMap (way/1411231399)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8269489,
+          15.4883221
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_1428214009",
+        "name": "Panaji Parking (osm_way_1428214009)",
+        "city": "Panaji",
+        "address": "Panaji, India",
+        "longitude": "73.8269489",
+        "latitude": "15.4883221",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "ALLOWED",
+        "rule_description": "Imported from OpenStreetMap (way/1428214009)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8041282,
+          15.4581042
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_1447421638",
+        "name": "Dona Paula Parking",
+        "city": "Panaji",
+        "address": "Panaji, India",
+        "longitude": "73.8041282",
+        "latitude": "15.4581042",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "ALLOWED",
+        "rule_description": "Imported from OpenStreetMap (way/1447421638)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8221796,
+          15.498954
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_1459841763",
+        "name": "Basement Paid Parking",
+        "city": "Panaji",
+        "address": "Panaji, India",
+        "longitude": "73.8221796",
+        "latitude": "15.4989540",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "true",
+        "price_per_hour": "",
+        "rule_type": "ALLOWED",
+        "rule_description": "Imported from OpenStreetMap (way/1459841763) | OSM Fee: yes | Level: -1"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8141551,
+          15.4888067
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_1459841780",
+        "name": "Panaji Parking (osm_way_1459841780)",
+        "city": "Panaji",
+        "address": "Panaji, India",
+        "longitude": "73.8141551",
+        "latitude": "15.4888067",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "ALLOWED",
+        "rule_description": "Imported from OpenStreetMap (way/1459841780)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.830805,
+          15.4960355
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_1489499511",
+        "name": "Panaji Parking (osm_way_1489499511)",
+        "city": "Panaji",
+        "address": "Panaji, India",
+        "longitude": "73.8308050",
+        "latitude": "15.4960355",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "ALLOWED",
+        "rule_description": "Imported from OpenStreetMap (way/1489499511)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8263752,
+          15.5012518
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_1502797180",
+        "name": "Panaji Parking (osm_way_1502797180)",
+        "city": "Panaji",
+        "address": "Panaji, India",
+        "longitude": "73.8263752",
+        "latitude": "15.5012518",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "ALLOWED",
+        "rule_description": "Imported from OpenStreetMap (way/1502797180)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8156929,
+          15.4885811
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_1524898189",
+        "name": "Panaji Parking (osm_way_1524898189)",
+        "city": "Panaji",
+        "address": "Panaji, India",
+        "longitude": "73.8156929",
+        "latitude": "15.4885811",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "ALLOWED",
+        "rule_description": "Imported from OpenStreetMap (way/1524898189) | Operator: Corporation of the City of Panji"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8288482,
+          15.5006672
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_1545339136",
+        "name": "Panaji Parking (osm_way_1545339136)",
+        "city": "Panaji",
+        "address": "Panaji, India",
+        "longitude": "73.8288482",
+        "latitude": "15.5006672",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "ALLOWED",
+        "rule_description": "Imported from OpenStreetMap (way/1545339136)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8353144,
+          15.4964346
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_1547916158",
+        "name": "Panaji Parking (osm_way_1547916158)",
+        "city": "Panaji",
+        "address": "Panaji, India",
+        "longitude": "73.8353144",
+        "latitude": "15.4964346",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "ALLOWED",
+        "rule_description": "Imported from OpenStreetMap (way/1547916158)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8348194,
+          15.4959586
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_1547916160",
+        "name": "Panaji Parking (osm_way_1547916160)",
+        "city": "Panaji",
+        "address": "Panaji, India",
+        "longitude": "73.8348194",
+        "latitude": "15.4959586",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "ALLOWED",
+        "rule_description": "Imported from OpenStreetMap (way/1547916160)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8347859,
+          15.4975101
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_1547918937",
+        "name": "Panaji Parking (osm_way_1547918937)",
+        "city": "Panaji",
+        "address": "Panaji, India",
+        "longitude": "73.8347859",
+        "latitude": "15.4975101",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "ALLOWED",
+        "rule_description": "Imported from OpenStreetMap (way/1547918937)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.83197,
+          15.4973733
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_1569607331",
+        "name": "Panaji Parking (osm_way_1569607331)",
+        "city": "Panaji",
+        "address": "Panaji, India",
+        "longitude": "73.8319700",
+        "latitude": "15.4973733",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "ALLOWED",
+        "rule_description": "Imported from OpenStreetMap (way/1569607331)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8316648,
+          15.4974611
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_1569607332",
+        "name": "Panaji Parking (osm_way_1569607332)",
+        "city": "Panaji",
+        "address": "Panaji, India",
+        "longitude": "73.8316648",
+        "latitude": "15.4974611",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "ALLOWED",
+        "rule_description": "Imported from OpenStreetMap (way/1569607332)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8282224,
+          15.4988716
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_1571653613",
+        "name": "Panaji Parking (osm_way_1571653613)",
+        "city": "Panaji",
+        "address": "Panaji, India",
+        "longitude": "73.8282224",
+        "latitude": "15.4988716",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "ALLOWED",
+        "rule_description": "Imported from OpenStreetMap (way/1571653613)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8363921,
+          15.4952625
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_1575252810",
+        "name": "Bus Parking",
+        "city": "Panaji",
+        "address": "Panaji, India",
+        "longitude": "73.8363921",
+        "latitude": "15.4952625",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "ALLOWED",
+        "rule_description": "Imported from OpenStreetMap (way/1575252810)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8096932,
+          15.487803
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_1578216355",
+        "name": "Panaji Parking (osm_way_1578216355)",
+        "city": "Panaji",
+        "address": "Panaji, India",
+        "longitude": "73.8096932",
+        "latitude": "15.4878030",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "ALLOWED",
+        "rule_description": "Imported from OpenStreetMap (way/1578216355)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8117498,
+          15.4893567
+        ]
+      },
+      "properties": {
+        "external_spot_id": "osm_way_1578223390",
+        "name": "Panaji Parking (osm_way_1578223390)",
+        "city": "Panaji",
+        "address": "Panaji, India",
+        "longitude": "73.8117498",
+        "latitude": "15.4893567",
+        "total_car_slots": "",
+        "total_bike_slots": "10",
+        "is_paid": "",
+        "price_per_hour": "",
+        "rule_type": "ALLOWED",
+        "rule_description": "Imported from OpenStreetMap (way/1578223390)"
+      }
+    }
+  ]
+}
