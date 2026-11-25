@@ -54,14 +54,14 @@ def create_booking(booking_in: BookingCreate, db: Session = Depends(get_db)):
             detail=f"Cannot book: This spot is a designated NO_PARKING / Tow-Away zone! ({spot.rule_description})"
         )
 
-    # 2. Check active bookings capacity with row locks
+    # 2. Check active bookings capacity (parent spot row is already locked)
     now_utc = datetime.now(timezone.utc)
     active_count = db.query(ActiveBooking).filter(
         ActiveBooking.spot_id == spot.id,
         ActiveBooking.vehicle_type == booking_in.vehicle_type,
         ActiveBooking.status == "active",
         ActiveBooking.end_time > now_utc
-    ).with_for_update().count()
+    ).count()
 
     total_slots = (spot.total_car_slots or 0) if booking_in.vehicle_type == "car" else (spot.total_bike_slots or 0)
     if active_count >= total_slots:

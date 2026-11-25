@@ -1,7 +1,7 @@
 import csv
 from pathlib import Path
 
-PROJECT_DIR = Path(r"C:\Users\HP\Documents\GitHub\ParkKaro\data\processed")
+PROJECT_DIR = Path(__file__).resolve().parent / "processed"
 CSV_PATH = PROJECT_DIR / "indore_panaji_cleaned.csv"
 SQL_PATH = PROJECT_DIR / "import_indore_panaji.sql"
 

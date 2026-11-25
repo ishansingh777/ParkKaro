@@ -17,6 +17,7 @@ class ParkingSpotOut(BaseModel):
     price_per_hour: int = 0
     rule_type: str = "ALLOWED"
     rule_description: Optional[str] = None
+    external_spot_id: Optional[str] = None
     distance_km: Optional[float] = None
     earliest_free_time: Optional[str] = None
 
