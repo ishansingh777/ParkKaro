@@ -41,7 +41,6 @@ async def lifespan(app: FastAPI):
     model_dir = os.path.join(os.path.dirname(__file__), "models")
     joblib_model_path = os.path.join(model_dir, "parking_occupancy_model.joblib")
     pkl_model_path = os.path.join(model_dir, "parking_model.pkl")
-    sign_model_path = os.path.join(model_dir, "sign_detector.pt")
 
     # 1. Load Model 1: Rush Predictor (Pipeline or Random Forest)
     rush_loaded = False
@@ -106,8 +105,7 @@ def health_check(db: Session = Depends(get_db)):
             total_spots=spots_count,
             active_bookings=bookings_count,
             models_loaded={
-                "rush_predictor": models.get("rush") is not None,
-                "sign_scanner": models.get("sign") is not None
+                "rush_predictor": models.get("rush") is not None
             },
             timestamp=datetime.now(timezone.utc)
         )
