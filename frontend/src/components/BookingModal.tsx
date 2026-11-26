@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { ParkingSpot } from "../types";
+import { bookSpot } from "@/lib/api";
 import { X, Car, Bike, Clock, IndianRupee, ShieldCheck, Check } from "lucide-react";
 
 interface BookingModalProps {
@@ -42,23 +43,7 @@ export default function BookingModal({
     setError(null);
 
     try {
-      const res = await fetch(`${apiBaseUrl}/bookings`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          spot_id: spot.id,
-          user_name: userName.trim(),
-          vehicle_type: vehicleType,
-          duration_hours: duration,
-        }),
-      });
-
-      if (!res.ok) {
-        const data = await res.json();
-        throw new Error(data.detail || "Booking failed");
-      }
-
-      const booking = await res.json();
+      const booking = await bookSpot(spot.id, userName.trim(), vehicleType, duration);
       onSuccess(booking.id);
       onClose();
     } catch (err: any) {

@@ -80,7 +80,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Include Routers under /api and /api/v1 compatibility prefix
+# Include Routers under /api, /api/v1, and direct root compatibility prefix
 app.include_router(spots_router, prefix="/api")
 app.include_router(bookings_router, prefix="/api")
 app.include_router(ai_router, prefix="/api")
@@ -90,6 +90,11 @@ app.include_router(spots_router, prefix="/api/v1")
 app.include_router(bookings_router, prefix="/api/v1")
 app.include_router(ai_router, prefix="/api/v1")
 app.include_router(feedback_router, prefix="/api/v1")
+
+app.include_router(spots_router)
+app.include_router(bookings_router)
+app.include_router(ai_router)
+app.include_router(feedback_router)
 
 
 @app.get("/api/health", response_model=HealthResponse, tags=["health"])
