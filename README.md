@@ -78,6 +78,12 @@ npm run dev
 
 - Open **[http://localhost:3000](http://localhost:3000)** in your browser or mobile device.
 
+### 3. Deploy to Render (Blueprint)
+
+Use [render.yaml](render.yaml) (configured with `rootDir: backend`, Python `3.12.11`, and `/api/health` healthcheck) or launch directly:
+
+- [![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/akhandpratap7032-hash/ParkKaro)
+
 ---
 
 ## 🎨 Embedded UI Highlights
