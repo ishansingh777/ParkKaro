@@ -59,6 +59,22 @@ async def lifespan(app: FastAPI):
         print("ℹ️ Rush model not found; using calibrated heuristic predictor.")
         models["rush"] = None
 
+    # 2. Load Model 2: Sign Detector (YOLOv8)
+    sign_model_path = os.path.join(model_dir, "sign_detector.pt")
+    sign_loaded = False
+    if os.path.exists(sign_model_path):
+        try:
+            from ultralytics import YOLO
+            models["sign"] = YOLO(sign_model_path)
+            print(f" Loaded Model 2 (YOLOv8 Sign Detector): {os.path.basename(sign_model_path)}")
+            sign_loaded = True
+        except Exception as e:
+            print(f"ℹ️ YOLOv8 runner notice: {e}. Sign intelligence knowledge pipeline active.")
+            models["sign"] = None
+    else:
+        print(f"ℹ️ {sign_model_path} not found; sign knowledge base active.")
+        models["sign"] = None
+
     app.state.models = models
     yield
     models.clear()
@@ -104,13 +120,16 @@ def health_check(db: Session = Depends(get_db)):
     try:
         spots_count = db.query(ParkingSpot).count()
         bookings_count = db.query(ActiveBooking).filter(ActiveBooking.status == "active").count()
+        sign_model_path = os.path.join(os.path.dirname(__file__), "models", "sign_detector.pt")
+        sign_active = (models.get("sign") is not None) or os.path.exists(sign_model_path)
         return HealthResponse(
             status="ok",
             database="connected",
             total_spots=spots_count,
             active_bookings=bookings_count,
             models_loaded={
-                "rush_predictor": models.get("rush") is not None
+                "rush_predictor": models.get("rush") is not None,
+                "sign_scanner": sign_active
             },
             timestamp=datetime.now(timezone.utc)
         )

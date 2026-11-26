@@ -1,4 +1,4 @@
-import { ParkingSpot, Booking, RushPrediction } from "@/types";
+import { ParkingSpot, Booking, RushPrediction, SignScanResult } from "@/types";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
 
@@ -77,5 +77,27 @@ export async function predictRush(
     `${API_BASE_URL}/api/predict-rush?spot_id=${spotId}&hour=${hour}&day_of_week=${dayOfWeek}`
   );
   if (!res.ok) throw new Error("Failed to predict rush");
+  return res.json();
+}
+
+export async function scanSign(
+  file: File,
+  coords?: { latitude: number; longitude: number }
+): Promise<SignScanResult> {
+  const formData = new FormData();
+  formData.append("file", file);
+  if (coords) {
+    formData.append("latitude", coords.latitude.toString());
+    formData.append("longitude", coords.longitude.toString());
+  }
+
+  const res = await fetch(`${API_BASE_URL}/api/scan-sign`, {
+    method: "POST",
+    body: formData,
+  });
+  if (!res.ok) {
+    const error = await res.json().catch(() => ({ detail: "Sign scanning failed" }));
+    throw new Error(error.detail || "Sign scanning failed");
+  }
   return res.json();
 }
