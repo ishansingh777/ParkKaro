@@ -12,7 +12,7 @@ class Settings(BaseSettings):
         "DATABASE_URL",
         "postgresql://postgres.isatsybreksmsliwmipj:Siddarth890@aws-1-ap-southeast-1.pooler.supabase.com:5432/postgres"
     )
-    api_port: int = int(os.getenv("API_PORT", 8000))
+    api_port: int = int(os.getenv("PORT", os.getenv("API_PORT", 8000)))
     api_host: str = os.getenv("API_HOST", "0.0.0.0")
     cors_origins: str = os.getenv(
         "CORS_ORIGINS",
