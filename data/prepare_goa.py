@@ -19,6 +19,7 @@ for feature in data["features"]:
     if not geometry or geometry.get("type") != "Point":
         continue
 
+
     osm_id = properties.get("@id") or feature.get("id")
     coordinates = geometry.get("coordinates", [])
 
