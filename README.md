@@ -76,7 +76,7 @@ npm install
 npm run dev
 ```
 
-- Open **[http://localhost:3000](http://localhost:3000)** in your browser or mobile device.
+- Open **[https://parkkaro-api-production.up.railway.app/home]** in your browser or mobile device.
 
 ### 3. Deploy to Render (Blueprint)
 

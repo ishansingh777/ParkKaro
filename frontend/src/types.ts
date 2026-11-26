@@ -38,3 +38,33 @@ export interface RushPrediction {
   chance_of_full: string;
   status: "Likely available" | "Moderate rush" | "Hard to find parking";
 }
+
+export interface SignDetail {
+  sign_key: string;
+  name: string;
+  category: string;
+  meaning: string;
+  wrong_meaning?: string | null;
+  driver_action: string;
+  parking_impact: string;
+  rule_type: string;
+  penalty?: string | null;
+}
+
+export interface SignScanResult {
+  detected_signs: string[];
+  rule_type: string;
+  rule_description: string;
+  sign_name?: string;
+  sign_category?: string;
+  sign_meaning?: string;
+  wrong_meaning?: string | null;
+  driver_action?: string;
+  parking_impact?: string;
+  penalty_info?: string | null;
+  all_details?: SignDetail[];
+  saved_to_db: boolean;
+  spot_id?: number;
+  latitude?: number;
+  longitude?: number;
+}

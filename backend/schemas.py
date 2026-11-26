@@ -95,6 +95,36 @@ class RushPredictionOut(BaseModel):
     status: str
 
 
+class SignDetail(BaseModel):
+    sign_key: str
+    name: str
+    category: str
+    meaning: str
+    wrong_meaning: Optional[str] = None
+    driver_action: str
+    parking_impact: str
+    rule_type: str
+    penalty: Optional[str] = None
+
+
+class SignScanOut(BaseModel):
+    detected_signs: List[str]
+    rule_type: str
+    rule_description: str
+    sign_name: str = "Parking Sign"
+    sign_category: str = "Traffic Sign"
+    sign_meaning: str = "Traffic sign regulating vehicle movement and parking."
+    wrong_meaning: Optional[str] = None
+    driver_action: str = "Follow indicated sign."
+    parking_impact: str = "Check local parking regulations."
+    penalty_info: Optional[str] = None
+    all_details: List[SignDetail] = []
+    saved_to_db: bool = False
+    spot_id: Optional[int] = None
+    latitude: Optional[float] = None
+    longitude: Optional[float] = None
+
+
 class HealthResponse(BaseModel):
     status: str
     database: str
