@@ -2,10 +2,11 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from sqlalchemy import text
 from datetime import datetime, timedelta, timezone
-from typing import List
+from typing import List, Optional
 
+from auth.dependencies import optional_auth
 from database import get_db
-from db_models import ParkingSpot, ActiveBooking
+from db_models import ParkingSpot, ActiveBooking, User
 from schemas import BookingCreate, BookingOut, CheckInRequest, CheckInResponse
 
 router = APIRouter(tags=["bookings"])
@@ -35,7 +36,11 @@ def auto_release_no_shows(db: Session):
 
 @router.post("/book", response_model=BookingOut, status_code=status.HTTP_201_CREATED)
 @router.post("/bookings", response_model=BookingOut, status_code=status.HTTP_201_CREATED)
-def create_booking(booking_in: BookingCreate, db: Session = Depends(get_db)):
+def create_booking(
+    booking_in: BookingCreate,
+    db: Session = Depends(get_db),
+    current_user: Optional[User] = Depends(optional_auth),
+):
     """
     Create a live parking booking with Race-Condition Lock (SELECT ... FOR UPDATE).
     Validates capacity, rule_type, and auto-calculates end_time.
@@ -76,6 +81,7 @@ def create_booking(booking_in: BookingCreate, db: Session = Depends(get_db)):
 
     new_booking = ActiveBooking(
         spot_id=spot.id,
+        user_id=current_user.id if current_user else None,
         user_name=booking_in.user_name,
         vehicle_type=booking_in.vehicle_type,
         start_time=start_time,

@@ -82,10 +82,101 @@ export interface UserProfile {
 }
 
 export interface AuthResponse {
-  status: string;
-  message: string;
+  id?: number;
+  email?: string;
+  full_name?: string | null;
+  phone_number?: string | null;
+  vehicle_number?: string | null;
+  role?: string;
+  is_active?: boolean;
   is_verified: boolean;
+  created_at?: string | null;
+  status?: string;
+  message?: string;
   user?: UserProfile | null;
   token?: string | null;
   verification_code_hint?: string | null;
+}
+
+export interface AuthUser {
+  id: number;
+  email: string;
+  full_name?: string | null;
+  phone_number?: string | null;
+  vehicle_number?: string | null;
+  role: "user" | "developer" | string;
+  is_active: boolean;
+  is_verified?: boolean;
+  created_at?: string | null;
+}
+
+export interface UserDashboardData {
+  user: AuthUser;
+  summary: {
+    total_bookings: number;
+    active_bookings: number;
+    completed_or_past: number;
+    total_spent: number;
+  };
+  bookings: Booking[];
+}
+
+export interface DevDbStatus {
+  status: string;
+  dialect: string;
+  database_name: string;
+  version: string;
+  size_mb: number | null;
+  active_connections: number | null;
+  table_counts: Record<string, number>;
+  timestamp: string;
+}
+
+export interface DevServerHealth {
+  status: string;
+  uptime_seconds: number;
+  cpu_percent: number;
+  process_memory_mb: number;
+  system_memory_percent: number;
+  system_memory_total_gb: number;
+  models_loaded: Record<string, boolean>;
+  api_latency: {
+    sample_size: number;
+    avg_ms: number;
+    p95_ms: number;
+    error_count: number;
+  };
+  timestamp: string;
+}
+
+export interface DevLogsResponse {
+  request_logs: Array<{
+    id: number;
+    level: string;
+    method: string;
+    path: string;
+    status_code: number;
+    duration_ms: number;
+    user_id?: number | null;
+    user_role?: string | null;
+    ip_address?: string | null;
+    message?: string | null;
+    created_at?: string | null;
+  }>;
+  audit_logs: Array<{
+    id: number;
+    actor_user_id?: number | null;
+    actor_email: string;
+    action: string;
+    target_type?: string | null;
+    target_id?: string | null;
+    ip_address?: string | null;
+    details?: string | null;
+    created_at?: string | null;
+  }>;
+}
+
+export interface DevUsersResponse {
+  total: number;
+  users: AuthUser[];
 }

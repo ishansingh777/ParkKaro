@@ -1,6 +1,27 @@
-from sqlalchemy import Column, Integer, String, Boolean, DateTime, ForeignKey
+from sqlalchemy import Column, Integer, String, Boolean, DateTime, ForeignKey, Float, Text, CheckConstraint
 from sqlalchemy.sql import func
 from database import Base
+
+class User(Base):
+    """Application user account with server-enforced RBAC role and verification status."""
+    __tablename__ = "users"
+    __table_args__ = (
+        CheckConstraint("role IN ('user', 'developer')", name="ck_users_role"),
+    )
+
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    email = Column(String(255), unique=True, index=True, nullable=False)
+    full_name = Column(String(120), nullable=True)
+    phone_number = Column(String(30), unique=True, index=True, nullable=True)
+    vehicle_number = Column(String(30), nullable=True)
+    password_hash = Column(String(255), nullable=False)
+    role = Column(String(32), nullable=False, default="user")
+    is_active = Column(Boolean, nullable=False, default=True)
+    is_verified = Column(Boolean, nullable=False, default=False)
+    verification_code = Column(String(10), nullable=True)
+    verified_at = Column(DateTime(timezone=True), nullable=True)
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+
 
 class ParkingSpot(Base):
     __tablename__ = "parking_spots"
@@ -24,6 +45,7 @@ class ActiveBooking(Base):
 
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     spot_id = Column(Integer, ForeignKey("parking_spots.id"), nullable=False)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=True, index=True)
     user_name = Column(String, nullable=False)
     vehicle_type = Column(String, default="car")
     start_time = Column(DateTime(timezone=True), server_default=func.now())
@@ -44,18 +66,43 @@ class FeedbackSubmission(Base):
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
 
-class User(Base):
-    __tablename__ = "users"
+class AuditLog(Base):
+    """Persistent trail of developer actions and privilege-sensitive events."""
+    __tablename__ = "audit_logs"
 
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
-    email = Column(String(255), unique=True, index=True, nullable=False)
-    full_name = Column(String(120), nullable=True)
-    phone_number = Column(String(30), unique=True, index=True, nullable=True)
-    vehicle_number = Column(String(30), nullable=True)
-    password_hash = Column(String(255), nullable=False)
-    role = Column(String(20), default="user")
-    is_active = Column(Boolean, default=True)
-    is_verified = Column(Boolean, default=False)
-    verification_code = Column(String(10), nullable=True)
-    verified_at = Column(DateTime(timezone=True), nullable=True)
-    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    actor_user_id = Column(Integer, ForeignKey("users.id"), nullable=True, index=True)
+    actor_email = Column(String(255), nullable=False)
+    action = Column(String(100), nullable=False)
+    target_type = Column(String(64), nullable=True)
+    target_id = Column(String(64), nullable=True)
+    ip_address = Column(String(64), nullable=True)
+    details = Column(Text, nullable=True)
+    created_at = Column(DateTime(timezone=True), server_default=func.now(), index=True)
+
+
+class ServerLog(Base):
+    """Persisted security/error log entries inspected on the developer dashboard."""
+    __tablename__ = "server_logs"
+
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    level = Column(String(16), nullable=False, default="INFO", index=True)
+    method = Column(String(12), nullable=False)
+    path = Column(String(255), nullable=False, index=True)
+    status_code = Column(Integer, nullable=False, index=True)
+    duration_ms = Column(Float, nullable=False, default=0.0)
+    user_id = Column(Integer, nullable=True)
+    user_role = Column(String(32), nullable=True)
+    ip_address = Column(String(64), nullable=True)
+    message = Column(Text, nullable=True)
+    created_at = Column(DateTime(timezone=True), server_default=func.now(), index=True)
+
+
+class LoginAttempt(Base):
+    """Supabase-persisted failed login timestamps for distributed rate limiting."""
+    __tablename__ = "login_attempts"
+
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    ip_address = Column(String(64), nullable=False, index=True)
+    email = Column(String(255), nullable=False, index=True)
+    created_at = Column(DateTime(timezone=True), server_default=func.now(), index=True)

@@ -49,7 +49,6 @@ class StatsResponse(BaseModel):
     cities_count: int
 
 
-
 class BookingCreate(BaseModel):
     spot_id: int
     user_name: str = Field(..., min_length=2, max_length=50)
@@ -156,6 +155,20 @@ class FeedbackOut(BaseModel):
         from_attributes = True
 
 
+# ==================== User & Authentication Schemas ====================
+
+class SignupRequest(BaseModel):
+    email: str = Field(..., min_length=5, max_length=254)
+    password: str = Field(..., min_length=6, max_length=128)
+    full_name: Optional[str] = Field(None, max_length=120)
+    phone_number: Optional[str] = Field(None, max_length=30)
+    vehicle_number: Optional[str] = Field(None, max_length=30)
+
+    class Config:
+        extra = "ignore"
+
+
+# Verified Driver Signup alias
 class UserSignUp(BaseModel):
     full_name: str = Field(..., min_length=2, max_length=100)
     email: str = Field(..., min_length=5, max_length=150)
@@ -167,6 +180,12 @@ class UserSignUp(BaseModel):
 class UserVerify(BaseModel):
     email: str
     verification_code: str
+
+
+class LoginRequest(BaseModel):
+    email: Optional[str] = Field(None, min_length=3, max_length=254)
+    email_or_phone: Optional[str] = None
+    password: str = Field(..., min_length=1, max_length=128)
 
 
 class UserLogin(BaseModel):
@@ -189,10 +208,40 @@ class UserOut(BaseModel):
         from_attributes = True
 
 
+class AuthUserOut(BaseModel):
+    id: int
+    email: str
+    full_name: Optional[str] = None
+    phone_number: Optional[str] = None
+    vehicle_number: Optional[str] = None
+    role: str = "user"
+    is_active: bool = True
+    is_verified: bool = False
+    created_at: Optional[datetime] = None
+
+    class Config:
+        from_attributes = True
+
+
 class AuthResponse(BaseModel):
-    status: str
-    message: str
-    is_verified: bool
+    id: Optional[int] = None
+    email: Optional[str] = None
+    full_name: Optional[str] = None
+    phone_number: Optional[str] = None
+    vehicle_number: Optional[str] = None
+    role: str = "user"
+    is_active: bool = True
+    is_verified: bool = False
+    created_at: Optional[datetime] = None
+    status: str = "success"
+    message: Optional[str] = None
     user: Optional[UserOut] = None
     token: Optional[str] = None
     verification_code_hint: Optional[str] = None
+
+    class Config:
+        from_attributes = True
+
+
+class UserStatusUpdate(BaseModel):
+    is_active: bool

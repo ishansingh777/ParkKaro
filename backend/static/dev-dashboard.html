@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Developer Dashboard — ParkKaro</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background: #fafbfd; color: #1e2025; }
+    .font-mono { font-family: 'JetBrains Mono', monospace; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+  <header class="sticky top-0 z-30 border-b border-slate-200 bg-[#1C4178] text-white">
+    <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <a href="/" class="inline-flex items-center bg-[#FFCA20] text-[#111827] px-3.5 py-1.5 rounded-full font-black text-sm">parkkaro</a>
+        <span class="px-2.5 py-0.5 rounded-full bg-white/15 border border-white/25 text-[11px] font-black uppercase tracking-wider text-[#FFCA20]">
+          Developer Console
+        </span>
+      </div>
+      <div class="flex items-center gap-2 text-xs font-bold">
+        <span id="devEmailLabel" class="hidden sm:inline text-blue-100 font-mono"></span>
+        <a href="/dashboard" class="px-3 py-1.5 rounded-xl bg-white/15 hover:bg-white/25">User View</a>
+        <a href="/" class="px-3 py-1.5 rounded-xl bg-white/15 hover:bg-white/25">Live Map</a>
+        <button onclick="handleLogout()" class="px-3 py-1.5 rounded-xl bg-rose-500 hover:bg-rose-600 text-white">Sign Out</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="devContent" class="hidden flex-1 max-w-7xl w-full mx-auto px-4 py-6 space-y-6">
+    <!-- Top DB + Server Health Cards -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+      <section class="bg-white rounded-3xl border border-slate-200 p-5 shadow-sm">
+        <div class="flex items-center justify-between mb-3">
+          <h2 class="text-sm font-black uppercase tracking-wider text-[#1C4178]">Supabase Database Status</h2>
+          <button onclick="refreshAll()" class="px-2.5 py-1 rounded-xl bg-slate-100 hover:bg-slate-200 text-xs font-bold">Refresh</button>
+        </div>
+        <div id="dbStatusBody" class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 text-xs"></div>
+      </section>
+
+      <section class="bg-white rounded-3xl border border-slate-200 p-5 shadow-sm">
+        <h2 class="text-sm font-black uppercase tracking-wider text-[#1C4178] mb-3">Server Health &amp; Latency</h2>
+        <div id="serverHealthBody" class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 text-xs"></div>
+      </section>
+    </div>
+
+    <!-- Users Management -->
+    <section class="bg-white rounded-3xl border border-slate-200 p-5 shadow-sm">
+      <h2 class="text-sm font-black uppercase tracking-wider text-[#1C4178] mb-3">Registered Users</h2>
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs">
+          <thead>
+            <tr class="border-b border-slate-200 text-slate-500 uppercase text-[10px]">
+              <th class="py-2 pr-3">ID</th>
+              <th class="py-2 pr-3">Email</th>
+              <th class="py-2 pr-3">Name</th>
+              <th class="py-2 pr-3">Role</th>
+              <th class="py-2 pr-3">Status</th>
+              <th class="py-2 pr-3">Action</th>
+            </tr>
+          </thead>
+          <tbody id="usersTableBody" class="divide-y divide-slate-100"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Request/Error Logs + Developer Audit Logs -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+      <section class="bg-white rounded-3xl border border-slate-200 p-5 shadow-sm">
+        <div class="flex items-center justify-between mb-3">
+          <h2 class="text-sm font-black uppercase tracking-wider text-[#1C4178]">Supabase Request &amp; Error Logs</h2>
+          <select id="logLevelFilter" onchange="loadLogs()" class="px-2.5 py-1 rounded-xl bg-slate-100 text-xs font-bold">
+            <option value="">All Levels</option>
+            <option value="INFO">INFO</option>
+            <option value="WARN">WARN</option>
+            <option value="ERROR">ERROR</option>
+          </select>
+        </div>
+        <div id="requestLogsBody" class="space-y-2 max-h-96 overflow-y-auto font-mono text-[11px]"></div>
+      </section>
+
+      <section class="bg-white rounded-3xl border border-slate-200 p-5 shadow-sm">
+        <h2 class="text-sm font-black uppercase tracking-wider text-[#1C4178] mb-3">Developer Audit Log</h2>
+        <div id="auditLogsBody" class="space-y-2 max-h-96 overflow-y-auto font-mono text-[11px]"></div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    function escapeHtml(text) {
+      if (text === null || text === undefined) return '';
+      return String(text).replace(/[&<>"']/g, m => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;' }[m]));
+    }
+
+    function metricTile(label, val) {
+      return `<div class="p-2.5 rounded-2xl bg-slate-50 border border-slate-200">
+        <div class="text-[10px] font-bold uppercase text-slate-500">${escapeHtml(label)}</div>
+        <div class="font-mono font-black text-slate-900 mt-0.5 truncate">${escapeHtml(val)}</div>
+      </div>`;
+    }
+
+    async function verifyDevSession() {
+      const meRes = await fetch('/api/auth/me', { credentials: 'include' });
+      if (meRes.status === 401) {
+        window.location.href = '/login';
+        return false;
+      }
+      const me = await meRes.json();
+      if (me.role !== 'developer') {
+        window.location.href = '/dashboard';
+        return false;
+      }
+      document.getElementById('devEmailLabel').innerText = me.email;
+      document.getElementById('devContent').classList.remove('hidden');
+      return true;
+    }
+
+    async function loadDbAndHealth() {
+      const [dbRes, healthRes] = await Promise.all([
+        fetch('/api/dev/db-status', { credentials: 'include' }),
+        fetch('/api/dev/health', { credentials: 'include' }),
+      ]);
+      if (dbRes.status === 401 || healthRes.status === 401) return (window.location.href = '/login');
+      if (dbRes.status === 403 || healthRes.status === 403) return (window.location.href = '/dashboard');
+
+      if (dbRes.ok) {
+        const d = await dbRes.json();
+        const tc = d.table_counts || {};
+        document.getElementById('dbStatusBody').innerHTML = [
+          metricTile('Connection', d.status),
+          metricTile('Size (MB)', d.size_mb ?? 'N/A'),
+          metricTile('Active Conns', d.active_connections ?? 'N/A'),
+          metricTile('Users', tc.users),
+          metricTile('Spots', tc.parking_spots),
+          metricTile('Active Bookings', tc.active_bookings),
+        ].join('');
+      }
+
+      if (healthRes.ok) {
+        const h = await healthRes.json();
+        const lat = h.api_latency || {};
+        document.getElementById('serverHealthBody').innerHTML = [
+          metricTile('CPU %', `${h.cpu_percent}%`),
+          metricTile('Process RAM', `${h.process_memory_mb} MB`),
+          metricTile('System RAM', `${h.system_memory_percent}%`),
+          metricTile('Uptime', `${h.uptime_seconds}s`),
+          metricTile('Avg Latency', `${lat.avg_ms} ms`),
+          metricTile('P95 Latency', `${lat.p95_ms} ms`),
+        ].join('');
+      }
+    }
+
+    async function loadUsers() {
+      const res = await fetch('/api/dev/users', { credentials: 'include' });
+      if (!res.ok) return;
+      const data = await res.json();
+      document.getElementById('usersTableBody').innerHTML = (data.users || []).map(u => `
+        <tr>
+          <td class="py-2 pr-3 font-mono">${u.id}</td>
+          <td class="py-2 pr-3 font-semibold">${escapeHtml(u.email)}</td>
+          <td class="py-2 pr-3">${escapeHtml(u.full_name || '-')}</td>
+          <td class="py-2 pr-3"><span class="px-2 py-0.5 rounded-full text-[10px] font-black ${u.role === 'developer' ? 'bg-blue-100 text-[#1C4178]' : 'bg-slate-100 text-slate-700'}">${escapeHtml(u.role)}</span></td>
+          <td class="py-2 pr-3">${u.is_active ? '<span class="text-emerald-600 font-bold">Active</span>' : '<span class="text-rose-600 font-bold">Disabled</span>'}</td>
+          <td class="py-2 pr-3">
+            <button onclick="toggleUser(${u.id}, ${!u.is_active})" class="px-2.5 py-1 rounded-lg ${u.is_active ? 'bg-rose-50 text-rose-700 hover:bg-rose-100' : 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100'} font-bold">
+              ${u.is_active ? 'Disable' : 'Enable'}
+            </button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    async function toggleUser(userId, newActive) {
+      const res = await fetch(`/api/dev/users/${userId}/status`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ is_active: newActive }),
+      });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        alert(err.detail || 'Could not update user status');
+      }
+      await loadUsers();
+      await loadLogs();
+    }
+
+    async function loadLogs() {
+      const level = document.getElementById('logLevelFilter').value;
+      const url = level ? `/api/dev/logs?level=${encodeURIComponent(level)}` : '/api/dev/logs';
+      const res = await fetch(url, { credentials: 'include' });
+      if (!res.ok) return;
+      const data = await res.json();
+
+      document.getElementById('requestLogsBody').innerHTML = (data.request_logs || []).map(l => `
+        <div class="p-2 rounded-xl border border-slate-200 bg-slate-50">
+          <div class="flex justify-between">
+            <span class="font-bold ${l.status_code >= 500 ? 'text-rose-600' : l.status_code >= 400 ? 'text-amber-600' : 'text-emerald-700'}">[${escapeHtml(l.level)}] ${escapeHtml(l.method)} ${escapeHtml(l.path)}</span>
+            <span>${l.status_code} (${l.duration_ms}ms)</span>
+          </div>
+          <div class="text-slate-500 mt-0.5">role=${escapeHtml(l.user_role || 'anon')} ip=${escapeHtml(l.ip_address || '')} ${escapeHtml(l.message || '')}</div>
+        </div>
+      `).join('') || '<p class="text-slate-400">No logs recorded yet.</p>';
+
+      document.getElementById('auditLogsBody').innerHTML = (data.audit_logs || []).map(a => `
+        <div class="p-2 rounded-xl border border-slate-200 bg-slate-50">
+          <div class="font-bold text-[#1C4178]">${escapeHtml(a.action)} • ${escapeHtml(a.actor_email)}</div>
+          <div class="text-slate-500 mt-0.5">${escapeHtml(a.details || '')} (${escapeHtml(a.target_type || '')}:${escapeHtml(a.target_id || '')})</div>
+        </div>
+      `).join('') || '<p class="text-slate-400">No audit records yet.</p>';
+    }
+
+    async function refreshAll() {
+      await Promise.all([loadDbAndHealth(), loadUsers()]);
+      await loadLogs();
+    }
+
+    async function handleLogout() {
+      await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' });
+      window.location.href = '/login';
+    }
+
+    window.addEventListener('DOMContentLoaded', async () => {
+      if (await verifyDevSession()) {
+        await refreshAll();
+      }
+    });
+  </script>
+</body>
+</html>
