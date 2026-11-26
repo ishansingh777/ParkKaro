@@ -12,9 +12,6 @@ class Settings(BaseSettings):
     api_port: int = int(os.getenv("API_PORT", 8000))
     api_host: str = os.getenv("API_HOST", "0.0.0.0")
     cors_origins: str = os.getenv("CORS_ORIGINS", "http://localhost:3000,http://127.0.0.1:3000")
-    supabase_url: str = os.getenv("SUPABASE_URL", "")
-    supabase_key: str = os.getenv("SUPABASE_KEY", "")
-    supabase_bucket: str = os.getenv("SUPABASE_BUCKET", "traffic-signs")
 
     @property
     def cors_list(self):

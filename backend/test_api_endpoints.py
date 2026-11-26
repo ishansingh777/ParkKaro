@@ -89,31 +89,6 @@ with TestClient(app) as client:
     assert res_leave.status_code == 200, f"Early release failed: {res_leave.text}"
     print(f"   ✅ Early Slot Release verified: {res_leave.json()['message']}")
 
-    # 6. Sign Scanner & Motor Vehicles Act Knowledge Pipeline
-    print("\n6. Testing AI Sign Scanner & 85-Sign Knowledge Pipeline:")
-    # Create a 1x1 test image bytes
-    from io import BytesIO
-    from PIL import Image
-    buf = BytesIO()
-    Image.new("RGB", (64, 64), color=(255, 0, 0)).save(buf, format="JPEG")
-    fake_img_bytes = buf.getvalue()
-
-    res_scan = client.post(
-        "/api/scan-sign",
-        files={"file": ("no_parking_zone.jpg", fake_img_bytes, "image/jpeg")},
-        data={"latitude": 22.7185, "longitude": 75.8553}
-    )
-    assert res_scan.status_code == 200, f"Sign scan failed: {res_scan.text}"
-    scan_data = res_scan.json()
-    print(f"   ✅ Sign Scanner Response ({res_scan.status_code}):")
-    print(f"      - Detected Sign: {scan_data['sign_name']}")
-    print(f"      - Category: {scan_data['sign_category']}")
-    print(f"      - Rule Type: {scan_data['rule_type']}")
-    print(f"      - Driver Action: {scan_data['driver_action']}")
-    print(f"      - Fine / Penalty: {scan_data['penalty_info']}")
-    print(f"      - Misconception: {scan_data['wrong_meaning']}")
-    print(f"      - Auto-saved to PostGIS: {scan_data['saved_to_db']}")
-
 print("\n==================================================")
 print("🎉 All Backend Endpoints & PostGIS Integrations Verified!")
 print("==================================================")

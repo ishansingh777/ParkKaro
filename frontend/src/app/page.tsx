@@ -113,7 +113,7 @@ export default function Home() {
 
       {/* Main Content */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
-        {/* Floating Controls Bar: 2W/4W toggle + Camera Scan + Refresh */}
+        {/* Floating Controls Bar: 2W/4W toggle + Refresh */}
         <div className="mb-4 flex flex-wrap items-center justify-between gap-3 bg-white p-3 rounded-2xl border border-slate-200 shadow-sm">
           {/* 2-Wheeler vs 4-Wheeler Toggle */}
           <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl">
