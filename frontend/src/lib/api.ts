@@ -1,6 +1,24 @@
-import { ParkingSpot, Booking, RushPrediction } from "@/types";
+import {
+  ParkingSpot,
+  Booking,
+  RushPrediction,
+  AuthUser,
+  UserDashboardData,
+  DevDbStatus,
+  DevServerHealth,
+  DevLogsResponse,
+  DevUsersResponse,
+} from "@/types";
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
+function getApiBaseUrl(): string {
+  if (process.env.NEXT_PUBLIC_API_URL) return process.env.NEXT_PUBLIC_API_URL;
+  if (typeof window !== "undefined" && window.location.hostname === "localhost") {
+    return "http://localhost:8000";
+  }
+  return "http://127.0.0.1:8000";
+}
+
+const API_BASE_URL = getApiBaseUrl();
 
 export async function fetchHealth() {
   const res = await fetch(`${API_BASE_URL}/api/health`);
@@ -37,7 +55,7 @@ export async function fetchNearestSpots(
 }
 
 export async function fetchActiveBookings(): Promise<Booking[]> {
-  const res = await fetch(`${API_BASE_URL}/api/bookings`);
+  const res = await fetch(`${API_BASE_URL}/api/bookings`, { credentials: "include" });
   if (!res.ok) throw new Error("Failed to fetch bookings");
   return res.json();
 }
@@ -51,6 +69,7 @@ export async function createBooking(data: {
   const res = await fetch(`${API_BASE_URL}/api/book`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
+    credentials: "include",
     body: JSON.stringify(data),
   });
   if (!res.ok) {
@@ -63,6 +82,7 @@ export async function createBooking(data: {
 export async function endBooking(bookingId: number): Promise<{ message: string; status: string }> {
   const res = await fetch(`${API_BASE_URL}/api/bookings/${bookingId}/end`, {
     method: "POST",
+    credentials: "include",
   });
   if (!res.ok) throw new Error("Failed to end booking");
   return res.json();
@@ -78,4 +98,108 @@ export async function predictRush(
   );
   if (!res.ok) throw new Error("Failed to predict rush");
   return res.json();
+}
+
+export async function signup(payload: {
+  email: string;
+  password: string;
+  full_name?: string;
+}): Promise<AuthUser> {
+  const res = await fetch(`${API_BASE_URL}/api/auth/signup`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+    body: JSON.stringify(payload),
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(data.detail || "Signup failed");
+  return data;
+}
+
+export async function login(payload: { email: string; password: string }): Promise<AuthUser> {
+  const res = await fetch(`${API_BASE_URL}/api/auth/login`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+    body: JSON.stringify(payload),
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(data.detail || "Invalid credentials");
+  return data;
+}
+
+export async function logout(): Promise<void> {
+  await fetch(`${API_BASE_URL}/api/auth/logout`, {
+    method: "POST",
+    credentials: "include",
+  });
+}
+
+export async function fetchMe(): Promise<AuthUser | null> {
+  const res = await fetch(`${API_BASE_URL}/api/auth/me`, { credentials: "include" });
+  if (res.status === 401) return null;
+  if (!res.ok) throw new Error("Failed to load session");
+  return res.json();
+}
+
+export async function fetchUserDashboard(): Promise<UserDashboardData> {
+  const res = await fetch(`${API_BASE_URL}/api/user/dashboard`, { credentials: "include" });
+  if (res.status === 401) throw new Error("UNAUTHORIZED");
+  if (!res.ok) throw new Error("Failed to load user dashboard");
+  return res.json();
+}
+
+export async function endOwnBooking(bookingId: number): Promise<void> {
+  const res = await fetch(`${API_BASE_URL}/api/user/bookings/${bookingId}/end`, {
+    method: "POST",
+    credentials: "include",
+  });
+  if (!res.ok) throw new Error("Failed to end booking");
+}
+
+export async function fetchDevDbStatus(): Promise<DevDbStatus> {
+  const res = await fetch(`${API_BASE_URL}/api/dev/db-status`, { credentials: "include" });
+  if (res.status === 401) throw new Error("UNAUTHORIZED");
+  if (res.status === 403) throw new Error("FORBIDDEN");
+  if (!res.ok) throw new Error("Failed to load database status");
+  return res.json();
+}
+
+export async function fetchDevHealth(): Promise<DevServerHealth> {
+  const res = await fetch(`${API_BASE_URL}/api/dev/health`, { credentials: "include" });
+  if (res.status === 401) throw new Error("UNAUTHORIZED");
+  if (res.status === 403) throw new Error("FORBIDDEN");
+  if (!res.ok) throw new Error("Failed to load server health");
+  return res.json();
+}
+
+export async function fetchDevLogs(level?: string): Promise<DevLogsResponse> {
+  const url = level
+    ? `${API_BASE_URL}/api/dev/logs?level=${encodeURIComponent(level)}`
+    : `${API_BASE_URL}/api/dev/logs`;
+  const res = await fetch(url, { credentials: "include" });
+  if (res.status === 401) throw new Error("UNAUTHORIZED");
+  if (res.status === 403) throw new Error("FORBIDDEN");
+  if (!res.ok) throw new Error("Failed to load logs");
+  return res.json();
+}
+
+export async function fetchDevUsers(): Promise<DevUsersResponse> {
+  const res = await fetch(`${API_BASE_URL}/api/dev/users`, { credentials: "include" });
+  if (res.status === 401) throw new Error("UNAUTHORIZED");
+  if (res.status === 403) throw new Error("FORBIDDEN");
+  if (!res.ok) throw new Error("Failed to load users");
+  return res.json();
+}
+
+export async function toggleDevUserStatus(userId: number, isActive: boolean): Promise<AuthUser> {
+  const res = await fetch(`${API_BASE_URL}/api/dev/users/${userId}/status`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+    body: JSON.stringify({ is_active: isActive }),
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(data.detail || "Failed to update user status");
+  return data;
 }

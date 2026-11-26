@@ -154,3 +154,34 @@ class FeedbackOut(BaseModel):
 
     class Config:
         from_attributes = True
+
+
+class SignupRequest(BaseModel):
+    email: str = Field(..., min_length=5, max_length=254)
+    password: str = Field(..., min_length=8, max_length=128)
+    full_name: Optional[str] = Field(None, max_length=120)
+
+    class Config:
+        # Ignore any client-supplied fields like `role`; server always assigns role="user".
+        extra = "ignore"
+
+
+class LoginRequest(BaseModel):
+    email: str = Field(..., min_length=3, max_length=254)
+    password: str = Field(..., min_length=1, max_length=128)
+
+
+class AuthUserOut(BaseModel):
+    id: int
+    email: str
+    full_name: Optional[str] = None
+    role: str
+    is_active: bool
+    created_at: Optional[datetime] = None
+
+    class Config:
+        from_attributes = True
+
+
+class UserStatusUpdate(BaseModel):
+    is_active: bool

@@ -1,7 +1,8 @@
 "use client";
 
 import React from "react";
-import { ShieldCheck, Car, Database, Sparkles } from "lucide-react";
+import Link from "next/link";
+import { ShieldCheck, Car, Database, Sparkles, LogIn } from "lucide-react";
 
 interface NavbarProps {
   selectedCity: string;
@@ -66,8 +67,15 @@ export default function Navbar({
           ))}
         </div>
 
-        {/* Supabase & Backend Status */}
+        {/* Supabase & Backend Status + Account */}
         <div className="flex items-center space-x-2">
+          <Link
+            href="/login"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition-colors"
+          >
+            <LogIn className="w-3.5 h-3.5 text-[#FFCA20]" />
+            <span>Sign In</span>
+          </Link>
           <div
             className={`flex items-center space-x-1.5 px-2.5 py-1 rounded-full text-xs font-medium border ${
               backendStatus === "connected"

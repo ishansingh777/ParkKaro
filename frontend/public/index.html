@@ -203,63 +203,52 @@
       text-decoration: none !important;
     }
 
-    /* High-Contrast Floating Pill Map Markers */
+    /* High-Contrast Floating Price Pill Map Markers */
     .modern-park-pin {
       background: transparent !important;
       border: none !important;
     }
     .modern-marker-wrap {
       position: relative;
-      display: flex;
+      display: inline-flex;
       flex-direction: column;
       align-items: center;
+      width: max-content;
+      transform: translate(-50%, -100%);
       cursor: pointer;
       user-select: none;
-      filter: drop-shadow(0 5px 12px rgba(15, 23, 42, 0.35));
-      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
     .modern-marker-wrap:hover,
     .modern-marker-wrap.is-selected {
-      transform: scale(1.15) translateY(-4px);
       z-index: 1000 !important;
     }
     .marker-pill {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 5px;
-      padding: 6px 12px;
+      padding: 4px 10px;
       border-radius: 9999px;
-      border: 2px solid #ffffff;
-      box-shadow: 0 4px 16px var(--glow);
+      border: 1.5px solid #ffffff;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.16);
       font-weight: 800;
       font-size: 11px;
-      letter-spacing: 0.02em;
+      line-height: 1.15;
+      letter-spacing: 0.01em;
       white-space: nowrap;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+    .modern-marker-wrap:hover .marker-pill,
+    .modern-marker-wrap.is-selected .marker-pill {
+      transform: scale(1.12);
+      box-shadow: 0 0 0 2px #FFCA20, 0 2px 6px rgba(15, 23, 42, 0.22);
     }
     .marker-pin-tip {
       width: 0;
       height: 0;
-      border-left: 5px solid transparent;
-      border-right: 5px solid transparent;
-      border-top: 6px solid var(--border);
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 5px solid var(--border);
       margin-top: -1px;
-    }
-    .marker-beacon {
-      position: absolute;
-      bottom: -4px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--border);
-      box-shadow: 0 0 12px var(--glow);
-      animation: beacon-wave 2s infinite cubic-bezier(0, 0.2, 0.8, 1);
-    }
-    @keyframes beacon-wave {
-      0% { transform: translateX(-50%) scale(0.6); opacity: 0.95; }
-      100% { transform: translateX(-50%) scale(3.4); opacity: 0; }
     }
 
     /* Scanner Laser Beam */
@@ -281,15 +270,11 @@
       animation: slide-up 0.32s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
-    /* Leaflet street polyline glow */
-    .leaflet-interactive.street-legal {
-      filter: drop-shadow(0 0 6px #10b981);
-    }
-    .leaflet-interactive.street-paid {
-      filter: drop-shadow(0 0 6px #1c4178);
-    }
+    /* Leaflet street polylines without dark drop-shadow halos */
+    .leaflet-interactive.street-legal,
+    .leaflet-interactive.street-paid,
     .leaflet-interactive.street-danger {
-      filter: drop-shadow(0 0 6px #ef4444);
+      filter: none;
     }
 
     /* Startup Splash Animation Styles */
@@ -490,6 +475,12 @@
           <i data-lucide="download" class="w-3.5 h-3.5"></i>
           <span class="hidden sm:inline">Install App</span>
         </button>
+
+        <!-- Sign In / Account Dashboard Link -->
+        <a id="navAccountLink" href="/login" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 border border-slate-200 text-[#111827] text-xs font-bold transition-all">
+          <i data-lucide="user-circle" class="w-3.5 h-3.5 text-[#1C4178]"></i>
+          <span id="navAccountText">Sign In</span>
+        </a>
 
         <!-- Add Spot Button (Rapido / Home Black Pill Style) -->
         <button onclick="openAddSpotModal()" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-[18px_18px_5px_18px] bg-[#0D0F14] hover:bg-[#1E2330] text-white text-xs font-bold transition-all shadow-md">
@@ -1388,7 +1379,9 @@
     let selectedDuration = 1;
     let leafletMap = null;
     let mapMarkers = {};
-    let mapStreetLines = [];
+    let markerEntries = [];
+    let markersLayerGroup = null;
+    let streetLinesLayerGroup = null;
     let deferredPrompt = null;
     let cameraStream = null;
     let deliveryModeActive = false;
@@ -1473,6 +1466,8 @@
       showToast('📲 Parking Pass downloaded to Apple Wallet / Offline Pass!', 'success');
     }
 
+    let lastMarkerSignature = '';
+
     // Initialize Map with 2026 Navigation Styling & Multi-Layer Engine
     function initMap() {
       if (leafletMap) return;
@@ -1482,6 +1477,9 @@
         zoom: 6,
         zoomControl: false
       });
+
+      markersLayerGroup = L.layerGroup().addTo(leafletMap);
+      streetLinesLayerGroup = L.layerGroup().addTo(leafletMap);
 
       // Street Layer (Full Color Vibrant OpenStreetMap)
       streetTileLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -1498,6 +1496,10 @@
       // Activate current layer
       switchMapLayer(currentMapLayer);
 
+      leafletMap.on('zoomend moveend', () => {
+        updateVisibleMarkers();
+      });
+
       leafletMap.on('click', function(e) {
         const latInput = document.getElementById('newSpotLat');
         const lngInput = document.getElementById('newSpotLng');
@@ -1509,49 +1511,70 @@
       });
     }
 
-    // Crisp High-Contrast Floating Capsule Pin Creator
-    function createMapIcon(spot, isSelected) {
-      const ruleType = spot ? spot.rule_type : 'ALLOWED';
-      let badgeBg = "#1C4178";
-      let badgeBorder = "#1C4178";
-      let badgeText = "#ffffff";
-      let tagText = spot && spot.is_paid ? `₹${spot.price_per_hour}/h` : "PAID";
-      let glowColor = "rgba(28, 65, 120, 0.45)";
-      let iconSvg = `<svg style="width:12px; height:12px; display:inline; color:#FFCA20;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-9h6m-6 4h4"/></svg>`;
+    function classifySpotMarker(spot) {
+      const ruleType = ((spot && spot.rule_type) || 'ALLOWED').toUpperCase();
+      const price = spot && spot.price_per_hour ? Number(spot.price_per_hour) : 0;
+      const isNoParking = ruleType === 'NO_PARKING';
 
-      if (ruleType === "ALLOWED") {
-        badgeBg = "#059669";
-        badgeBorder = "#059669";
-        badgeText = "#ffffff";
-        tagText = "FREE";
-        glowColor = "rgba(5, 150, 105, 0.45)";
-        iconSvg = `<svg style="width:12px; height:12px; display:inline;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>`;
-      } else if (ruleType === "NO_PARKING") {
-        badgeBg = "#e11d48";
-        badgeBorder = "#e11d48";
-        badgeText = "#ffffff";
-        tagText = "TOW ZONE";
-        glowColor = "rgba(225, 29, 72, 0.5)";
-        iconSvg = `<svg style="width:12px; height:12px; display:inline;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>`;
+      if (isNoParking) {
+        return {
+          badgeBg: '#e11d48',
+          badgeBorder: '#e11d48',
+          badgeText: '#ffffff',
+          tagText: 'NO PARK',
+          lineColor: '#e11d48',
+          lineClass: 'street-danger'
+        };
       }
+      if (price > 0) {
+        return {
+          badgeBg: '#1C4178',
+          badgeBorder: '#1C4178',
+          badgeText: '#ffffff',
+          tagText: `₹${price}/hr`,
+          lineColor: '#1C4178',
+          lineClass: 'street-paid'
+        };
+      }
+      if (spot && spot.is_paid) {
+        return {
+          badgeBg: '#1C4178',
+          badgeBorder: '#1C4178',
+          badgeText: '#ffffff',
+          tagText: 'PAID',
+          lineColor: '#1C4178',
+          lineClass: 'street-paid'
+        };
+      }
+      return {
+        badgeBg: '#059669',
+        badgeBorder: '#059669',
+        badgeText: '#ffffff',
+        tagText: 'FREE',
+        lineColor: '#10b981',
+        lineClass: 'street-legal'
+      };
+    }
+
+    // Clean Floating Price Pill Creator (no dark halos or beacon rings)
+    function createMapIcon(spot, isSelected) {
+      const style = classifySpotMarker(spot);
 
       const html = `
-        <div class="modern-marker-wrap ${isSelected ? 'is-selected' : ''}" style="--glow: ${glowColor}; --border: ${badgeBorder};">
-          <div class="marker-beacon"></div>
-          <div class="marker-pill" style="background: ${badgeBg}; color: ${badgeText};">
-            ${iconSvg}
-            <span>${tagText}</span>
+        <div class="modern-marker-wrap ${isSelected ? 'is-selected' : ''}" style="--border: ${style.badgeBorder};">
+          <div class="marker-pill" style="background: ${style.badgeBg}; color: ${style.badgeText};">
+            <span>${style.tagText}</span>
           </div>
-          <div class="marker-pin-tip" style="border-top-color: ${badgeBorder};"></div>
+          <div class="marker-pin-tip" style="border-top-color: ${style.badgeBorder};"></div>
         </div>
       `;
 
       return L.divIcon({
         html,
         className: 'modern-park-pin',
-        iconSize: [86, 38],
-        iconAnchor: [43, 38],
-        popupAnchor: [0, -38]
+        iconSize: [0, 0],
+        iconAnchor: [0, 0],
+        popupAnchor: [0, -28]
       });
     }
 
@@ -1621,6 +1644,9 @@
 
     // Filter & Sort Logic
     function getFilteredSpots() {
+      const ruleFilterEl = document.getElementById('ruleTypeFilter');
+      const activeRule = ruleFilterEl ? ruleFilterEl.value : currentRuleFilter;
+
       return allSpots.filter(spot => {
         if (currentCityFilter !== "All" && spot.city.toLowerCase() !== currentCityFilter.toLowerCase()) {
           return false;
@@ -1628,8 +1654,12 @@
         if (deliveryModeActive && spot.rule_type === 'NO_PARKING') {
           return false;
         }
-        if (currentRuleFilter !== "ALL" && spot.rule_type !== currentRuleFilter) {
-          return false;
+        if (activeRule !== "ALL") {
+          const isNoParking = spot.rule_type === 'NO_PARKING';
+          const isPaidSpot = !isNoParking && (spot.rule_type === 'PAID' || spot.is_paid || Number(spot.price_per_hour) > 0);
+          if (activeRule === 'NO_PARKING' && !isNoParking) return false;
+          if (activeRule === 'PAID' && !isPaidSpot) return false;
+          if (activeRule === 'ALLOWED' && (isNoParking || isPaidSpot)) return false;
         }
         if (currentSearchQuery.trim()) {
           const q = currentSearchQuery.toLowerCase();
@@ -1750,9 +1780,13 @@
           badgeHtml = `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-black bg-rose-50 text-rose-700 border border-rose-200">
             <i data-lucide="alert-triangle" class="w-3 h-3"></i> Tow-Away
           </span>`;
-        } else if (isPaid) {
+        } else if (spot.price_per_hour > 0) {
           badgeHtml = `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-black bg-blue-50 text-[#1C4178] border border-blue-200">
             ₹${spot.price_per_hour}/hr
+          </span>`;
+        } else if (isPaid) {
+          badgeHtml = `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-black bg-blue-50 text-[#1C4178] border border-blue-200">
+            Paid Lot
           </span>`;
         } else {
           badgeHtml = `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-black bg-emerald-50 text-emerald-700 border border-emerald-200">
@@ -1843,36 +1877,129 @@
       }).join('');
     }
 
+    function getSpotDisplayPriority(spot) {
+      const price = Number(spot.price_per_hour) || 0;
+      const isNoParking = (spot.rule_type || '').toUpperCase() === 'NO_PARKING';
+      if (!isNoParking && price > 0) return 1000 + price;
+      const isUnnamedOsm = /^Unnamed Parking/i.test(spot.name || '') || /^Chandigarh Parking \(osm_/i.test(spot.name || '');
+      if (!isNoParking && !isUnnamedOsm) {
+        return 500 + (spot.is_paid ? 40 : 0) + (spot.available_car_slots > 0 ? 20 : 0);
+      }
+      if (isNoParking) return 300;
+      return (spot.available_car_slots + spot.available_bike_slots > 0 ? 100 : 10) + (spot.is_paid ? 5 : 0);
+    }
+
+    // Show non-overlapping price pills for current zoom & viewport (prevents dark stacking)
+    function updateVisibleMarkers() {
+      if (!leafletMap || !markersLayerGroup) return;
+
+      const zoom = leafletMap.getZoom();
+      const size = leafletMap.getSize();
+      const placedBoxes = [];
+      const halfW = zoom >= 14 ? 32 : 38;
+      const height = zoom >= 14 ? 28 : 34;
+      const showStreetLines = zoom >= 13;
+
+      const ordered = [...markerEntries].sort((a, b) => {
+        const aSel = selectedSpot && selectedSpot.id === a.spot.id ? 1 : 0;
+        const bSel = selectedSpot && selectedSpot.id === b.spot.id ? 1 : 0;
+        if (aSel !== bSel) return bSel - aSel;
+        return b.priority - a.priority;
+      });
+
+      ordered.forEach(entry => {
+        const isSel = !!(selectedSpot && selectedSpot.id === entry.spot.id);
+        const pt = leafletMap.latLngToContainerPoint([entry.spot.latitude, entry.spot.longitude]);
+        const inView = isSel || (pt.x >= -80 && pt.y >= -80 && pt.x <= size.x + 80 && pt.y <= size.y + 80);
+
+        let shouldShow = false;
+        if (inView) {
+          const box = {
+            left: pt.x - halfW,
+            right: pt.x + halfW,
+            top: pt.y - height,
+            bottom: pt.y + 4
+          };
+
+          let overlaps = false;
+          if (!isSel) {
+            for (let i = 0; i < placedBoxes.length; i++) {
+              const b = placedBoxes[i];
+              if (box.left < b.right && box.right > b.left && box.top < b.bottom && box.bottom > b.top) {
+                overlaps = true;
+                break;
+              }
+            }
+          }
+
+          if (!overlaps) {
+            placedBoxes.push(box);
+            shouldShow = true;
+          }
+        }
+
+        if (shouldShow) {
+          if (entry.lastSelected !== isSel) {
+            entry.marker.setIcon(createMapIcon(entry.spot, isSel));
+            entry.lastSelected = isSel;
+          }
+          entry.marker.setZIndexOffset(isSel ? 1000 : (entry.priority >= 1000 ? 500 : 0));
+          if (!markersLayerGroup.hasLayer(entry.marker)) {
+            markersLayerGroup.addLayer(entry.marker);
+          }
+          if (entry.streetLine) {
+            if (showStreetLines || isSel) {
+              if (!streetLinesLayerGroup.hasLayer(entry.streetLine)) {
+                streetLinesLayerGroup.addLayer(entry.streetLine);
+              }
+            } else if (streetLinesLayerGroup.hasLayer(entry.streetLine)) {
+              streetLinesLayerGroup.removeLayer(entry.streetLine);
+            }
+          }
+        } else {
+          if (markersLayerGroup.hasLayer(entry.marker)) {
+            markersLayerGroup.removeLayer(entry.marker);
+          }
+          if (entry.streetLine && streetLinesLayerGroup.hasLayer(entry.streetLine)) {
+            streetLinesLayerGroup.removeLayer(entry.streetLine);
+          }
+        }
+      });
+    }
+
     // Render Markers & Street Lines on Map
     function renderMapMarkers(spots) {
       if (!leafletMap) return;
 
-      Object.values(mapMarkers).forEach(m => m.remove());
-      mapMarkers = {};
+      const signature = spots
+        .map(s => `${s.id}:${s.available_car_slots}:${s.available_bike_slots}:${s.price_per_hour}:${s.is_paid}:${s.rule_type}`)
+        .join('|');
 
-      mapStreetLines.forEach(line => line.remove());
-      mapStreetLines = [];
+      if (signature === lastMarkerSignature && markerEntries.length > 0) {
+        updateVisibleMarkers();
+        return;
+      }
+      lastMarkerSignature = signature;
+
+      const openPopupSpotId = selectedSpot && mapMarkers[selectedSpot.id] && mapMarkers[selectedSpot.id].isPopupOpen()
+        ? selectedSpot.id
+        : null;
+
+      if (markersLayerGroup) markersLayerGroup.clearLayers();
+      if (streetLinesLayerGroup) streetLinesLayerGroup.clearLayers();
+      mapMarkers = {};
+      markerEntries = [];
 
       if (spots.length === 0) return;
 
       const bounds = L.latLngBounds([]);
 
       spots.forEach(spot => {
-        const isSelected = selectedSpot && selectedSpot.id === spot.id;
+        const isSelected = !!(selectedSpot && selectedSpot.id === spot.id);
         const icon = createMapIcon(spot, isSelected);
+        const style = classifySpotMarker(spot);
 
-        const marker = L.marker([spot.latitude, spot.longitude], { icon })
-          .addTo(leafletMap);
-
-        let lineColor = "#1C4178"; // royal navy blue
-        let lineClass = "street-paid";
-        if (spot.rule_type === 'ALLOWED') {
-          lineColor = "#10b981"; // green
-          lineClass = "street-legal";
-        } else if (spot.rule_type === 'NO_PARKING') {
-          lineColor = "#e11d48"; // red
-          lineClass = "street-danger";
-        }
+        const marker = L.marker([spot.latitude, spot.longitude], { icon });
 
         const streetOffset = 0.0012;
         const streetPoints = [
@@ -1882,24 +2009,23 @@
         ];
 
         const streetLine = L.polyline(streetPoints, {
-          color: lineColor,
-          weight: 6,
-          opacity: 0.9,
+          color: style.lineColor,
+          weight: 5,
+          opacity: 0.85,
           lineCap: 'round',
-          className: lineClass
-        }).addTo(leafletMap);
+          className: style.lineClass
+        });
 
         streetLine.on('click', () => {
           focusSpot(spot.id, false);
         });
-        mapStreetLines.push(streetLine);
 
         const popupContent = `
           <div style="min-width: 215px; color: #1e2025; font-family: 'Plus Jakarta Sans', sans-serif;">
             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 5px;">
               <span style="font-size: 9px; font-weight: 900; letter-spacing: 0.14em; text-transform: uppercase; color: #1C4178;">${escapeHtml(spot.city)}</span>
-              <span style="font-size: 10px; font-weight: 800; color: ${spot.rule_type === 'ALLOWED' ? '#059669' : (spot.rule_type === 'PAID' ? '#1C4178' : '#e11d48')};">
-                ${spot.rule_type === 'ALLOWED' ? 'FREE' : (spot.rule_type === 'PAID' ? '₹' + spot.price_per_hour + '/hr' : 'TOW ZONE')}
+              <span style="font-size: 10px; font-weight: 800; color: ${style.badgeBg};">
+                ${style.tagText}
               </span>
             </div>
             <div style="font-size: 14px; font-weight: 900; color: #111827; line-height: 1.25;">${escapeHtml(spot.name)}</div>
@@ -1937,17 +2063,29 @@
           </div>
         `;
 
-        marker.bindPopup(popupContent, { offset: [0, -20] });
+        marker.bindPopup(popupContent, { offset: [0, -6] });
         marker.on('click', () => {
           focusSpot(spot.id, false);
         });
 
         mapMarkers[spot.id] = marker;
+        markerEntries.push({
+          spot,
+          marker,
+          streetLine,
+          priority: getSpotDisplayPriority(spot),
+          lastSelected: isSelected
+        });
         bounds.extend([spot.latitude, spot.longitude]);
       });
 
       if (!selectedSpot && spots.length > 0) {
         leafletMap.fitBounds(bounds, { padding: [50, 50], maxZoom: 14 });
+      }
+      updateVisibleMarkers();
+
+      if (openPopupSpotId && mapMarkers[openPopupSpotId]) {
+        mapMarkers[openPopupSpotId].openPopup();
       }
     }
 
@@ -1959,12 +2097,18 @@
       selectedSpot = spot;
       renderSpotsList(getFilteredSpots());
       updateBottomCard(spot);
+      updateVisibleMarkers();
 
       if (leafletMap) {
         leafletMap.flyTo([spot.latitude, spot.longitude], 15, { duration: 1 });
         const marker = mapMarkers[spot.id];
         if (marker && openPopup) {
-          setTimeout(() => marker.openPopup(), 400);
+          setTimeout(() => {
+            updateVisibleMarkers();
+            if (mapMarkers[spot.id]) {
+              mapMarkers[spot.id].openPopup();
+            }
+          }, 400);
         }
       }
 
@@ -2015,9 +2159,12 @@
       if (spot.rule_type === 'NO_PARKING') {
         badge.className = "inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-black bg-rose-50 text-rose-700 border border-rose-200";
         badge.innerText = "⛔ Tow-Away Zone";
-      } else if (spot.is_paid) {
+      } else if (spot.price_per_hour > 0) {
         badge.className = "inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-black bg-blue-50 text-[#1C4178] border border-blue-200";
         badge.innerText = `₹${spot.price_per_hour}/hr`;
+      } else if (spot.is_paid) {
+        badge.className = "inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-black bg-blue-50 text-[#1C4178] border border-blue-200";
+        badge.innerText = "Paid Lot";
       } else {
         badge.className = "inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-black bg-emerald-50 text-emerald-700 border border-emerald-200";
         badge.innerText = "🟢 Legal Parking";
@@ -2089,6 +2236,7 @@
       document.getElementById('spotBottomCard').classList.add('hidden');
       selectedSpot = null;
       renderSpotsList(getFilteredSpots());
+      updateVisibleMarkers();
     }
 
     function openDirections(spot) {
@@ -2420,6 +2568,7 @@
         const res = await fetch(`${API_BASE_URL}/bookings`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
           body: JSON.stringify({
             spot_id: spotId,
             user_name: userName,
@@ -2801,6 +2950,17 @@
       fetchData().then(() => {
         if (window.location.search) resetMapView();
       });
+      fetch('/api/auth/me', { credentials: 'include' })
+        .then(r => r.ok ? r.json() : null)
+        .then(me => {
+          const link = document.getElementById('navAccountLink');
+          const txt = document.getElementById('navAccountText');
+          if (me && link && txt) {
+            link.href = me.role === 'developer' ? '/dev-dashboard' : '/dashboard';
+            txt.innerText = me.role === 'developer' ? 'Dev Panel' : 'Dashboard';
+          }
+        })
+        .catch(() => {});
       setInterval(fetchData, 8000);
     });
   </script>
