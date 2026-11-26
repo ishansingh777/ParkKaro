@@ -485,6 +485,12 @@
           <span id="connectionText" class="text-[11px] font-mono">PostGIS Live</span>
         </div>
 
+        <!-- Driver Auth / Verified Status Pill -->
+        <a href="/auth" id="headerAuthBtn" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all bg-amber-50/80 hover:bg-amber-100 text-[#1C4178] border border-amber-200/80 shadow-sm" title="Verified Driver Account">
+          <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-600"></i>
+          <span id="headerAuthText" class="truncate max-w-[120px]">Driver Auth</span>
+        </a>
+
         <!-- PWA Install Button -->
         <button id="pwaInstallBtn" onclick="installPWA()" class="hidden items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#FFCA20] hover:bg-[#F2BC10] text-[#111827] text-xs font-black shadow-sm transition-all">
           <i data-lucide="download" class="w-3.5 h-3.5"></i>
@@ -2792,9 +2798,25 @@
       if (cityParam || qParam) resetMapView();
     }
 
+    function checkVerifiedDriverStatus() {
+      try {
+        const userStr = localStorage.getItem('parkkaro_user');
+        if (userStr) {
+          const user = JSON.parse(userStr);
+          const authText = document.getElementById('headerAuthText');
+          const authBtn = document.getElementById('headerAuthBtn');
+          if (user && user.is_verified && authText) {
+            authText.innerText = user.full_name ? user.full_name.split(' ')[0] : 'Verified';
+            authBtn.className = "flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-black transition-all bg-emerald-50 text-emerald-800 border border-emerald-200 shadow-sm";
+          }
+        }
+      } catch (_) {}
+    }
+
     // Startup
     window.addEventListener('DOMContentLoaded', () => {
       lucide.createIcons();
+      checkVerifiedDriverStatus();
       runSplashAnimation();
       initMap();
       applyQueryParams();

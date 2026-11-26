@@ -68,3 +68,24 @@ export interface SignScanResult {
   latitude?: number;
   longitude?: number;
 }
+
+export interface UserProfile {
+  id: number;
+  email: string;
+  full_name?: string | null;
+  phone_number?: string | null;
+  vehicle_number?: string | null;
+  role: string;
+  is_active: boolean;
+  is_verified: boolean;
+  created_at?: string | null;
+}
+
+export interface AuthResponse {
+  status: string;
+  message: string;
+  is_verified: boolean;
+  user?: UserProfile | null;
+  token?: string | null;
+  verification_code_hint?: string | null;
+}

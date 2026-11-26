@@ -19,6 +19,7 @@ from routers.spots import router as spots_router
 from routers.bookings import router as bookings_router
 from routers.ai import router as ai_router
 from routers.feedback import router as feedback_router
+from routers.auth import router as auth_router
 
 # In-memory dictionary for ML models loaded once on startup
 models = {}
@@ -85,16 +86,19 @@ app.include_router(spots_router, prefix="/api")
 app.include_router(bookings_router, prefix="/api")
 app.include_router(ai_router, prefix="/api")
 app.include_router(feedback_router, prefix="/api")
+app.include_router(auth_router, prefix="/api")
 
 app.include_router(spots_router, prefix="/api/v1")
 app.include_router(bookings_router, prefix="/api/v1")
 app.include_router(ai_router, prefix="/api/v1")
 app.include_router(feedback_router, prefix="/api/v1")
+app.include_router(auth_router, prefix="/api/v1")
 
 app.include_router(spots_router)
 app.include_router(bookings_router)
 app.include_router(ai_router)
 app.include_router(feedback_router)
+app.include_router(auth_router)
 
 
 @app.get("/api/health", response_model=HealthResponse, tags=["health"])
@@ -144,6 +148,17 @@ def serve_ui():
     if index_file.exists():
         return FileResponse(str(index_file))
     return {"message": "ParkKaro API is running. UI file not found in static folder."}
+
+
+@app.get("/signup", include_in_schema=False)
+@app.get("/login", include_in_schema=False)
+@app.get("/auth", include_in_schema=False)
+def serve_auth():
+    """Serves the ParkKaro Verified Driver Signup & Login Page."""
+    auth_file = STATIC_DIR / "auth.html"
+    if auth_file.exists():
+        return FileResponse(str(auth_file))
+    return FileResponse(str(STATIC_DIR / "index.html"))
 
 
 @app.get("/manifest.json", include_in_schema=False)

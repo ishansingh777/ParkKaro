@@ -42,3 +42,20 @@ class FeedbackSubmission(Base):
     sender_email = Column(String(120), nullable=True)
     source_page = Column(String(50), default="home")
     created_at = Column(DateTime(timezone=True), server_default=func.now())
+
+
+class User(Base):
+    __tablename__ = "users"
+
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    email = Column(String(255), unique=True, index=True, nullable=False)
+    full_name = Column(String(120), nullable=True)
+    phone_number = Column(String(30), unique=True, index=True, nullable=True)
+    vehicle_number = Column(String(30), nullable=True)
+    password_hash = Column(String(255), nullable=False)
+    role = Column(String(20), default="user")
+    is_active = Column(Boolean, default=True)
+    is_verified = Column(Boolean, default=False)
+    verification_code = Column(String(10), nullable=True)
+    verified_at = Column(DateTime(timezone=True), nullable=True)
+    created_at = Column(DateTime(timezone=True), server_default=func.now())

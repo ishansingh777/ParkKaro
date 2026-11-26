@@ -154,3 +154,45 @@ class FeedbackOut(BaseModel):
 
     class Config:
         from_attributes = True
+
+
+class UserSignUp(BaseModel):
+    full_name: str = Field(..., min_length=2, max_length=100)
+    email: str = Field(..., min_length=5, max_length=150)
+    phone_number: Optional[str] = Field(None, max_length=25)
+    vehicle_number: Optional[str] = Field(None, max_length=30)
+    password: str = Field(..., min_length=6, max_length=100)
+
+
+class UserVerify(BaseModel):
+    email: str
+    verification_code: str
+
+
+class UserLogin(BaseModel):
+    email_or_phone: str
+    password: str
+
+
+class UserOut(BaseModel):
+    id: int
+    email: str
+    full_name: Optional[str] = None
+    phone_number: Optional[str] = None
+    vehicle_number: Optional[str] = None
+    role: str = "user"
+    is_active: bool = True
+    is_verified: bool = False
+    created_at: Optional[datetime] = None
+
+    class Config:
+        from_attributes = True
+
+
+class AuthResponse(BaseModel):
+    status: str
+    message: str
+    is_verified: bool
+    user: Optional[UserOut] = None
+    token: Optional[str] = None
+    verification_code_hint: Optional[str] = None

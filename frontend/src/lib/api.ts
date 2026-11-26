@@ -1,4 +1,4 @@
-import { ParkingSpot, Booking, RushPrediction } from "@/types";
+import { ParkingSpot, Booking, RushPrediction, UserProfile, AuthResponse } from "@/types";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
 
@@ -77,5 +77,58 @@ export async function predictRush(
     `${API_BASE_URL}/api/predict-rush?spot_id=${spotId}&hour=${hour}&day_of_week=${dayOfWeek}`
   );
   if (!res.ok) throw new Error("Failed to predict rush");
+  return res.json();
+}
+
+export async function signUpUser(data: {
+  full_name: string;
+  email: string;
+  phone_number?: string;
+  vehicle_number?: string;
+  password: string;
+}): Promise<AuthResponse> {
+  const res = await fetch(`${API_BASE_URL}/api/auth/signup`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+  const resData = await res.json();
+  if (!res.ok) throw new Error(resData.detail || "Sign up failed");
+  return resData;
+}
+
+export async function verifyUserAccount(
+  email: string,
+  verificationCode: string
+): Promise<AuthResponse> {
+  const res = await fetch(`${API_BASE_URL}/api/auth/verify`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, verification_code: verificationCode }),
+  });
+  const resData = await res.json();
+  if (!res.ok) throw new Error(resData.detail || "Verification failed");
+  return resData;
+}
+
+export async function loginUser(
+  emailOrPhone: string,
+  password: string
+): Promise<AuthResponse> {
+  const res = await fetch(`${API_BASE_URL}/api/auth/login`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email_or_phone: emailOrPhone, password }),
+  });
+  const resData = await res.json();
+  if (!res.ok) throw new Error(resData.detail || "Login failed");
+  return resData;
+}
+
+export async function fetchCurrentUser(token: string): Promise<UserProfile> {
+  const res = await fetch(`${API_BASE_URL}/api/auth/me`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  if (!res.ok) throw new Error("Session invalid or expired");
   return res.json();
 }

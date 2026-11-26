@@ -872,16 +872,23 @@
       <ul class="nav-links">
         <li><a href="/home" class="active">Home</a></li>
         <li><a href="#home" onclick="setHeroMode('scanner')">Sign Scanner</a></li>
+        <li><a href="/auth">Sign In / Sign Up</a></li>
         <li><a href="#about">About Us</a></li>
         <li><a href="#safety">Safety</a></li>
         <li><a href="#contact">Contact Us</a></li>
       </ul>
 
-      <!-- Primary App Link -->
-      <a href="/" class="btn-black-pill">
-        <span>Open Live Map</span>
-        <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
-      </a>
+      <!-- Primary App & Driver Auth Links -->
+      <div style="display:flex;align-items:center;gap:8px;">
+        <a href="/auth" style="display:inline-flex;align-items:center;gap:5px;padding:8px 14px;background:#FAFBFD;border:1.5px solid #E5E7EB;border-radius:999px;font-size:12px;font-weight:800;color:#1C4178;text-decoration:none;transition:all 0.2s ease;">
+          <i data-lucide="shield-check" style="width:14px;height:14px;color:#10B981;"></i>
+          <span id="homeDriverStatus">Driver Sign In</span>
+        </a>
+        <a href="/" class="btn-black-pill">
+          <span>Open Live Map</span>
+          <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+        </a>
+      </div>
     </div>
   </header>
 

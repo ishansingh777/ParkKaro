@@ -89,6 +89,59 @@ with TestClient(app) as client:
     assert res_leave.status_code == 200, f"Early release failed: {res_leave.text}"
     print(f"   ✅ Early Slot Release verified: {res_leave.json()['message']}")
 
+    # 6. Testing Verified Driver Authentication & Supabase Storage Lifecycle
+    print("\n6. Testing Verified Driver Authentication Flow (Supabase):")
+    import time
+    ts = int(time.time())
+    test_email = f"verified_driver_{ts}@parkkaro.in"
+    test_phone = f"+9198765{str(ts)[-5:]}"
+    signup_payload = {
+        "full_name": "Test Verified Driver",
+        "email": test_email,
+        "phone_number": test_phone,
+        "vehicle_number": "MP09AB9999",
+        "password": "Password123!"
+    }
+
+    # Step A: Signup
+    res_signup = client.post("/api/auth/signup", json=signup_payload)
+    assert res_signup.status_code == 201, f"Signup failed: {res_signup.text}"
+    signup_data = res_signup.json()
+    print(f"   ✅ Sign Up Success: {signup_data['status']}")
+    print(f"      - Registered User: {signup_data['user']['email']} (is_verified={signup_data['is_verified']})")
+    otp_code = signup_data.get("verification_code_hint")
+    assert otp_code, "Verification code not generated"
+    print(f"      - Generated 6-Digit Verification Code: {otp_code}")
+
+    # Step B: Login before verification (should require verification)
+    res_prelogin = client.post("/api/auth/login", json={"email_or_phone": test_email, "password": "Password123!"})
+    assert res_prelogin.status_code == 200
+    assert res_prelogin.json()["is_verified"] is False, "Unverified user must not have is_verified=True"
+    print(f"   ✅ Gatekeeper Verified: Unverified login correctly intercepted ({res_prelogin.json()['status']})")
+
+    # Step C: Verify Account with 6-digit Code
+    res_verify = client.post("/api/auth/verify", json={"email": test_email, "verification_code": otp_code})
+    assert res_verify.status_code == 200, f"Verification failed: {res_verify.text}"
+    verify_data = res_verify.json()
+    assert verify_data["is_verified"] is True
+    print(f"   ✅ Account Verified in Supabase: {verify_data['message']}")
+
+    # Step D: Login after verification (should succeed with token)
+    res_login = client.post("/api/auth/login", json={"email_or_phone": test_email, "password": "Password123!"})
+    assert res_login.status_code == 200
+    login_data = res_login.json()
+    assert login_data["is_verified"] is True
+    token = login_data["token"]
+    assert token, "Token not returned upon login"
+    print(f"   ✅ Verified Login Successful! Profile: {login_data['user']['full_name']} | Vehicle: {login_data['user']['vehicle_number']}")
+
+    # Step E: Authenticated /auth/me call with Bearer Token
+    res_me = client.get("/api/auth/me", headers={"Authorization": f"Bearer {token}"})
+    assert res_me.status_code == 200
+    me_data = res_me.json()
+    assert me_data["email"] == test_email
+    print(f"   ✅ Token Bearer Session Confirmed for {me_data['email']} (Verified: {me_data['is_verified']})")
+
 print("\n==================================================")
 print("🎉 All Backend Endpoints & PostGIS Integrations Verified!")
 print("==================================================")
