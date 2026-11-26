@@ -1,12 +1,21 @@
+import importlib.util
 import os
 import sys
 
-# Add backend directory to sys.path so all relative imports resolve cleanly
-backend_dir = os.path.join(os.path.dirname(__file__), "backend")
-if backend_dir not in sys.path:
-    sys.path.insert(0, backend_dir)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+BACKEND_DIR = os.path.join(BASE_DIR, "backend")
 
-from backend.main import app  # noqa: E402
+# Ensure backend directory is in sys.path so relative imports work
+if BACKEND_DIR not in sys.path:
+    sys.path.insert(0, BACKEND_DIR)
+
+# Explicitly load backend/main.py without module name collision with root "main"
+spec = importlib.util.spec_from_file_location("backend_app_module", os.path.join(BACKEND_DIR, "main.py"))
+backend_module = importlib.util.module_from_spec(spec)
+sys.modules["backend_app_module"] = backend_module
+spec.loader.exec_module(backend_module)
+
+app = backend_module.app
 
 if __name__ == "__main__":
     import uvicorn
