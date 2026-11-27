@@ -26,6 +26,7 @@ from auth.security import (
 from database import get_db
 from db_models import User
 from schemas import AuthResponse, LoginRequest, SignupRequest, UserOut, UserVerify
+from services.email_service import send_verification_email
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
@@ -98,6 +99,10 @@ def signup(payload: SignupRequest, request: Request, response: Response, db: Ses
     set_auth_cookie(response, token)
     request.state.auth_user_id = new_user.id
     request.state.auth_user_role = new_user.role
+
+    # Send verification email if OTP code generated
+    if otp_code:
+        send_verification_email(new_user.email, otp_code, new_user.full_name)
 
     user_out = UserOut.from_orm(new_user)
     status_str = "verification_required" if requires_verification else "success"
@@ -244,6 +249,9 @@ def login(payload: LoginRequest, request: Request, response: Response, db: Sessi
         if not user.verification_code:
             user.verification_code = str(100000 + secrets.randbelow(900000))
             db.commit()
+
+        # Send fresh verification email
+        send_verification_email(user.email, user.verification_code, user.full_name)
 
         return AuthResponse(
             id=user.id,

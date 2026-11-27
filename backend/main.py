@@ -1,7 +1,13 @@
 from contextlib import asynccontextmanager
 import os
 from pathlib import Path
+import sys
 import time
+
+# Ensure backend directory is in sys.path for direct imports in any runtime environment
+_CURRENT_DIR = str(Path(__file__).resolve().parent)
+if _CURRENT_DIR not in sys.path:
+    sys.path.insert(0, _CURRENT_DIR)
 
 from fastapi import FastAPI, Depends, HTTPException, Request, status
 from fastapi.middleware.cors import CORSMiddleware
